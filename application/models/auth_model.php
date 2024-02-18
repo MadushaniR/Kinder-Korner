@@ -1,9 +1,5 @@
-
 <?php
-
 class auth_model extends CI_Model{
-
-
     function __construct()
     {
         parent::__construct();
@@ -17,7 +13,7 @@ class auth_model extends CI_Model{
        
 
         if($password!=$con_password){
-            $this->session->set_flashdata('worng','The password not equal with confirmation!');
+            $this->session->set_flashdata('wrong','The password not equal with confirmation!');
             redirect('Auth/register');
         }else{
             $data=array(

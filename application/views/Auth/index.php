@@ -32,7 +32,12 @@
                       </div>
                     </div>
 
-
+					<div id="container">
+	<h1>Welcome to Quiz!</h1>
+<form method ="" action="<?php echo base_url();?>index.php/Questions/quizdisplay">
+    <input type ="submit" value = "start">
+</form>
+</div>
 					<div class="text-center mt-5 text-muted">
 						Copyright &copy; 2017-2021 &mdash; Your Company 
 					</div>
@@ -46,8 +51,8 @@
 
 <?php if($this->session->flashdata('suc')){ ?>
     toastr.success("<?php echo $this->session->flashdata('suc'); ?>");
-<?php }else if($this->session->flashdata('worng')){  ?>
-    toastr.error("<?php echo $this->session->flashdata('worng'); ?>");
+<?php }else if($this->session->flashdata('wrong')){  ?>
+    toastr.error("<?php echo $this->session->flashdata('wrong'); ?>");
 <?php }else if($this->session->flashdata('warning')){  ?>
     toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
 <?php }else if($this->session->flashdata('info')){  ?>
@@ -57,7 +62,7 @@
 	$this->session->unset_userdata ( 'suc' ); ?>
 	
 	<?php
-    $this->session->unset_userdata ( 'worng' ); ?>
+    $this->session->unset_userdata ( 'wrong' ); ?>
 
 </script>
 </body>
