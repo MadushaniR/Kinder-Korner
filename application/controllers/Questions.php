@@ -24,22 +24,59 @@ class Questions extends CI_Controller {
         redirect(base_url()); // Redirect to the main page or handle it as per your requirement.
     }
 
+    // $this->load->model('quizmodel');
+    // $this->data['questions'] = $this->quizmodel->getQuestions($quizNumber);
+    // $this->load->view('play_quiz', $this->data);
     $this->load->model('quizmodel');
     $this->data['questions'] = $this->quizmodel->getQuestions($quizNumber);
+    $this->data['quizNumber'] = $quizNumber; // Pass quizNumber to the view
     $this->load->view('play_quiz', $this->data);
 }
+public function resultdisplay()
+{
+    $quizNumber = $this->input->get('quizNumber');
+
+    $this->data['checks'] = array(
+        'ques1' => $this->input->post('quizid1'),
+        'ques2' => $this->input->post('quizid2'),
+        'ques3' => $this->input->post('quizid3'),
+        'ques4' => $this->input->post('quizid4'),
+    );
+
+    $this->load->model('quizmodel');
+    $this->data['results'] = $this->quizmodel->getQuestions($quizNumber);
+    $this->data['quizNumber'] = $quizNumber; // Pass quizNumber to the view
+    $this->load->view('results_display', $this->data);
+}
+
+// public function resultdisplay()
+// {
+//     $quizNumber = $this->input->get('quizNumber');
 
 
-    public function resultdisplay(){
-        $this->data['checks'] = array(
-            'ques1'=>$this->input->post('quizid1'),
-            'ques2'=>$this->input->post('quizid2'),
-            'ques3'=>$this->input->post('quizid3'),
-            'ques4'=>$this->input->post('quizid4'),
-        );
-        $this->load->model('quizmodel');
-        $this->data['results'] = $this->quizmodel->getQuestions();
-        $this->load->view('results_display',$this->data);
+//     $this->data['checks'] = array(
+//         'ques1' => $this->input->post('quizid1'),
+//         'ques2' => $this->input->post('quizid2'),
+//         'ques3' => $this->input->post('quizid3'),
+//         'ques4' => $this->input->post('quizid4'),
+//     );
 
-    }
+//     $this->load->model('quizmodel');
+//     $this->data['results'] = $this->quizmodel->getQuestions($quizNumber);
+//     $this->data['quizNumber'] = $quizNumber; // Pass quizNumber to the view
+//     $this->load->view('results_display', $this->data);
+// }
+
+    // public function resultdisplay(){
+    //     $this->data['checks'] = array(
+    //         'ques1'=>$this->input->post('quizid1'),
+    //         'ques2'=>$this->input->post('quizid2'),
+    //         'ques3'=>$this->input->post('quizid3'),
+    //         'ques4'=>$this->input->post('quizid4'),
+    //     );
+    //     $this->load->model('quizmodel');
+    //     $this->data['results'] = $this->quizmodel->getQuestions();
+    //     $this->load->view('results_display',$this->data);
+
+    // }
 }
