@@ -1,33 +1,36 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
+class Auth extends CI_Controller
+{
 	public function __construct()
-    {
-        parent::__construct();
-        $this->load->model('Auth_model'); 
-    }
+	{
+		parent::__construct();
+		$this->load->model('Auth_model');
+	}
 
 	public function index()
 	{
 		$this->load->view('Auth/login');
 	}
 
-	public function register(){
+	public function register()
+	{
 		$this->load->view('Auth/register');
 	}
 
-	public function registration_form(){
+	public function registration_form()
+	{
 		$this->auth_model->register_user();
 	}
 
-	public function login_form(){
+	public function login_form()
+	{
 		$this->auth_model->login_user();
 	}
 
-	public function main(){
+	public function main()
+	{
 		$this->load->view('Auth/index');
 	}
 }
-
-

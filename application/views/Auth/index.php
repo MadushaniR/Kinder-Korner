@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="<?php echo site_url(); ?>assets/toast/toast.min.css">
 	<script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
 	<script src="<?php echo site_url(); ?>assets/toast/toast.js"></script>
-
 </head>
 
 <body>
@@ -22,7 +21,6 @@
 					<div class="text-center my-5">
 						<img src="<?php echo site_url(); ?>assets/logo.jpg" alt="logo" width="100">
 					</div>
-
 					<div class="card text-white bg-primary">
 						<img class="card-img-top" src="holder.js/100px180/" alt="">
 						<div class="card-body">
@@ -30,25 +28,13 @@
 							<p class="card-text">Users</p>
 						</div>
 					</div>
-
-					<!-- <div id="container">
-	<h1>Welcome to Quiz!</h1>
-<form method ="" action="
-<?php echo base_url(); ?>index.php/Questions/quizdisplay">
-    <input type ="submit" value = "start">
-</form>
-</div> -->
 					<div id="container">
 						<h1>Welcome to Quiz!</h1>
-
 						<?php
-
 						$this->db->select('quizNumber');
 						$this->db->distinct();
 						$query = $this->db->get('quiz');
-
 						$uniqueQuizNumbers = $query->result_array();
-
 						foreach ($uniqueQuizNumbers as $quizNumber) {
 							echo '<form method="" action="' . base_url() . 'index.php/Questions/quizdisplay">';
 							echo '<input type="hidden" name="quizNumber" value="' . $quizNumber['quizNumber'] . '">';
@@ -56,7 +42,6 @@
 							echo '</form>';
 						}
 						?>
-
 					</div>
 				</div>
 			</div>
@@ -75,7 +60,6 @@
 		<?php } ?>
 		<?php
 		$this->session->unset_userdata('suc'); ?>
-
 		<?php
 		$this->session->unset_userdata('wrong'); ?>
 	</script>
