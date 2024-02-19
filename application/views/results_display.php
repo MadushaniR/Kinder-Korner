@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Play Geography Quiz</title>
+	<title>Play Quiz</title>
 
 </head>
 <body>
