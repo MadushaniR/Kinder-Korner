@@ -37,10 +37,12 @@
                
                
            <?php 
-		       for ($x=0; $x <4; $x++) { ?>
+		       for ($x=0; $x <2; $x++) { ?>
  
-    <form method="post" action="<?php echo base_url();?>index.php/welcome/index">  
-  
+
+    <!-- <form method="post" action="<?php echo base_url();?>index.php/Questions/resultdisplay">  -->
+    <form method="post" action="<?php echo base_url();?>index.php/Questions/quizdisplay?quizNumber=<?=$quizNumber?>">
+
     
     <p><?=$array3[$x]?>.<?=$array4[$x]?></p>
     
@@ -61,7 +63,7 @@
     <br><br>
     
     <h2>Your Score: </h2>
-      <h1><?=$score?>/4</h1>
+      <h1><?=$score?>/2</h1>
     
     <input type="submit" value="Play Again!">
     

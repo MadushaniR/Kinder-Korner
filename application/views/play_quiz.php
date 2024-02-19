@@ -10,7 +10,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <div id="container">
 	<h1>Play Quiz!</h1>
-    <form method="post" action="<?php echo base_url();?>index.php/Questions/resultdisplay">
+    <!-- <form method="post" action="<?php echo base_url();?>index.php/Questions/resultdisplay?quizNumber=<?=$quizNumber?>"> -->
+    <form method="post" action="<?php echo base_url();?>index.php/Questions/resultdisplay?quizNumber=<?=$quizNumber?>">
+
+        <p>Quiz Number: <?=$quizNumber?></p>
     <?php foreach($questions as $row){ ?>
 
     <?php $ans_array = array($row->choice1,$row->choice2, $row->choice3,$row->answer );
