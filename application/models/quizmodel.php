@@ -3,20 +3,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class quizmodel extends CI_Model {
 
-	public function getQuestions()
-	{
-		$this->db->select("quizID, question,choice1,choice2,choice3,answer");
-        $this->db->from("Quiz");
+	// public function getQuestions()
+	// {
+	// 	$this->db->select("quizID, question,choice1,choice2,choice3,answer,quizNumber");
+    //     $this->db->from("Quiz");
 
-        $query = $this->db->get();
+    //     $query = $this->db->get();
 
-        return $query->result();
+    //     return $query->result();
 
-        $num_data_returned = $query->num_rows;
+    //     $num_data_returned = $query->num_rows;
 
-        if($num_data_returned <1 ){
-            echo "There is no data in db";
-            exit();
-        }
-	}
+    //     if($num_data_returned <1 ){
+    //         echo "There is no data in db";
+    //         exit();
+    //     }
+	// }
+    public function getQuestions($quizNumber)
+{
+    $this->db->select("quizID, question, choice1, choice2, choice3, answer, quizNumber");
+    $this->db->from("Quiz");
+    $this->db->where("quizNumber", $quizNumber); // Filter questions based on the selected quizNumber.
+
+    $query = $this->db->get();
+
+    return $query->result();
+
+    $num_data_returned = $query->num_rows;
+
+    if ($num_data_returned < 1) {
+        echo "There is no data in db";
+        exit();
+    }
+}
+
 }

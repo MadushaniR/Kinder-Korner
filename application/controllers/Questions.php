@@ -9,13 +9,27 @@ class Questions extends CI_Controller {
         $this->load->database();
     }
 
-	public function quizdisplay()
-	{
-        $this->load->model('quizmodel');
-        $this->data['questions'] = $this->quizmodel->getQuestions();
-        $this->load->view('play_quiz', $this->data);
-		// $this->load->view('quiz_game');
-	}
+	// public function quizdisplay()
+	// {
+    //     $this->load->model('quizmodel');
+    //     $this->data['questions'] = $this->quizmodel->getQuestions();
+    //     $this->load->view('play_quiz', $this->data);
+	// 	// $this->load->view('quiz_game');
+	// }
+    public function quizdisplay()
+{
+    $quizNumber = $this->input->get('quizNumber');
+    if (!$quizNumber) {
+        // Handle the case where quizNumber is not provided.
+        redirect(base_url()); // Redirect to the main page or handle it as per your requirement.
+    }
+
+    $this->load->model('quizmodel');
+    $this->data['questions'] = $this->quizmodel->getQuestions($quizNumber);
+    $this->load->view('play_quiz', $this->data);
+}
+
+
     public function resultdisplay(){
         $this->data['checks'] = array(
             'ques1'=>$this->input->post('quizid1'),
