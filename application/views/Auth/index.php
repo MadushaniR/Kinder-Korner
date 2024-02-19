@@ -6,7 +6,7 @@
 	<meta name="author" content="Muhamad Nauval Azhar">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="description" content="This is a login page template based on Bootstrap 5">
-	<title>Bootstrap 5 Login Page</title>
+	<title>Kinder Koner</title>
 	<link rel="stylesheet" href="<?php echo site_url(); ?>assets/all.css">
 	<link rel="stylesheet" href="<?php echo site_url(); ?>assets/toast/toast.min.css">
 	<script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
