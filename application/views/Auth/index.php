@@ -24,6 +24,9 @@
 					<div class="text-center my-5"></div>
 					<div id="main-container">
 						<h1>Welcome to Quiz!</h1>
+						<form method="get" action="<?php echo base_url(); ?>index.php/Questions/createquiz">
+        					<input type="submit" value="Create New Quiz">
+   						 </form>
 						<h1>Welcome,
 							<?= $user_name ?>
 							!</h1>
