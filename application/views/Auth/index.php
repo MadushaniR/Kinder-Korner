@@ -14,22 +14,19 @@
 </head>
 
 <body>
+	<header>
+		<?php $this->load->view('Comman/header'); ?>
+	</header>
 	<section class="h-100">
 		<div class="container h-100">
 			<div class="row justify-content-sm-center h-100">
 				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
-					<div class="text-center my-5">
-						<img src="<?php echo site_url(); ?>assets/logo.jpg" alt="logo" width="100">
-					</div>
-					<div class="card text-white bg-primary">
-						<img class="card-img-top" src="holder.js/100px180/" alt="">
-						<div class="card-body">
-							<h4 class="card-title">Welcome </h4>
-							<p class="card-text">Users</p>
-						</div>
-					</div>
-					<div id="container">
+					<div class="text-center my-5"></div>
+					<div id="main-container">
 						<h1>Welcome to Quiz!</h1>
+						<h1>Welcome,
+							<?= $user_name ?>
+							!</h1>
 						<?php
 						$this->db->select('quizNumber');
 						$this->db->distinct();

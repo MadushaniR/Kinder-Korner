@@ -5,10 +5,14 @@
     <meta charset="utf-8">
     <title>Play Quiz</title>
 </head>
+<header>
+    <?php $this->load->view('Comman/header'); ?>
+</header>
 
 <body>
 
     <div id="container">
+        <h1>Welcome, <?= $user_name ?>!</h1>
         <h1>Play the Quiz!</h1>
 
         <?php $score = 0; ?>

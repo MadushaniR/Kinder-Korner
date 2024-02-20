@@ -11,6 +11,7 @@ class Auth extends CI_Controller
 
 	public function index()
 	{
+		$data['user_name'] = $this->session->userdata('user_name');
 		$this->load->view('Auth/login');
 	}
 
@@ -26,11 +27,30 @@ class Auth extends CI_Controller
 
 	public function login_form()
 	{
-		$this->auth_model->login_user();
+		$this->load->model('auth_model');
+		$user_data = $this->auth_model->login_user();
+
+		if ($user_data) {
+			$this->session->set_userdata('user_id', $user_data->id);
+			$this->session->set_userdata('user_name', $user_data->name);
+			redirect('auth/main');
+		} else {
+			$this->session->set_flashdata('warning', 'Incorrect Authentication!!!');
+			redirect('Auth/');
+		}
 	}
 
 	public function main()
 	{
-		$this->load->view('Auth/index');
+		$data['user_name'] = $this->session->userdata('user_name');
+		$this->load->model('auth_model');
+		$this->load->view('Auth/index', $data);
+	}
+
+	public function logout()
+	{
+		$this->session->unset_userdata('user_id');
+		$this->session->set_flashdata('suc', 'You have been logged out successfully.');
+		redirect('/');
 	}
 }

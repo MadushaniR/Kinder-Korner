@@ -12,6 +12,7 @@ class Questions extends CI_Controller
 
     public function quizdisplay()
     {
+        $user_name = $this->session->userdata('user_name');
         $quizNumber = $this->input->get('quizNumber');
         if (!$quizNumber) {
             redirect(base_url());
@@ -20,11 +21,14 @@ class Questions extends CI_Controller
         $this->load->model('quizmodel');
         $this->data['questions'] = $this->quizmodel->getQuestions($quizNumber);
         $this->data['quizNumber'] = $quizNumber;
+        $this->data['user_name'] = $user_name;
+        $this->load->model('auth_model');
         $this->load->view('play_quiz', $this->data);
     }
-    
+ 
     public function resultdisplay()
     {
+        $user_name = $this->session->userdata('user_name');
         $quizNumber = $this->input->get('quizNumber');
 
         $this->data['checks'] = array(
@@ -40,6 +44,8 @@ class Questions extends CI_Controller
         $this->load->model('quizmodel');
         $this->data['results'] = $this->quizmodel->getQuestions($quizNumber);
         $this->data['quizNumber'] = $quizNumber;
+        $this->data['user_name'] = $user_name;
+        $this->load->model('auth_model');
         $this->load->view('results_display', $this->data);
     }
 }
