@@ -5,6 +5,6 @@ class Welcome extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('quiz_game');
+		$this->load->view('Quiz/quiz_game');
 	}
 }

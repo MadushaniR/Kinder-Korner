@@ -23,7 +23,7 @@ class Questions extends CI_Controller
         $this->data['quizNumber'] = $quizNumber;
         $this->data['user_name'] = $user_name;
         $this->load->model('auth_model');
-        $this->load->view('play_quiz', $this->data);
+        $this->load->view('Quiz/play_quiz', $this->data);
     }
  
     public function resultdisplay()
@@ -46,6 +46,6 @@ class Questions extends CI_Controller
         $this->data['quizNumber'] = $quizNumber;
         $this->data['user_name'] = $user_name;
         $this->load->model('auth_model');
-        $this->load->view('results_display', $this->data);
+        $this->load->view('Quiz/results_display', $this->data);
     }
 }
