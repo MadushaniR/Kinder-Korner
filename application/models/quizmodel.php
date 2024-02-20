@@ -21,17 +21,4 @@ class quizmodel extends CI_Model
         }
     }
 
-    public function saveQuiz($quizTitle)
-    {
-        // Perform validation and save the quiz details to the 'Quiz' table
-        $data = array(
-            'quizTitle' => $quizTitle,
-            // Add more fields as needed
-        );
-
-        $this->db->insert('quiz', $data);
-
-        // Return the ID of the newly inserted quiz
-        return $this->db->insert_id();
-    }
 }
