@@ -29,7 +29,7 @@ class auth_model extends CI_Model
             redirect('Auth/');
         }
     }
-
+    
     public function login_user()
     {
         $email = $this->input->post('email');
@@ -39,10 +39,10 @@ class auth_model extends CI_Model
         $this->db->where('password', $password);
         $query = $this->db->get('users');
         $user = $query->row(); // Get the user data
-        return $user;
 
         if ($user) {
             $this->session->set_userdata('user_id', $user->id);
+            $this->session->set_userdata('user_name', $user->name);
             $this->session->set_flashdata('suc', 'You are logged in as ' . $user->name);
             redirect('Auth/main');
         } else {
@@ -50,6 +50,7 @@ class auth_model extends CI_Model
             redirect('Auth/');
         }
     }
+
     public function get_user_by_id($user_id)
     {
         $this->db->where('id', $user_id);

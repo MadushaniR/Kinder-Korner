@@ -51,6 +51,6 @@ class Auth extends CI_Controller
 	{
 		$this->session->unset_userdata('user_id');
 		$this->session->set_flashdata('suc', 'You have been logged out successfully.');
-		redirect('');
+		redirect('/');
 	}
 }
