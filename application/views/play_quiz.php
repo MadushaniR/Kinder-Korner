@@ -8,10 +8,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta charset="utf-8">
     <title>Play Quiz</title>
 </head>
+<header>
+    <?php $this->load->view('Comman/header'); ?>
+</header>
+
 <body>
 
     <div id="container">
         <h1>Play Quiz!</h1>
+        <h1>Welcome,
+            <?= $user_name ?>
+            !</h1>
         <form method="post" action="<?php echo base_url(); ?>index.php/Questions/resultdisplay?quizNumber=<?= $quizNumber ?>">
             <p>Quiz Number: <?= $quizNumber ?></p>
             <?php foreach ($questions as $row) { ?>
@@ -27,6 +34,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <input type="submit" value="Submit">
         </form>
     </div>
+
 
 </body>
 

@@ -38,14 +38,22 @@ class auth_model extends CI_Model
         $this->db->where('email', $email);
         $this->db->where('password', $password);
         $query = $this->db->get('users');
-        $find_user = $query->num_rows($query);
+        $user = $query->row(); // Get the user data
+        return $user;
 
-        if ($find_user > 0) {
-            $this->session->set_flashdata('suc', 'You are logged');
+        if ($user) {
+            $this->session->set_userdata('user_id', $user->id);
+            $this->session->set_flashdata('suc', 'You are logged in as ' . $user->name);
             redirect('Auth/main');
         } else {
             $this->session->set_flashdata('warning', 'Incorrect Authentication!!!');
             redirect('Auth/');
         }
+    }
+    public function get_user_by_id($user_id)
+    {
+        $this->db->where('id', $user_id);
+        $query = $this->db->get('users');
+        return $query->row(); // Return the user data
     }
 }
