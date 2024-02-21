@@ -52,51 +52,55 @@ class Questions extends CI_Controller
     public function createquiz() {
         // Load any necessary libraries or models
         $this->load->model('quizmodel');
-
+    
         // Check if the form is submitted
         if ($this->input->post()) {
             // Process form data and insert a new quiz into the database
-
-            // Get form data
-            $question = $this->input->post('question');
-            $choice1 = $this->input->post('choice1');
-            $choice2 = $this->input->post('choice2');
-            $choice3 = $this->input->post('choice3');
-            $answer = $this->input->post('answer');
-            $quizNumber = $this->input->post('quizNumber');
-
+    
+            // Get form data as arrays
+            $questions = $this->input->post('question');
+            $choices1 = $this->input->post('choice1');
+            $choices2 = $this->input->post('choice2');
+            $choices3 = $this->input->post('choice3');
+            $answers = $this->input->post('answer');
+            $quizNumbers = $this->input->post('quizNumber');
+    
             // Validate form data (you may add more validation as needed)
-
+    
             // Insert data into the database using CodeIgniter's query builder
-            $data = array(
-                'question' => $question,
-                'choice1' => $choice1,
-                'choice2' => $choice2,
-                'choice3' => $choice3,
-                'answer' => $answer,
-                'quizNumber' => $quizNumber
-            );
-
-            $this->db->insert('quiz', $data);
-
-            // Check for database errors
-            if ($this->db->affected_rows() > 0) {
-                // Set a flash message for success
-                $this->session->set_flashdata('success', 'Quiz created successfully!');
-            } else {
-                // Set a flash message for error
-                $this->session->set_flashdata('error', 'Failed to create quiz. Please try again.');
-                
-                // Debugging: Display database error (if any)
-                echo "Database Error: " . $this->db->error()['message'];
+            foreach ($questions as $index => $question) {
+                $data = array(
+                    'question' => $question,
+                    'choice1' => $choices1[$index],
+                    'choice2' => $choices2[$index],
+                    'choice3' => $choices3[$index],
+                    'answer' => $answers[$index],
+                    'quizNumber' => $quizNumbers[$index]
+                );
+    
+                $this->db->insert('quiz', $data);
+    
+                // Check for database errors
+                if ($this->db->affected_rows() <= 0) {
+                    // Set a flash message for error
+                    $this->session->set_flashdata('error', 'Failed to create quiz. Please try again.');
+    
+                    // Debugging: Display database error (if any)
+                    echo "Database Error: " . $this->db->error()['message'];
+                }
             }
-
-            // Redirect to Auth/main
+    
+            // Set a flash message for success
+            $this->session->set_flashdata('success', 'Quiz created successfully!');
+            
+            // Redirect to the appropriate page after processing the form
             redirect('Auth/main');
         }
-
+    
         // Load the view for creating a new quiz
         $this->load->view('Quiz/create_quiz');
     }
+    
+    
 }
 
