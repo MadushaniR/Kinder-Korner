@@ -20,4 +20,5 @@ class quizmodel extends CI_Model
             exit();
         }
     }
+
 }

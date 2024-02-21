@@ -48,4 +48,59 @@ class Questions extends CI_Controller
         $this->load->model('auth_model');
         $this->load->view('Quiz/results_display', $this->data);
     }
+
+    public function createquiz() {
+        // Load any necessary libraries or models
+        $this->load->model('quizmodel');
+    
+        // Check if the form is submitted
+        if ($this->input->post()) {
+            // Process form data and insert a new quiz into the database
+    
+            // Get form data as arrays
+            $questions = $this->input->post('question');
+            $choices1 = $this->input->post('choice1');
+            $choices2 = $this->input->post('choice2');
+            $choices3 = $this->input->post('choice3');
+            $answers = $this->input->post('answer');
+            $quizNumbers = $this->input->post('quizNumber');
+    
+            // Validate form data (you may add more validation as needed)
+    
+            // Insert data into the database using CodeIgniter's query builder
+            foreach ($questions as $index => $question) {
+                $data = array(
+                    'question' => $question,
+                    'choice1' => $choices1[$index],
+                    'choice2' => $choices2[$index],
+                    'choice3' => $choices3[$index],
+                    'answer' => $answers[$index],
+                    'quizNumber' => $quizNumbers[$index]
+                );
+    
+                $this->db->insert('quiz', $data);
+    
+                // Check for database errors
+                if ($this->db->affected_rows() <= 0) {
+                    // Set a flash message for error
+                    $this->session->set_flashdata('error', 'Failed to create quiz. Please try again.');
+    
+                    // Debugging: Display database error (if any)
+                    echo "Database Error: " . $this->db->error()['message'];
+                }
+            }
+    
+            // Set a flash message for success
+            $this->session->set_flashdata('success', 'Quiz created successfully!');
+            
+            // Redirect to the appropriate page after processing the form
+            redirect('Auth/main');
+        }
+    
+        // Load the view for creating a new quiz
+        $this->load->view('Quiz/create_quiz');
+    }
+    
+    
 }
+
