@@ -30,10 +30,13 @@
 						<h1>Welcome,
 							<?= $user_name ?>
 							!</h1>
+							<h1>user id,
+							<?= $userID ?>
+							!</h1>
 						<?php
 						$this->db->select('quizNumber');
 						$this->db->distinct();
-						$query = $this->db->get('quiz');
+						$query = $this->db->get('quizdetails');
 						$uniqueQuizNumbers = $query->result_array();
 						foreach ($uniqueQuizNumbers as $quizNumber) {
 							echo '<form method="" action="' . base_url() . 'index.php/Questions/quizdisplay">';

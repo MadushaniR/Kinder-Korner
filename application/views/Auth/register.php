@@ -27,7 +27,7 @@
 							<?php echo form_open('Auth/registration_form'); ?>
 							<div class="mb-3">
 								<label class="mb-2 text-muted" for="email">Full Name</label>
-								<input id="name" name="name" type="text" class="form-control" value="" required autofocus>
+								<input id="username" name="username" type="text" class="form-control" value="" required autofocus>
 							</div>
 							<div class="mb-3">
 								<label class="mb-2 text-muted" for="email">E-Mail Address</label>

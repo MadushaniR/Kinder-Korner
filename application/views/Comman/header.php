@@ -44,7 +44,7 @@
                 <h1>Kinder Koner</h1>
             </div>
             <div class="user-info">
-                <?php if ($this->session->userdata('user_id') && $this->session->userdata('user_name')) { ?>
+                <?php if ($this->session->userdata('userID') && $this->session->userdata('user_name')) { ?>
                     <p class="welcome-message">Welcome, <?php echo $this->session->userdata('user_name'); ?></p>
                     <a href="<?php echo site_url('Auth/logout'); ?>" class="btn btn-danger">Logout</a>
                 <?php } else { ?>

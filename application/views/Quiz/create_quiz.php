@@ -1,6 +1,5 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
-?>
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,6 +16,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
     <?php echo form_open('questions/createquiz'); ?>
 
+    <label for="quizName">Quiz Name:</label>
+    <input type="text" name="quizName" required>
+
+    <label for="quizDescription">Quiz Description:</label>
+    <textarea name="quizDescription" required></textarea>
+
     <div id="questions-container">
         <!-- This div provides space for a single set of question and answers -->
         <div class="question">
@@ -32,11 +37,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <label for="choice3">Choice 3:</label>
             <input type="text" name="choice3[]" required>
 
-            <label for="answer">Answer:</label>
-            <input type="text" name="answer[]" required>
+            <label for="choice4">Choice 4:</label>
+            <input type="text" name="choice4[]" required>
 
-            <label for="quizNumber">Quiz Number:</label>
-            <input type="text" name="quizNumber[]" required>
+            <label for="answer">Correct Answer:</label>
+            <input type="text" name="answer[]" required>
         </div>
     </div>
 
@@ -66,11 +71,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <label for="choice3">Choice 3:</label>
                 <input type="text" name="choice3[]" required>
 
-                <label for="answer">Answer:</label>
-                <input type="text" name="answer[]" required>
+                <label for="choice4">Choice 4:</label>
+                <input type="text" name="choice4[]" required>
 
-                <label for="quizNumber">Quiz Number:</label>
-                <input type="text" name="quizNumber[]" required>
+                <label for="answer">Correct Answer:</label>
+                <input type="text" name="answer[]" required>
             `;
 
             // Append the new set to the container
