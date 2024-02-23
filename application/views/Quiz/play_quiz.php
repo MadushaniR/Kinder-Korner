@@ -13,7 +13,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </header>
 
 <body>
-
     <div id="container">
         <h1>Play Quiz!</h1>
         <h1>Welcome, <?= $user_name ?>!</h1>
@@ -34,7 +33,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <input type="submit" value="Submit">
         </form>
     </div>
-
 </body>
 
 </html>
