@@ -8,6 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta charset="utf-8">
     <title>Quiz Results</title>
 </head>
+
 <header>
     <?php $this->load->view('Comman/header'); ?>
 </header>
@@ -20,19 +21,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <h2>Quiz Number: <?= $quizID ?></h2>
 
         <?php
-        // Fetch user answers from the useranswer table
-        $userAnswers = $this->quizmodel->getUserAnswers($userID, $quizID);
-
-        $correctAnswers = 0; // Initialize the counter for correct answers
+        $totalQuestions = count($questions);  // Total number of questions
+        $correctAnswers = 0;  // Counter for correct answers
 
         foreach ($questions as $row) {
             $userAnswerText = '';
+            $questionID = $row->questionID;
+
             // Find the corresponding user answer for the current question
-            foreach ($userAnswers as $userAnswer) {
-                if ($userAnswer->questionID == $row->questionID) {
-                    $userAnswerText = $userAnswer->selectedOption;
-                    break;
-                }
+            $selectedOptionKey = 'selectedOption' . $questionID;
+            if (isset($_POST[$selectedOptionKey])) {
+                $userAnswerText = $_POST[$selectedOptionKey];
             }
 
             // Check if the user's answer is correct
@@ -42,16 +41,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
             if ($isCorrect) {
                 $correctAnswers++;
             }
-        ?>
-            <p><?= $row->questionID ?>. <?= $row->questionText ?></p>
+            ?>
+            <p><?= $questionID ?>. <?= $row->questionText ?></p>
             <p>Correct Answer: <?= $row->correctAnswer ?></p>
             <p>Your Answer: <?= $userAnswerText ?></p>
             <p><?= ($isCorrect ? 'Correct' : 'Incorrect') ?></p>
             <hr>
         <?php } ?>
 
-        <!-- Display the result count -->
-        <h3>Result: <?= $correctAnswers ?>/<?= count($questions) ?></h3>
+        <!-- Display the correct answer count with the total question count -->
+        <p>Result: <?= $correctAnswers ?>/<?= $totalQuestions ?></p>
 
         <!-- Add a button to go to the home page -->
         <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
