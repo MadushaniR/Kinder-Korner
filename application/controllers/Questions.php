@@ -10,97 +10,188 @@ class Questions extends CI_Controller
         $this->load->database();
     }
 
-    public function quizdisplay()
+    // public function quizdisplay()
+    // {
+    //     $user_name = $this->session->userdata('user_name');
+    //     $userID = $this->session->userdata('userID');
+    //     $quizID = $this->input->get('quizID');
+    //     if (!$quizID) {
+    //         redirect(base_url());
+    //     }
+
+    //     $this->load->model('quizmodel');
+    //     $this->data['questions'] = $this->quizmodel->getQuestions($quizID);
+    //     $this->data['quizID'] = $quizID;
+    //     $this->data['user_name'] = $user_name;
+    //     $this->data['userID'] = $userID;
+    //     $this->load->model('auth_model');
+    //     $this->load->view('Quiz/play_quiz', $this->data);
+    // }
+
+//     public function quizdisplay()
+// {
+//     $user_name = $this->session->userdata('user_name');
+//     $userID = $this->session->userdata('userID');
+//     $quizID = $this->input->get('quizID');
+    
+//     if (!$quizID) {
+//         redirect(base_url());
+//     }
+
+//     $this->load->model('quizmodel');
+
+//     if ($this->input->post()) {
+//         $userAnswers = array();
+        
+//         foreach ($this->input->post() as $key => $value) {
+//             if (strpos($key, 'selectedOption') !== false) {
+//                 $questionID = str_replace('selectedOption', '', $key);
+//                 $userAnswers[] = array(
+//                     'userID' => $userID,
+//                     'quizID' => $quizID,
+//                     'questionID' => $questionID,
+//                     'selectedOption' => $value,
+//                     'quizNumber' => $quizID
+//                 );
+//             }
+//         }
+
+//         // Store user answers in the database
+//         $this->quizmodel->storeUserAnswers($userAnswers);
+
+//         redirect('Questions/resultdisplay?quizID=' . $quizID);
+//     }
+
+//     $this->data['questions'] = $this->quizmodel->getQuestions($quizID);
+//     $this->data['quizID'] = $quizID;
+//     $this->data['user_name'] = $user_name;
+//     $this->data['userID'] = $userID;
+//     $this->load->model('auth_model');
+//     $this->load->view('Quiz/play_quiz', $this->data);
+// }
+public function quizdisplay()
+{
+    $user_name = $this->session->userdata('user_name');
+    $userID = $this->session->userdata('userID');
+    $quizID = $this->input->get('quizID');
+    
+    if (!$quizID) {
+        redirect(base_url());
+    }
+
+    $this->load->model('quizmodel');
+
+    if ($this->input->post()) {
+        $userAnswers = array();
+        foreach ($this->input->post() as $key => $value) {
+            if (strpos($key, 'selectedOption') !== false) {
+                $questionID = str_replace('selectedOption', '', $key);
+                $userAnswers[] = array(
+                    'userID' => $userID,
+                    'quizID' => $quizID,
+                    'questionID' => $questionID,
+                    'selectedOption' => $value,
+                );
+            }
+        }
+        
+        // Store user answers in the database
+        $this->quizmodel->storeUserAnswers($userAnswers);
+    
+        redirect('Questions/resultdisplay?quizID=' . $quizID);
+    }
+    
+
+    $this->data['questions'] = $this->quizmodel->getQuestions($quizID);
+    $this->data['quizID'] = $quizID;
+    $this->data['user_name'] = $user_name;
+    $this->data['userID'] = $userID;
+    $this->load->model('auth_model');
+    $this->load->view('Quiz/play_quiz', $this->data);
+}
+
+    public function createquiz()
+{
+    $this->load->model('quizmodel');
+
+    if ($this->input->post()) {
+        $quizName = $this->input->post('quizName');
+        $quizDescription = $this->input->post('quizDescription');
+        $questions = $this->input->post('question');
+        $choices1 = $this->input->post('choice1');
+        $choices2 = $this->input->post('choice2');
+        $choices3 = $this->input->post('choice3');
+        $choices4 = $this->input->post('choice4');
+        $answers = $this->input->post('answer');
+
+        // Check if the quizName already exists
+        $existingQuiz = $this->db->get_where('quizdetails', array('quizName' => $quizName))->row();
+
+        if ($existingQuiz) {
+            // Use the existing quizID
+            $quizID = $existingQuiz->quizID;
+        } else {
+            // Insert new quiz details
+            $data = array(
+                'quizName' => $quizName,
+                'quizDescription' => $quizDescription,
+                'userID' => $this->session->userdata('userID')
+            );
+
+            $this->db->insert('quizdetails', $data);
+            $quizID = $this->db->insert_id();
+        }
+
+        // Get the maximum quizID and increment it
+        $maxquizID = $this->db->select_max('quizID')->get('quizdetails')->row()->quizID;
+        $quizID = $maxquizID + 1;
+
+        // Update the quizID for the current quiz
+        $this->db->update('quizdetails', array('quizID' => $quizID), array('quizID' => $quizID));
+
+        foreach ($questions as $index => $question) {
+            $questionData = array(
+                'quizID' => $quizID,
+                'questionText' => $question,
+                'correctAnswer' => $answers[$index]
+            );
+
+            $this->db->insert('questions', $questionData);
+            $questionID = $this->db->insert_id();
+
+            $optionsData = array(
+                'questionID' => $questionID,
+                'option1' => $choices1[$index],
+                'option2' => $choices2[$index],
+                'option3' => $choices3[$index],
+                'option4' => $choices4[$index]
+            );
+
+            $this->db->insert('options', $optionsData);
+        }
+
+        $this->session->set_flashdata('success', 'Quiz created successfully!');
+        redirect('Auth/main');
+    }
+
+    $this->load->view('Quiz/create_quiz');
+}
+
+    public function resultdisplay()
     {
         $user_name = $this->session->userdata('user_name');
-        $quizNumber = $this->input->get('quizNumber');
-        if (!$quizNumber) {
+        $userID = $this->session->userdata('userID');
+        $quizID = $this->input->get('quizID');
+        if (!$quizID) {
             redirect(base_url());
         }
 
         $this->load->model('quizmodel');
-        $this->data['questions'] = $this->quizmodel->getQuestions($quizNumber);
-        $this->data['quizNumber'] = $quizNumber;
+        $this->data['questions'] = $this->quizmodel->getResults($quizID);
+        $this->data['quizID'] = $quizID;
         $this->data['user_name'] = $user_name;
-        $this->load->model('auth_model');
-        $this->load->view('Quiz/play_quiz', $this->data);
-    }
- 
-    public function resultdisplay()
-    {
-        $user_name = $this->session->userdata('user_name');
-        $quizNumber = $this->input->get('quizNumber');
-
-        $this->data['checks'] = array(
-            'ques1' => $this->input->post('quizid1'),
-            'ques2' => $this->input->post('quizid2'),
-            'ques3' => $this->input->post('quizid3'),
-            'ques4' => $this->input->post('quizid4'),
-            'ques5' => $this->input->post('quizid5'),
-            'ques6' => $this->input->post('quizid6'),
-            'ques7' => $this->input->post('quizid7'),
-        );
-
-        $this->load->model('quizmodel');
-        $this->data['results'] = $this->quizmodel->getQuestions($quizNumber);
-        $this->data['quizNumber'] = $quizNumber;
-        $this->data['user_name'] = $user_name;
+        $this->data['userID'] = $userID;
         $this->load->model('auth_model');
         $this->load->view('Quiz/results_display', $this->data);
     }
-
-    public function createquiz() {
-        // Load any necessary libraries or models
-        $this->load->model('quizmodel');
-    
-        // Check if the form is submitted
-        if ($this->input->post()) {
-            // Process form data and insert a new quiz into the database
-    
-            // Get form data as arrays
-            $questions = $this->input->post('question');
-            $choices1 = $this->input->post('choice1');
-            $choices2 = $this->input->post('choice2');
-            $choices3 = $this->input->post('choice3');
-            $answers = $this->input->post('answer');
-            $quizNumbers = $this->input->post('quizNumber');
-    
-            // Validate form data (you may add more validation as needed)
-    
-            // Insert data into the database using CodeIgniter's query builder
-            foreach ($questions as $index => $question) {
-                $data = array(
-                    'question' => $question,
-                    'choice1' => $choices1[$index],
-                    'choice2' => $choices2[$index],
-                    'choice3' => $choices3[$index],
-                    'answer' => $answers[$index],
-                    'quizNumber' => $quizNumbers[$index]
-                );
-    
-                $this->db->insert('quiz', $data);
-    
-                // Check for database errors
-                if ($this->db->affected_rows() <= 0) {
-                    // Set a flash message for error
-                    $this->session->set_flashdata('error', 'Failed to create quiz. Please try again.');
-    
-                    // Debugging: Display database error (if any)
-                    echo "Database Error: " . $this->db->error()['message'];
-                }
-            }
-    
-            // Set a flash message for success
-            $this->session->set_flashdata('success', 'Quiz created successfully!');
-            
-            // Redirect to the appropriate page after processing the form
-            redirect('Auth/main');
-        }
-    
-        // Load the view for creating a new quiz
-        $this->load->view('Quiz/create_quiz');
-    }
-    
-    
 }
-

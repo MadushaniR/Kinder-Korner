@@ -19,7 +19,7 @@ class auth_model extends CI_Model
             redirect('Auth/register');
         } else {
             $data = array(
-                "name" => $this->input->post('name'),
+                "username" => $this->input->post('username'),
                 "email" => $this->input->post('email'),
                 "password" => $password
             );
@@ -41,9 +41,9 @@ class auth_model extends CI_Model
         $user = $query->row(); // Get the user data
 
         if ($user) {
-            $this->session->set_userdata('user_id', $user->id);
-            $this->session->set_userdata('user_name', $user->name);
-            $this->session->set_flashdata('suc', 'You are logged in as ' . $user->name);
+            $this->session->set_userdata('userID', $user->userID);
+            $this->session->set_userdata('user_name', $user->username);
+            $this->session->set_flashdata('suc', 'You are logged in as ' . $user->username);
             redirect('Auth/main');
         } else {
             $this->session->set_flashdata('warning', 'Incorrect Authentication!!!');
@@ -51,9 +51,9 @@ class auth_model extends CI_Model
         }
     }
 
-    public function get_user_by_id($user_id)
+    public function get_user_by_id($userID)
     {
-        $this->db->where('id', $user_id);
+        $this->db->where('userID', $userID);
         $query = $this->db->get('users');
         return $query->row(); // Return the user data
     }

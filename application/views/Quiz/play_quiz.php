@@ -13,29 +13,28 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </header>
 
 <body>
-
     <div id="container">
         <h1>Play Quiz!</h1>
-        <h1>Welcome,
-            <?= $user_name ?>
-            !</h1>
-        <form method="post" action="<?php echo base_url(); ?>index.php/Questions/resultdisplay?quizNumber=<?= $quizNumber ?>">
-            <p>Quiz Number: <?= $quizNumber ?></p>
+        <h1>Welcome, <?= $user_name ?>!</h1>
+        <h1>USER ID, <?= $userID ?>!</h1>
+        <form method="post" action="<?php echo base_url(); ?>index.php/Questions/resultdisplay?quizID=<?= $quizID ?>">
+            <p>Quiz Number: <?= $quizID ?></p>
             <?php foreach ($questions as $row) { ?>
-                <?php $ans_array = array($row->choice1, $row->choice2, $row->choice3, $row->answer);
-                shuffle($ans_array); ?>
-                <p><?= $row->quizID ?>.<?= $row->question ?></p>
-                <input type="radio" name="quizid<?= $row->quizID ?>" value="<?= $ans_array[0] ?>" required><?= $ans_array[0] ?><br>
-                <input type="radio" name="quizid<?= $row->quizID ?>" value="<?= $ans_array[1] ?>"><?= $ans_array[1] ?><br>
-                <input type="radio" name="quizid<?= $row->quizID ?>" value="<?= $ans_array[2] ?>"><?= $ans_array[2] ?><br>
-                <input type="radio" name="quizid<?= $row->quizID ?>" value="<?= $ans_array[3] ?>"><?= $ans_array[3] ?><br>
+                <p><?= $row->questionID ?>.<?= $row->questionText ?></p>
+                <input type="radio" name="selectedOption<?= $row->questionID ?>" value="<?= $row->option1 ?>" required><?= $row->option1 ?><br>
+                <input type="radio" name="selectedOption<?= $row->questionID ?>" value="<?= $row->option2 ?>"><?= $row->option2 ?><br>
+                <input type="radio" name="selectedOption<?= $row->questionID ?>" value="<?= $row->option3 ?>"><?= $row->option3 ?><br>
+                <input type="radio" name="selectedOption<?= $row->questionID ?>" value="<?= $row->option4 ?>"><?= $row->option4 ?><br>
+
+                <!-- Add hidden fields to store questionID -->
+                <input type="hidden" name="questionID<?= $row->questionID ?>" value="<?= $row->questionID ?>">
             <?php } ?>
             <br><br>
             <input type="submit" value="Submit">
+             <!-- Add a button to go to the home page -->
+             <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
         </form>
     </div>
-
-
 </body>
 
 </html>
