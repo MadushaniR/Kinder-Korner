@@ -1,5 +1,3 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -91,6 +89,41 @@
         }
         ?>
     </script>
+
+    <h2>Quiz Details</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Quiz Name</th>
+                <th>Quiz Description</th>
+                <th>Question</th>
+                <th>Choice 1</th>
+                <th>Choice 2</th>
+                <th>Choice 3</th>
+                <th>Choice 4</th>
+                <th>Correct Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($quizzes as $quiz) : ?>
+                <tr>
+                    <td><?= $quiz->username ?></td>
+                    <td><?= $quiz->quizName ?></td>
+                    <td><?= $quiz->quizDescription ?></td>
+                    <td><?= $quiz->questionText ?></td>
+                    <td><?= $quiz->option1 ?></td>
+                    <td><?= $quiz->option2 ?></td>
+                    <td><?= $quiz->option3 ?></td>
+                    <td><?= $quiz->option4 ?></td>
+                    <td><?= $quiz->correctAnswer ?></td>
+
+                    
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
 </body>
 
 </html>
