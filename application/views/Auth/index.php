@@ -34,14 +34,14 @@
 							<?= $userID ?>
 							!</h1>
 						<?php
-						$this->db->select('quizNumber');
+						$this->db->select('quizID');
 						$this->db->distinct();
 						$query = $this->db->get('quizdetails');
-						$uniqueQuizNumbers = $query->result_array();
-						foreach ($uniqueQuizNumbers as $quizNumber) {
+						$uniquequizIDs = $query->result_array();
+						foreach ($uniquequizIDs as $quizID) {
 							echo '<form method="" action="' . base_url() . 'index.php/Questions/quizdisplay">';
-							echo '<input type="hidden" name="quizNumber" value="' . $quizNumber['quizNumber'] . '">';
-							echo '<input type="submit" value="Start Quiz ' . $quizNumber['quizNumber'] . '">';
+							echo '<input type="hidden" name="quizID" value="' . $quizID['quizID'] . '">';
+							echo '<input type="submit" value="Start Quiz ' . $quizID['quizID'] . '">';
 							echo '</form>';
 						}
 						?>

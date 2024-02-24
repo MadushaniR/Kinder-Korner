@@ -17,8 +17,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <h1>Play Quiz!</h1>
         <h1>Welcome, <?= $user_name ?>!</h1>
         <h1>USER ID, <?= $userID ?>!</h1>
-        <form method="post" action="<?php echo base_url(); ?>index.php/Questions/resultdisplay?quizNumber=<?= $quizNumber ?>">
-            <p>Quiz Number: <?= $quizNumber ?></p>
+        <form method="post" action="<?php echo base_url(); ?>index.php/Questions/resultdisplay?quizID=<?= $quizID ?>">
+            <p>Quiz Number: <?= $quizID ?></p>
             <?php foreach ($questions as $row) { ?>
                 <p><?= $row->questionID ?>.<?= $row->questionText ?></p>
                 <input type="radio" name="selectedOption<?= $row->questionID ?>" value="<?= $row->option1 ?>" required><?= $row->option1 ?><br>
@@ -31,6 +31,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <?php } ?>
             <br><br>
             <input type="submit" value="Submit">
+             <!-- Add a button to go to the home page -->
+             <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
         </form>
     </div>
 </body>
