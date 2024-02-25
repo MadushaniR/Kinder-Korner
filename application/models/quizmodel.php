@@ -34,7 +34,7 @@ public function storeUserAnswers($userAnswers)
 
 public function getQuizDetails()
 {
-    $this->db->select('quizdetails.quizID, quizdetails.quizName, quizdetails.quizDescription, quizdetails.quizNumber, quizdetails.userID, users.username, questions.questionText, options.option1, options.option2, options.option3, options.option4, questions.correctAnswer');
+    $this->db->select('quizdetails.quizID, quizdetails.quizName, quizdetails.quizDescription, quizdetails.quizNumber, quizdetails.userID, users.username, questions.questionID, questions.questionText, options.option1, options.option2, options.option3, options.option4, questions.correctAnswer');
     $this->db->from('quizdetails');
     $this->db->join('users', 'quizdetails.userID = users.userID', 'left');
     $this->db->join('questions', 'quizdetails.quizID = questions.quizID', 'left');
@@ -45,7 +45,31 @@ public function getQuizDetails()
     return $query->result();
 }
 
-    
+
+public function deleteQuestion($questionID)
+{
+    // Get the quizID associated with the question
+    $quizID = $this->db->select('quizID')->from('questions')->where('questionID', $questionID)->get()->row()->quizID;
+
+    // Delete options first
+    $this->db->where('questionID', $questionID);
+    $this->db->delete('options');
+
+    // Now, delete the question
+    $this->db->where('questionID', $questionID);
+    $this->db->delete('questions');
+
+    // Check if there are no more questions for the same quiz
+    $remainingQuestions = $this->db->where('quizID', $quizID)->get('questions')->num_rows();
+
+    // If no more questions, delete the quizdetails row
+    if ($remainingQuestions == 0) {
+        $this->db->where('quizID', $quizID);
+        $this->db->delete('quizdetails');
+    }
+}
+
+
 
     public function getUserAnswers($userID, $quizID)
     {

@@ -7,6 +7,7 @@
     <!-- Include Toastr.js -->
     <script src="path/to/toastr.min.js"></script>
     <link rel="stylesheet" href="path/to/toastr.min.css">
+
 </head>
 
 <body>
@@ -50,6 +51,20 @@
     <?php echo form_close(); ?>
 
     <script>
+        function deleteRow(questionID) {
+        if (confirm("Are you sure you want to delete this question and its options?")) {
+            // Make an AJAX request to delete the question and options from the database
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // Reload the page or update the table
+                    window.location.reload();
+                }
+            };
+            xhttp.open("GET", "<?= base_url('questions/deleteQuestion/') ?>" + questionID, true);
+            xhttp.send();
+        }
+    }
         function addQuestion() {
             // Create a new div for a set of question and answers
             var newQuestionDiv = document.createElement('div');
@@ -103,6 +118,7 @@
                 <th>Choice 3</th>
                 <th>Choice 4</th>
                 <th>Correct Answer</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -117,7 +133,7 @@
                     <td><?= $quiz->option3 ?></td>
                     <td><?= $quiz->option4 ?></td>
                     <td><?= $quiz->correctAnswer ?></td>
-
+                    <td><button onclick="deleteRow(<?= $quiz->questionID ?>)">Delete</button></td> <!-- Add this column -->
                     
                 </tr>
             <?php endforeach; ?>

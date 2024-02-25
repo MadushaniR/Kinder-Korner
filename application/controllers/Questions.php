@@ -330,6 +330,12 @@ public function createquiz()
 }
 
 
+public function deleteQuestion($questionID)
+{
+    $this->load->model('quizmodel');
+    $this->quizmodel->deleteQuestion($questionID);
+    // You can redirect to the same page or send a success message if needed
+}
 
 
     public function resultdisplay()
