@@ -68,29 +68,16 @@
     <input type="submit" value="Create Quiz">
 
     <?php echo form_close(); ?>
-    <script>
-        function showAlert(message, type) {
-            alert(type.toUpperCase() + ': ' + message);
-        }
 
-        // Display success or fail message using alert
-        <?php
-        if ($this->session->flashdata('success')) {
-            echo "showAlert('" . $this->session->flashdata('success') . "', 'success');";
-        } elseif ($this->session->flashdata('error')) {
-            echo "showAlert('" . $this->session->flashdata('error') . "', 'error');";
-        }
-        ?>
-    </script>
 
     <script>
         function editRow(questionID) {
-    // Create a popup with close button and content "Hi"
-    var popupDiv = document.createElement('div');
-    popupDiv.className = 'popup';
+            // Create a popup with close button and content "Hi"
+            var popupDiv = document.createElement('div');
+            popupDiv.className = 'popup';
 
-    // Define HTML structure for the popup
-    popupDiv.innerHTML = `
+            // Define HTML structure for the popup
+            popupDiv.innerHTML = `
         <div id="editQuestionForm">
             <label for="editQuizName">Quiz Name:</label>
             <input type="text" name="editQuizName" id="editQuizName" required>
@@ -124,30 +111,30 @@
         </div>
     `;
 
-    // Append the popup to the body
-    document.body.appendChild(popupDiv);
+            // Append the popup to the body
+            document.body.appendChild(popupDiv);
 
-    // Fetch the data from the URL
-    $.ajax({
-        type: 'GET',
-        url: 'http://localhost/Kinder-Korner/questions/getQuestionDetails/' + questionID,
-        dataType: 'json',
-        success: function(data) {
-            // Populate the popup form with the retrieved values
-            $('#editQuizName').val(data.quizName);
-            $('#editQuizDescription').val(data.quizDescription);
-            $('#editQuestion').val(data.questionText);
-            $('#editChoice1').val(data.option1);
-            $('#editChoice2').val(data.option2);
-            $('#editChoice3').val(data.option3);
-            $('#editChoice4').val(data.option4);
-            $('#editCorrectAnswer').val(data.correctAnswer);
-        },
-        error: function() {
-            toastr.error('Error fetching question details.');
+            // Fetch the data from the URL
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost/Kinder-Korner/questions/getQuestionDetails/' + questionID,
+                dataType: 'json',
+                success: function(data) {
+                    // Populate the popup form with the retrieved values
+                    $('#editQuizName').val(data.quizName);
+                    $('#editQuizDescription').val(data.quizDescription);
+                    $('#editQuestion').val(data.questionText);
+                    $('#editChoice1').val(data.option1);
+                    $('#editChoice2').val(data.option2);
+                    $('#editChoice3').val(data.option3);
+                    $('#editChoice4').val(data.option4);
+                    $('#editCorrectAnswer').val(data.correctAnswer);
+                },
+                error: function() {
+                    toastr.error('Error fetching question details.');
+                }
+            });
         }
-    });
-}
 
         function closePopup() {
             // Remove the popup from the body
@@ -173,51 +160,51 @@
         }
 
         function saveChanges() {
-        // Retrieve edited values from the popup form
-        var editedQuizName = $('#editQuizName').val();
-        var editedQuizDescription = $('#editQuizDescription').val();
-        var editedQuestion = $('#editQuestion').val();
-        var editedChoice1 = $('#editChoice1').val();
-        var editedChoice2 = $('#editChoice2').val();
-        var editedChoice3 = $('#editChoice3').val();
-        var editedChoice4 = $('#editChoice4').val();
-        var editedCorrectAnswer = $('#editCorrectAnswer').val();
-        var questionID = $('#editQuestionID').val();
+            // Retrieve edited values from the popup form
+            var editedQuizName = $('#editQuizName').val();
+            var editedQuizDescription = $('#editQuizDescription').val();
+            var editedQuestion = $('#editQuestion').val();
+            var editedChoice1 = $('#editChoice1').val();
+            var editedChoice2 = $('#editChoice2').val();
+            var editedChoice3 = $('#editChoice3').val();
+            var editedChoice4 = $('#editChoice4').val();
+            var editedCorrectAnswer = $('#editCorrectAnswer').val();
+            var questionID = $('#editQuestionID').val();
 
-        // Create an object with the edited data
-        var editedData = {
-            quizName: editedQuizName,
-            quizDescription: editedQuizDescription,
-            question: editedQuestion,
-            choice1: editedChoice1,
-            choice2: editedChoice2,
-            choice3: editedChoice3,
-            choice4: editedChoice4,
-            correctAnswer: editedCorrectAnswer
-        };
+            // Create an object with the edited data
+            var editedData = {
+                quizName: editedQuizName,
+                quizDescription: editedQuizDescription,
+                question: editedQuestion,
+                choice1: editedChoice1,
+                choice2: editedChoice2,
+                choice3: editedChoice3,
+                choice4: editedChoice4,
+                correctAnswer: editedCorrectAnswer
+            };
 
-        // Make an AJAX request to update the data in the database
-        $.ajax({
-            type: 'POST',  // Use POST method for updating data
-            url: 'http://localhost/Kinder-Korner/questions/updateQuestion/' + questionID,
-            dataType: 'json',
-            data: editedData,
-            success: function(response) {
-                // Close the popup after successful update
-                closePopup();
+            // Make an AJAX request to update the data in the database
+            $.ajax({
+                type: 'POST', // Use POST method for updating data
+                url: 'http://localhost/Kinder-Korner/questions/updateQuestion/' + questionID,
+                dataType: 'json',
+                data: editedData,
+                success: function(response) {
+                    // Close the popup after successful update
+                    closePopup();
 
-                // Display success message using Toastr.js
-                toastr.success('Question details updated successfully!');
+                    // Display success message using Toastr.js
+                    toastr.success('Question details updated successfully!');
 
-                // Optionally, you can update the table or reload the page
-                window.location.reload();
-            },
-            error: function() {
-                // Display an error message using Toastr.js
-                toastr.error('Error updating question details.');
-            }
-        });
-    }
+                    // Optionally, you can update the table or reload the page
+                    window.location.reload();
+                },
+                error: function() {
+                    // Display an error message using Toastr.js
+                    toastr.error('Error updating question details.');
+                }
+            });
+        }
 
         function addQuestion() {
             // Create a new div for a set of question and answers
@@ -291,15 +278,13 @@
                         <button onclick="editRow(<?= $quiz->questionID ?>)">Edit</button>
                         <button onclick="deleteRow(<?= $quiz->questionID ?>)">Delete</button>
                     </td>
-
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
-
     <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
-   
+
 </body>
 
 </html>
