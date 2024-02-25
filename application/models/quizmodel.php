@@ -94,4 +94,30 @@ public function deleteQuestion($questionID)
 
         return $query->result();
     }
+
+
+    public function getQuestionDetails($questionID)
+    {
+        $this->db->select('quizdetails.quizID, quizdetails.quizName, quizdetails.quizDescription, quizdetails.quizNumber, quizdetails.userID, users.username, questions.questionID, questions.questionText, options.option1, options.option2, options.option3, options.option4, questions.correctAnswer');
+        $this->db->from('quizdetails');
+        $this->db->join('users', 'quizdetails.userID = users.userID', 'left');
+        $this->db->join('questions', 'quizdetails.quizID = questions.quizID', 'left');
+        $this->db->join('options', 'questions.questionID = options.questionID', 'left');
+        $this->db->where('questions.questionID', $questionID);
+
+        $query = $this->db->get();
+
+        return $query->row_array();
+    }
+
+    public function updateQuestion($questionID, $data)
+    {
+        $this->db->where('questionID', $questionID);
+        $this->db->update('questions', $data);
+
+        // Check for errors
+        $error = $this->db->error();
+
+        return ($error['code'] === 0);
+    }
 }

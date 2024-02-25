@@ -7,6 +7,15 @@
     <!-- Include Toastr.js -->
     <script src="path/to/toastr.min.js"></script>
     <link rel="stylesheet" href="path/to/toastr.min.css">
+    <script src="path/to/toastr.min.js"></script>
+    <link rel="stylesheet" href="path/to/toastr.min.css">
+
+    <!-- Add jQuery for handling AJAX requests -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="<?php echo site_url(); ?>assets/all.css">
+	<link rel="stylesheet" href="<?php echo site_url(); ?>assets/toast/toast.min.css">
+	<script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
+	<script src="<?php echo site_url(); ?>assets/toast/toast.js"></script>
 
 </head>
 
@@ -51,20 +60,46 @@
     <?php echo form_close(); ?>
 
     <script>
-        function deleteRow(questionID) {
-        if (confirm("Are you sure you want to delete this question and its options?")) {
-            // Make an AJAX request to delete the question and options from the database
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    // Reload the page or update the table
-                    window.location.reload();
+             function editRow(questionID) {
+            // Fetch the current values for the questionID and populate the popup form
+            $.ajax({
+                type: 'GET',
+                url: '<?= base_url("questions/getQuestionDetails/") ?>' + questionID,
+                dataType: 'json',
+                success: function (data) {
+                    // Populate the popup form with the current values
+                    $('#editQuestionID').val(data.questionID);
+                    $('#editQuestionText').val(data.questionText);
+                    $('#editChoice1').val(data.option1);
+                    $('#editChoice2').val(data.option2);
+                    $('#editChoice3').val(data.option3);
+                    $('#editChoice4').val(data.option4);
+                    $('#editCorrectAnswer').val(data.correctAnswer);
+
+                    // Show the popup form
+                    $('#editQuestionModal').modal('show');
+                },
+                error: function () {
+                    toastr.error('Error fetching question details.');
                 }
-            };
-            xhttp.open("GET", "<?= base_url('questions/deleteQuestion/') ?>" + questionID, true);
-            xhttp.send();
+            });
         }
-    }
+
+        function deleteRow(questionID) {
+            if (confirm("Are you sure you want to delete this question and its options?")) {
+                // Make an AJAX request to delete the question and options from the database
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Reload the page or update the table
+                        window.location.reload();
+                    }
+                };
+                xhttp.open("GET", "<?= base_url('questions/deleteQuestion/') ?>" + questionID, true);
+                xhttp.send();
+            }
+        }
+
         function addQuestion() {
             // Create a new div for a set of question and answers
             var newQuestionDiv = document.createElement('div');
@@ -133,13 +168,78 @@
                     <td><?= $quiz->option3 ?></td>
                     <td><?= $quiz->option4 ?></td>
                     <td><?= $quiz->correctAnswer ?></td>
-                    <td><button onclick="deleteRow(<?= $quiz->questionID ?>)">Delete</button></td> <!-- Add this column -->
-                    
+                    <td>
+                        <button onclick="editRow(<?= $quiz->questionID ?>)">Edit</button>
+                        <button onclick="deleteRow(<?= $quiz->questionID ?>)">Delete</button>
+                    </td>
+
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
+    <div id="editQuestionModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Question</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Edit Question Form -->
+                    <form id="editQuestionForm">
+                        <input type="hidden" id="editQuestionID" name="editQuestionID">
+
+                        <label for="editQuestionText">Question:</label>
+                        <input type="text" id="editQuestionText" name="editQuestionText" required>
+
+                        <label for="editChoice1">Choice 1:</label>
+                        <input type="text" id="editChoice1" name="editChoice1" required>
+                        <label for="editChoice1">Choice 1:</label>
+                        <input type="text" id="editChoice2" name="editChoice2" required>
+                        <label for="editChoice1">Choice 1:</label>
+                        <input type="text" id="editChoice3" name="editChoice3" required>
+                        <label for="editChoice1">Choice 1:</label>
+                        <input type="text" id="editChoice4" name="editChoice4" required>
+
+                        <!-- Add other input fields for choices 2-4 and correct answer -->
+
+                        <label for="editCorrectAnswer">Correct Answer:</label>
+                        <input type="text" id="editCorrectAnswer" name="editCorrectAnswer" required>
+
+                        <button type="button" onclick="updateQuestion()">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
+    <script>
+        function updateQuestion() {
+            // Perform AJAX request to update the question in the database
+            $.ajax({
+                type: 'POST',
+                url: '<?= base_url("questions/updateQuestion/") ?>',
+                data: $('#editQuestionForm').serialize(),
+                success: function (response) {
+                    if (response.success) {
+                        toastr.success(response.message);
+                        // Close the modal after successful update
+                        $('#editQuestionModal').modal('hide');
+                        // Reload the page or update the table as needed
+                        window.location.reload();
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function () {
+                    toastr.error('Error updating question.');
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
