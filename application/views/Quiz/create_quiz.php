@@ -84,70 +84,134 @@
     </script>
 
     <script>
+        // function editRow(questionID) {
+
+        //     // Create a popup with close button and content "Hi"
+        //     var popupDiv = document.createElement('div');
+        //     popupDiv.className = 'popup';
+
+        //     // Define HTML structure for the popup
+        //     popupDiv.innerHTML = `
+        //     <div>
+        //     <label for="quizName">Quiz Name:</label>
+        //     <input type="text" name="quizName"  required>
+
+        //     <label for="quizDescription">Quiz Description:</label>
+        //     <textarea name="quizDescription" required></textarea>
+
+        //     <label for="question">Question:</label>
+        //     <input type="text" name="question" required>
+
+        //     <label for="choice1">Choice 1:</label>
+        //     <input type="text" name="choice1"  required>
+
+        //     <label for="choice2">Choice 2:</label>
+        //     <input type="text" name="choice2"  required>
+
+        //     <label for="choice3">Choice 3:</label>
+        //     <input type="text" name="choice3"  required>
+
+        //     <label for="choice4">Choice 4:</label>
+        //     <input type="text" name="choice4"  required>
+
+        //     <label for="correctAnswer">Correct Answer:</label>
+        //     <input type="text" name="correctAnswer"  required>
+        //         <button onclick="closePopup()">Close</button>
+        //     </div>
+        // `;
+
+        //     // Append the popup to the body
+        //     document.body.appendChild(popupDiv);
+
+
+        //     //alert('Hi! This is a popup message.');
+        //     // Fetch the current values for the questionID and populate the popup form
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '<?= base_url("questions/getQuestionDetails/") ?>' + questionID,
+        //         dataType: 'json',
+        //         success: function(data) {
+        //             // Populate the popup form with the current values
+        //             $('#editQuestionID').val(data.questionID);
+        //             $('#editQuestionText').val(data.questionText);
+        //             $('#editChoice1').val(data.option1);
+        //             $('#editChoice2').val(data.option2);
+        //             $('#editChoice3').val(data.option3);
+        //             $('#editChoice4').val(data.option4);
+        //             $('#editCorrectAnswer').val(data.correctAnswer);
+
+        //             // Show the popup form
+        //             $('#editQuestionModal').modal('show');
+        //         },
+        //         error: function() {
+        //             toastr.error('Error fetching question details.');
+        //         }
+        //     });
+        // }
+
         function editRow(questionID) {
+    // Create a popup with close button and content "Hi"
+    var popupDiv = document.createElement('div');
+    popupDiv.className = 'popup';
 
-            // Create a popup with close button and content "Hi"
-            var popupDiv = document.createElement('div');
-            popupDiv.className = 'popup';
+    // Define HTML structure for the popup
+    popupDiv.innerHTML = `
+        <div>
+            <label for="editQuizName">Quiz Name:</label>
+            <input type="text" name="editQuizName" id="editQuizName" required>
 
-            // Define HTML structure for the popup
-            popupDiv.innerHTML = `
-            <div>
-            <label for="quizName">Quiz Name:</label>
-            <input type="text" name="quizName"  required>
+            <label for="editQuizDescription">Quiz Description:</label>
+            <textarea name="editQuizDescription" id="editQuizDescription" required></textarea>
 
-            <label for="quizDescription">Quiz Description:</label>
-            <textarea name="quizDescription" required></textarea>
+            <label for="editQuestion">Question:</label>
+            <input type="text" name="editQuestion" id="editQuestion" required>
 
-            <label for="question">Question:</label>
-            <input type="text" name="question" required>
+            <label for="editChoice1">Choice 1:</label>
+            <input type="text" name="editChoice1" id="editChoice1" required>
 
-            <label for="choice1">Choice 1:</label>
-            <input type="text" name="choice1"  required>
+            <label for="editChoice2">Choice 2:</label>
+            <input type="text" name="editChoice2" id="editChoice2" required>
 
-            <label for="choice2">Choice 2:</label>
-            <input type="text" name="choice2"  required>
+            <label for="editChoice3">Choice 3:</label>
+            <input type="text" name="editChoice3" id="editChoice3" required>
 
-            <label for="choice3">Choice 3:</label>
-            <input type="text" name="choice3"  required>
+            <label for="editChoice4">Choice 4:</label>
+            <input type="text" name="editChoice4" id="editChoice4" required>
 
-            <label for="choice4">Choice 4:</label>
-            <input type="text" name="choice4"  required>
+            <label for="editCorrectAnswer">Correct Answer:</label>
+            <input type="text" name="editCorrectAnswer" id="editCorrectAnswer" required>
 
-            <label for="correctAnswer">Correct Answer:</label>
-            <input type="text" name="correctAnswer"  required>
-                <button onclick="closePopup()">Close</button>
-            </div>
-        `;
+            <button onclick="closePopup()">Close</button>
+        </div>
+    `;
 
-            // Append the popup to the body
-            document.body.appendChild(popupDiv);
+    // Append the popup to the body
+    document.body.appendChild(popupDiv);
 
-
-            //alert('Hi! This is a popup message.');
-            // Fetch the current values for the questionID and populate the popup form
-            $.ajax({
-                type: 'GET',
-                url: '<?= base_url("questions/getQuestionDetails/") ?>' + questionID,
-                dataType: 'json',
-                success: function(data) {
-                    // Populate the popup form with the current values
-                    $('#editQuestionID').val(data.questionID);
-                    $('#editQuestionText').val(data.questionText);
-                    $('#editChoice1').val(data.option1);
-                    $('#editChoice2').val(data.option2);
-                    $('#editChoice3').val(data.option3);
-                    $('#editChoice4').val(data.option4);
-                    $('#editCorrectAnswer').val(data.correctAnswer);
-
-                    // Show the popup form
-                    $('#editQuestionModal').modal('show');
-                },
-                error: function() {
-                    toastr.error('Error fetching question details.');
-                }
-            });
+    // Fetch the data from the URL
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost/Kinder-Korner/questions/getQuestionDetails/' + questionID,
+        dataType: 'json',
+        success: function (data) {
+            // Populate the popup form with the retrieved values
+            $('#editQuizName').val(data.quizName);
+            $('#editQuizDescription').val(data.quizDescription);
+            $('#editQuestion').val(data.questionText);
+            $('#editChoice1').val(data.option1);
+            $('#editChoice2').val(data.option2);
+            $('#editChoice3').val(data.option3);
+            $('#editChoice4').val(data.option4);
+            $('#editCorrectAnswer').val(data.correctAnswer);
+        },
+        error: function () {
+            toastr.error('Error fetching question details.');
         }
+    });
+}
+
+
+
 
         function closePopup() {
             // Remove the popup from the body
@@ -249,43 +313,7 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    <div id="editQuestionModal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Question</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Edit Question Form -->
-                    <form id="editQuestionForm">
-                        <input type="hidden" id="editQuestionID" name="editQuestionID">
-
-                        <label for="editQuestionText">Question:</label>
-                        <input type="text" id="editQuestionText" name="editQuestionText" required>
-
-                        <label for="editChoice1">Choice 1:</label>
-                        <input type="text" id="editChoice1" name="editChoice1" required>
-                        <label for="editChoice1">Choice 1:</label>
-                        <input type="text" id="editChoice2" name="editChoice2" required>
-                        <label for="editChoice1">Choice 1:</label>
-                        <input type="text" id="editChoice3" name="editChoice3" required>
-                        <label for="editChoice1">Choice 1:</label>
-                        <input type="text" id="editChoice4" name="editChoice4" required>
-
-                        <!-- Add other input fields for choices 2-4 and correct answer -->
-
-                        <label for="editCorrectAnswer">Correct Answer:</label>
-                        <input type="text" id="editCorrectAnswer" name="editCorrectAnswer" required>
-
-                        <button type="button" onclick="updateQuestion()">Save Changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
     <script>
