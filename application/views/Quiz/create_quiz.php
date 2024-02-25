@@ -84,71 +84,7 @@
     </script>
 
     <script>
-        // function editRow(questionID) {
-
-        //     // Create a popup with close button and content "Hi"
-        //     var popupDiv = document.createElement('div');
-        //     popupDiv.className = 'popup';
-
-        //     // Define HTML structure for the popup
-        //     popupDiv.innerHTML = `
-        //     <div>
-        //     <label for="quizName">Quiz Name:</label>
-        //     <input type="text" name="quizName"  required>
-
-        //     <label for="quizDescription">Quiz Description:</label>
-        //     <textarea name="quizDescription" required></textarea>
-
-        //     <label for="question">Question:</label>
-        //     <input type="text" name="question" required>
-
-        //     <label for="choice1">Choice 1:</label>
-        //     <input type="text" name="choice1"  required>
-
-        //     <label for="choice2">Choice 2:</label>
-        //     <input type="text" name="choice2"  required>
-
-        //     <label for="choice3">Choice 3:</label>
-        //     <input type="text" name="choice3"  required>
-
-        //     <label for="choice4">Choice 4:</label>
-        //     <input type="text" name="choice4"  required>
-
-        //     <label for="correctAnswer">Correct Answer:</label>
-        //     <input type="text" name="correctAnswer"  required>
-        //         <button onclick="closePopup()">Close</button>
-        //     </div>
-        // `;
-
-        //     // Append the popup to the body
-        //     document.body.appendChild(popupDiv);
-
-
-        //     //alert('Hi! This is a popup message.');
-        //     // Fetch the current values for the questionID and populate the popup form
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: '<?= base_url("questions/getQuestionDetails/") ?>' + questionID,
-        //         dataType: 'json',
-        //         success: function(data) {
-        //             // Populate the popup form with the current values
-        //             $('#editQuestionID').val(data.questionID);
-        //             $('#editQuestionText').val(data.questionText);
-        //             $('#editChoice1').val(data.option1);
-        //             $('#editChoice2').val(data.option2);
-        //             $('#editChoice3').val(data.option3);
-        //             $('#editChoice4').val(data.option4);
-        //             $('#editCorrectAnswer').val(data.correctAnswer);
-
-        //             // Show the popup form
-        //             $('#editQuestionModal').modal('show');
-        //         },
-        //         error: function() {
-        //             toastr.error('Error fetching question details.');
-        //         }
-        //     });
-        // }
-
+       
         function editRow(questionID) {
     // Create a popup with close button and content "Hi"
     var popupDiv = document.createElement('div');
