@@ -13,10 +13,20 @@
     <!-- Add jQuery for handling AJAX requests -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="<?php echo site_url(); ?>assets/all.css">
-	<link rel="stylesheet" href="<?php echo site_url(); ?>assets/toast/toast.min.css">
-	<script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
-	<script src="<?php echo site_url(); ?>assets/toast/toast.js"></script>
-
+    <link rel="stylesheet" href="<?php echo site_url(); ?>assets/toast/toast.min.css">
+    <script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
+    <script src="<?php echo site_url(); ?>assets/toast/toast.js"></script>
+    <style>
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 </head>
 
 <body>
@@ -58,15 +68,69 @@
     <input type="submit" value="Create Quiz">
 
     <?php echo form_close(); ?>
+    <script>
+        function showAlert(message, type) {
+            alert(type.toUpperCase() + ': ' + message);
+        }
+
+        // Display success or fail message using alert
+        <?php
+        if ($this->session->flashdata('success')) {
+            echo "showAlert('" . $this->session->flashdata('success') . "', 'success');";
+        } elseif ($this->session->flashdata('error')) {
+            echo "showAlert('" . $this->session->flashdata('error') . "', 'error');";
+        }
+        ?>
+    </script>
 
     <script>
-             function editRow(questionID) {
+        function editRow(questionID) {
+
+            // Create a popup with close button and content "Hi"
+            var popupDiv = document.createElement('div');
+            popupDiv.className = 'popup';
+
+            // Define HTML structure for the popup
+            popupDiv.innerHTML = `
+            <div>
+            <label for="quizName">Quiz Name:</label>
+            <input type="text" name="quizName"  required>
+
+            <label for="quizDescription">Quiz Description:</label>
+            <textarea name="quizDescription" required></textarea>
+
+            <label for="question">Question:</label>
+            <input type="text" name="question" required>
+
+            <label for="choice1">Choice 1:</label>
+            <input type="text" name="choice1"  required>
+
+            <label for="choice2">Choice 2:</label>
+            <input type="text" name="choice2"  required>
+
+            <label for="choice3">Choice 3:</label>
+            <input type="text" name="choice3"  required>
+
+            <label for="choice4">Choice 4:</label>
+            <input type="text" name="choice4"  required>
+
+            <label for="correctAnswer">Correct Answer:</label>
+            <input type="text" name="correctAnswer"  required>
+                <button onclick="closePopup()">Close</button>
+            </div>
+        `;
+
+            // Append the popup to the body
+            document.body.appendChild(popupDiv);
+
+
+            //alert('Hi! This is a popup message.');
             // Fetch the current values for the questionID and populate the popup form
             $.ajax({
                 type: 'GET',
                 url: '<?= base_url("questions/getQuestionDetails/") ?>' + questionID,
                 dataType: 'json',
-                success: function (data) {
+                success: function(data) {
                     // Populate the popup form with the current values
                     $('#editQuestionID').val(data.questionID);
                     $('#editQuestionText').val(data.questionText);
@@ -79,10 +143,18 @@
                     // Show the popup form
                     $('#editQuestionModal').modal('show');
                 },
-                error: function () {
+                error: function() {
                     toastr.error('Error fetching question details.');
                 }
             });
+        }
+
+        function closePopup() {
+            // Remove the popup from the body
+            var popup = document.querySelector('.popup');
+            if (popup) {
+                popup.parentNode.removeChild(popup);
+            }
         }
 
         function deleteRow(questionID) {
@@ -223,7 +295,7 @@
                 type: 'POST',
                 url: '<?= base_url("questions/updateQuestion/") ?>',
                 data: $('#editQuestionForm').serialize(),
-                success: function (response) {
+                success: function(response) {
                     if (response.success) {
                         toastr.success(response.message);
                         // Close the modal after successful update
@@ -234,7 +306,7 @@
                         toastr.error(response.message);
                     }
                 },
-                error: function () {
+                error: function() {
                     toastr.error('Error updating question.');
                 }
             });
