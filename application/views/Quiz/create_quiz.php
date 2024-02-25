@@ -84,7 +84,6 @@
     </script>
 
     <script>
-       
         function editRow(questionID) {
     // Create a popup with close button and content "Hi"
     var popupDiv = document.createElement('div');
@@ -92,7 +91,7 @@
 
     // Define HTML structure for the popup
     popupDiv.innerHTML = `
-        <div>
+        <div id="editQuestionForm">
             <label for="editQuizName">Quiz Name:</label>
             <input type="text" name="editQuizName" id="editQuizName" required>
 
@@ -117,6 +116,10 @@
             <label for="editCorrectAnswer">Correct Answer:</label>
             <input type="text" name="editCorrectAnswer" id="editCorrectAnswer" required>
 
+            <!-- Add a hidden input field to store the question ID in the form -->
+            <input type="hidden" name="editQuestionID" id="editQuestionID" value="${questionID}">
+
+            <button onclick="saveChanges()">Save Changes</button>
             <button onclick="closePopup()">Close</button>
         </div>
     `;
@@ -129,7 +132,7 @@
         type: 'GET',
         url: 'http://localhost/Kinder-Korner/questions/getQuestionDetails/' + questionID,
         dataType: 'json',
-        success: function (data) {
+        success: function(data) {
             // Populate the popup form with the retrieved values
             $('#editQuizName').val(data.quizName);
             $('#editQuizDescription').val(data.quizDescription);
@@ -140,14 +143,11 @@
             $('#editChoice4').val(data.option4);
             $('#editCorrectAnswer').val(data.correctAnswer);
         },
-        error: function () {
+        error: function() {
             toastr.error('Error fetching question details.');
         }
     });
 }
-
-
-
 
         function closePopup() {
             // Remove the popup from the body
@@ -171,6 +171,53 @@
                 xhttp.send();
             }
         }
+
+        function saveChanges() {
+        // Retrieve edited values from the popup form
+        var editedQuizName = $('#editQuizName').val();
+        var editedQuizDescription = $('#editQuizDescription').val();
+        var editedQuestion = $('#editQuestion').val();
+        var editedChoice1 = $('#editChoice1').val();
+        var editedChoice2 = $('#editChoice2').val();
+        var editedChoice3 = $('#editChoice3').val();
+        var editedChoice4 = $('#editChoice4').val();
+        var editedCorrectAnswer = $('#editCorrectAnswer').val();
+        var questionID = $('#editQuestionID').val();
+
+        // Create an object with the edited data
+        var editedData = {
+            quizName: editedQuizName,
+            quizDescription: editedQuizDescription,
+            question: editedQuestion,
+            choice1: editedChoice1,
+            choice2: editedChoice2,
+            choice3: editedChoice3,
+            choice4: editedChoice4,
+            correctAnswer: editedCorrectAnswer
+        };
+
+        // Make an AJAX request to update the data in the database
+        $.ajax({
+            type: 'POST',  // Use POST method for updating data
+            url: 'http://localhost/Kinder-Korner/questions/updateQuestion/' + questionID,
+            dataType: 'json',
+            data: editedData,
+            success: function(response) {
+                // Close the popup after successful update
+                closePopup();
+
+                // Display success message using Toastr.js
+                toastr.success('Question details updated successfully!');
+
+                // Optionally, you can update the table or reload the page
+                window.location.reload();
+            },
+            error: function() {
+                // Display an error message using Toastr.js
+                toastr.error('Error updating question details.');
+            }
+        });
+    }
 
         function addQuestion() {
             // Create a new div for a set of question and answers
@@ -249,33 +296,10 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-    
+
 
     <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
-    <script>
-        function updateQuestion() {
-            // Perform AJAX request to update the question in the database
-            $.ajax({
-                type: 'POST',
-                url: '<?= base_url("questions/updateQuestion/") ?>',
-                data: $('#editQuestionForm').serialize(),
-                success: function(response) {
-                    if (response.success) {
-                        toastr.success(response.message);
-                        // Close the modal after successful update
-                        $('#editQuestionModal').modal('hide');
-                        // Reload the page or update the table as needed
-                        window.location.reload();
-                    } else {
-                        toastr.error(response.message);
-                    }
-                },
-                error: function() {
-                    toastr.error('Error updating question.');
-                }
-            });
-        }
-    </script>
+   
 </body>
 
 </html>

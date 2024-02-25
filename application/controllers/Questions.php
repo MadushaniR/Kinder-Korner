@@ -19,33 +19,6 @@ public function getQuestionDetails($questionID)
         echo json_encode($questionDetails);
     }
 
-    public function updateQuestion()
-    {
-        $this->load->model('quizmodel');
-        $questionID = $this->input->post('editQuestionID');
-
-        // Validate input if needed
-
-        $data = array(
-            'questionText' => $this->input->post('editQuestionText'),
-            'option1' => $this->input->post('editChoice1'),
-            'option2' => $this->input->post('editChoice2'),
-            'option3' => $this->input->post('editChoice3'),
-            'option4' => $this->input->post('editChoice4'),
-            'correctAnswer' => $this->input->post('editCorrectAnswer'),
-        );
-
-        $success = $this->quizmodel->updateQuestion($questionID, $data);
-
-        if ($success) {
-            $response = array('success' => true, 'message' => 'Question updated successfully.');
-        } else {
-            $response = array('success' => false, 'message' => 'Error updating question.');
-        }
-
-        echo json_encode($response);
-    }
-
 public function quizdisplay()
 {
     $user_name = $this->session->userdata('user_name');
@@ -184,4 +157,19 @@ public function deleteQuestion($questionID)
         $this->load->model('auth_model');
         $this->load->view('Quiz/results_display', $this->data);
     }
+
+    public function updateQuestion($questionID)
+{
+    $this->load->model('quizmodel');
+
+    // Retrieve edited data from the POST request
+    $editedData = $this->input->post();
+
+    // Update the question details in the database
+    $this->quizmodel->updateQuestionDetails($questionID, $editedData);
+
+    // Send a success response
+    echo json_encode(['success' => true]);
+}
+
 }

@@ -110,14 +110,34 @@ public function deleteQuestion($questionID)
         return $query->row_array();
     }
 
-    public function updateQuestion($questionID, $data)
-    {
-        $this->db->where('questionID', $questionID);
-        $this->db->update('questions', $data);
+    public function updateQuestionDetails($questionID, $editedData)
+{
+    // Update quiz details
+    $quizData = array(
+        'quizName' => $editedData['quizName'],
+        'quizDescription' => $editedData['quizDescription']
+    );
+    $this->db->where('quizID', $questionID);  // Use 'quizID' instead of 'questionID'
+    $this->db->update('quizdetails', $quizData);
 
-        // Check for errors
-        $error = $this->db->error();
+    // Update question details
+    $questionData = array(
+        'questionText' => $editedData['question'],
+        'correctAnswer' => $editedData['correctAnswer']
+    );
+    $this->db->where('questionID', $questionID);
+    $this->db->update('questions', $questionData);
 
-        return ($error['code'] === 0);
-    }
+    // Update options details
+    $optionsData = array(
+        'option1' => $editedData['choice1'],
+        'option2' => $editedData['choice2'],
+        'option3' => $editedData['choice3'],
+        'option4' => $editedData['choice4']
+    );
+    $this->db->where('questionID', $questionID);
+    $this->db->update('options', $optionsData);
+}
+
+    
 }
