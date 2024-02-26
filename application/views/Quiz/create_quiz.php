@@ -69,7 +69,6 @@
 
     <?php echo form_close(); ?>
 
-
     <script>
         function editRow(questionID) {
             // Create a popup with close button and content "Hi"
