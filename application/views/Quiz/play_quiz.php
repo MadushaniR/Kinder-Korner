@@ -18,7 +18,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         }
     </style>
 
-    <script>
+    <!-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             let currentPage = <?= $currentPage ?>; // Initialize currentPage with the value passed from the controller
 
@@ -67,7 +67,71 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 hiddenInput.value = selectedOption;
             }
         }
+    </script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentPage = <?= $currentPage ?>; // Initialize currentPage with the value passed from the controller
+            const totalQuestions = <?= count($questions) ?>; // Total number of questions
+
+            function showQuestion(page) {
+                const questions = document.querySelectorAll('.question-container');
+                questions.forEach(function(question, index) {
+                    question.style.display = index === page ? 'block' : 'none';
+                });
+            }
+
+            function selectOption(button) {
+                const questionID = button.getAttribute('data-question');
+                const selectedOption = button.getAttribute('data-value');
+
+                // Set the selected option in the hidden input field
+                const hiddenInput = document.getElementById('selectedOption' + questionID);
+                if (hiddenInput) {
+                    hiddenInput.value = selectedOption;
+                }
+            }
+
+            function updateButtonsState() {
+                // Enable or disable previous and next buttons based on the current page
+                const prevButton = document.getElementById('prevButton');
+                const nextButton = document.getElementById('nextButton');
+
+                prevButton.disabled = currentPage === 0;
+                nextButton.disabled = currentPage === totalQuestions - 1;
+            }
+
+            document.getElementById('nextButton').addEventListener('click', function() {
+                if (currentPage < totalQuestions - 1) {
+                    currentPage++;
+                    showQuestion(currentPage);
+                    updateButtonsState();
+                }
+            });
+
+            document.getElementById('prevButton').addEventListener('click', function() {
+                if (currentPage > 0) {
+                    currentPage--;
+                    showQuestion(currentPage);
+                    updateButtonsState();
+                }
+            });
+
+            showQuestion(currentPage);
+            updateButtonsState();
+        });
+
+        function selectOption(button) {
+            const questionID = button.getAttribute('data-question');
+            const selectedOption = button.getAttribute('data-value');
+
+            // Set the selected option in the hidden input field
+            const hiddenInput = document.getElementById('selectedOption' + questionID);
+            if (hiddenInput) {
+                hiddenInput.value = selectedOption;
+            }
+        }
     </script>
+
 </head>
 
 <body>
