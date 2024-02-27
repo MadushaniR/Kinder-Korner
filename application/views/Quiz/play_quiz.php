@@ -7,6 +7,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <head>
     <meta charset="utf-8">
     <title>Play Quiz</title>
+    <script>
+        function selectOption(button) {
+            const questionID = button.getAttribute('data-question');
+            const selectedOption = button.getAttribute('data-value');
+
+            // Set the selected option in the hidden input field
+            const hiddenInput = document.getElementById('selectedOption' + questionID);
+            if (hiddenInput) {
+                hiddenInput.value = selectedOption;
+            }
+        }
+    </script>
 </head>
 <header>
     <?php $this->load->view('Comman/header'); ?>
@@ -21,18 +33,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <p>Quiz Number: <?= $quizID ?></p>
             <?php foreach ($questions as $row) { ?>
                 <p><?= $row->questionID ?>.<?= $row->questionText ?></p>
-                <input type="radio" name="selectedOption<?= $row->questionID ?>" value="<?= $row->option1 ?>" required><?= $row->option1 ?><br>
-                <input type="radio" name="selectedOption<?= $row->questionID ?>" value="<?= $row->option2 ?>"><?= $row->option2 ?><br>
-                <input type="radio" name="selectedOption<?= $row->questionID ?>" value="<?= $row->option3 ?>"><?= $row->option3 ?><br>
-                <input type="radio" name="selectedOption<?= $row->questionID ?>" value="<?= $row->option4 ?>"><?= $row->option4 ?><br>
+                <button type="button" class="optionButton" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option1 ?>"><?= $row->option1 ?></button>
+                <button type="button" class="optionButton" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option2 ?>"><?= $row->option2 ?></button>
+                <button type="button" class="optionButton" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option3 ?>"><?= $row->option3 ?></button>
+                <button type="button" class="optionButton" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option4 ?>"><?= $row->option4 ?></button>
 
-                <!-- Add hidden fields to store questionID -->
+                <!-- Add hidden fields to store questionID and selectedOption -->
                 <input type="hidden" name="questionID<?= $row->questionID ?>" value="<?= $row->questionID ?>">
+                <input type="hidden" name="selectedOption<?= $row->questionID ?>" id="selectedOption<?= $row->questionID ?>">
             <?php } ?>
             <br><br>
             <input type="submit" value="Submit">
-             <!-- Add a button to go to the home page -->
-             <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
+            <!-- Add a button to go to the home page -->
+            <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
         </form>
     </div>
 </body>
