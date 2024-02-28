@@ -81,7 +81,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             }
         }
     </script>
-
 </head>
 
 <body>
@@ -89,7 +88,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <h1>Play Quiz!</h1>
         <h1>Welcome, <?= $user_name ?>!</h1>
         <h1>USER ID, <?= $userID ?>!</h1>
-        <form method="post" action="<?php echo base_url(); ?>index.php/Questions/resultdisplay?quizID=<?= $quizID ?>">
+        <form method="post" action="<?php echo base_url(); ?>index.php/Results/resultdisplay?quizID=<?= $quizID ?>">
             <p>Quiz Number: <?= $quizID ?></p>
 
             <?php foreach ($questions as $row) { ?>
@@ -113,5 +112,4 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </form>
     </div>
 </body>
-
 </html>
