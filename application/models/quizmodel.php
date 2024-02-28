@@ -14,23 +14,6 @@ class quizmodel extends CI_Model
         return $query->result();
     }
 
-    // public function storeUserAnswers($userAnswers)
-    // {
-    //     $this->db->insert_batch('useranswer', $userAnswers);
-
-    //     // Check for errors
-    //     $error = $this->db->error();
-
-    //     if ($error['code'] !== 0) {
-    //         // Handle the error (e.g., log it, display an error message)
-    //         echo 'Database Error: ' . $error['message'];
-    //         // Print the last query for debugging purposes
-    //         echo 'Last Query: ' . $this->db->last_query();
-    //     } else {
-    //         // Successful insertion
-    //         echo 'User answers stored successfully!';
-    //     }
-    // }
     public function storeUserAnswers($userAnswers)
     {
         // Iterate through user answers and update the database
