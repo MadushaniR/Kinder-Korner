@@ -18,56 +18,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
         }
     </style>
 
-    <!-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let currentPage = <?= $currentPage ?>; // Initialize currentPage with the value passed from the controller
-
-            function showQuestion(page) {
-                const questions = document.querySelectorAll('.question-container');
-                questions.forEach(function(question, index) {
-                    question.style.display = index === page ? 'block' : 'none';
-                });
-            }
-
-            function selectOption(button) {
-                const questionID = button.getAttribute('data-question');
-                const selectedOption = button.getAttribute('data-value');
-
-                // Set the selected option in the hidden input field
-                const hiddenInput = document.getElementById('selectedOption' + questionID);
-                if (hiddenInput) {
-                    hiddenInput.value = selectedOption;
-                }
-            }
-
-            document.getElementById('nextButton').addEventListener('click', function() {
-                if (currentPage < <?= count($questions) - 1 ?>) {
-                    currentPage++;
-                    showQuestion(currentPage);
-                }
-            });
-
-            document.getElementById('prevButton').addEventListener('click', function() {
-                if (currentPage > 0) {
-                    currentPage--;
-                    showQuestion(currentPage);
-                }
-            });
-
-            showQuestion(currentPage);
-        });
-
-        function selectOption(button) {
-            const questionID = button.getAttribute('data-question');
-            const selectedOption = button.getAttribute('data-value');
-
-            // Set the selected option in the hidden input field
-            const hiddenInput = document.getElementById('selectedOption' + questionID);
-            if (hiddenInput) {
-                hiddenInput.value = selectedOption;
-            }
-        }
-    </script> -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             let currentPage = <?= $currentPage ?>; // Initialize currentPage with the value passed from the controller
@@ -153,8 +103,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                     <!-- Updated: Use square brackets for array submission -->
                     <input type="hidden" name="questionID[]" value="<?= $row->questionID ?>">
                     <input type="hidden" name="selectedOption[<?= $row->questionID ?>]" id="selectedOption<?= $row->questionID ?>">
-
-
                 </div>
             <?php } ?>
 
@@ -163,8 +111,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <button type="button" id="nextButton" <?= $currentPage === count($questions) - 1 ? 'disabled' : '' ?>>Next</button>
             <input type="submit" value="Submit">
         </form>
-
-
     </div>
 </body>
 

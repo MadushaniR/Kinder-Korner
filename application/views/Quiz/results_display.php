@@ -27,8 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         foreach ($questions as $row) {
             $userAnswerText = '';
             $questionID = $row->questionID;
-
-            // Find the corresponding user answer for the current question
+            
             // Find the corresponding user answer for the current question
             $selectedOptionKey = 'selectedOption' . $questionID;
             if (isset($_POST['selectedOption'][$questionID])) {
