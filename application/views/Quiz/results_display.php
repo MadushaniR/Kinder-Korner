@@ -29,10 +29,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
             $questionID = $row->questionID;
 
             // Find the corresponding user answer for the current question
+            // Find the corresponding user answer for the current question
             $selectedOptionKey = 'selectedOption' . $questionID;
-            if (isset($_POST[$selectedOptionKey])) {
-                $userAnswerText = $_POST[$selectedOptionKey];
+            if (isset($_POST['selectedOption'][$questionID])) {
+                $userAnswerText = $_POST['selectedOption'][$questionID];
             }
+
 
             // Check if the user's answer is correct
             $isCorrect = ($userAnswerText == $row->correctAnswer);
@@ -41,7 +43,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
             if ($isCorrect) {
                 $correctAnswers++;
             }
-            ?>
+        ?>
             <p><?= $questionID ?>. <?= $row->questionText ?></p>
             <p>Correct Answer: <?= $row->correctAnswer ?></p>
             <p>Your Answer: <?= $userAnswerText ?></p>
