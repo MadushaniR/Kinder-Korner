@@ -24,7 +24,7 @@
 					<div class="text-center my-5"></div>
 					<div id="main-container">
 						<h1>Welcome to Quiz!</h1>
-						<form method="get" action="<?php echo base_url(); ?>index.php/Questions/createquiz">
+						<form method="get" action="<?php echo base_url(); ?>index.php/QuizManage/createquiz">
         					<input type="submit" value="Create New Quiz">
    						 </form>
 						<h1>Welcome,
@@ -39,7 +39,7 @@
 						$query = $this->db->get('quizdetails');
 						$uniquequizIDs = $query->result_array();
 						foreach ($uniquequizIDs as $quizID) {
-							echo '<form method="" action="' . base_url() . 'index.php/Questions/quizdisplay">';
+							echo '<form method="" action="' . base_url() . 'index.php/QuizDisplay/quizdisplay">';
 							echo '<input type="hidden" name="quizID" value="' . $quizID['quizID'] . '">';
 							echo '<input type="submit" value="Start Quiz ' . $quizID['quizID'] . '">';
 							echo '</form>';

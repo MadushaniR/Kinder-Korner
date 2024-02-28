@@ -6,7 +6,7 @@ class Auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Auth_model');
+		$this->load->model('AuthModel');
 	}
 
 	public function index()
@@ -23,13 +23,13 @@ class Auth extends CI_Controller
 
 	public function registration_form()
 	{
-		$this->auth_model->register_user();
+		$this->AuthModel->register_user();
 	}
 
 	public function login_form()
 	{
-		$this->load->model('auth_model');
-		$user_data = $this->auth_model->login_user();
+		$this->load->model('AuthModel');
+		$user_data = $this->AuthModel->login_user();
 
 		if ($user_data) {
 			$this->session->set_userdata('userID', $user->userID);
@@ -45,7 +45,7 @@ class Auth extends CI_Controller
 	{
 		$data['user_name'] = $this->session->userdata('user_name');
 		$data['userID'] = $this->session->userdata('userID');
-		$this->load->model('auth_model');
+		$this->load->model('AuthModel');
 		$this->load->view('Auth/index', $data);
 	}
 

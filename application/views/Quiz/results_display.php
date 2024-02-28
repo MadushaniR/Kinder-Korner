@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         foreach ($questions as $row) {
             $userAnswerText = '';
             $questionID = $row->questionID;
-            
+
             // Find the corresponding user answer for the current question
             $selectedOptionKey = 'selectedOption' . $questionID;
             if (isset($_POST['selectedOption'][$questionID])) {
@@ -57,5 +57,4 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
     </div>
 </body>
-
 </html>

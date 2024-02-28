@@ -32,7 +32,7 @@
 <body>
     <h1>Create New Quiz</h1>
 
-    <?php echo form_open('questions/createquiz'); ?>
+    <?php echo form_open('QuizManage/createquiz'); ?>
 
     <label for="quizName">Quiz Name:</label>
     <input type="text" name="quizName" required>
@@ -116,7 +116,7 @@
             // Fetch the data from the URL
             $.ajax({
                 type: 'GET',
-                url: 'http://localhost/Kinder-Korner/questions/getQuestionDetails/' + questionID,
+                url: 'http://localhost/Kinder-Korner/QuizDisplay/getQuestionDetails/' + questionID,
                 dataType: 'json',
                 success: function(data) {
                     // Populate the popup form with the retrieved values
@@ -153,7 +153,7 @@
                         window.location.reload();
                     }
                 };
-                xhttp.open("GET", "<?= base_url('questions/deleteQuestion/') ?>" + questionID, true);
+                xhttp.open("GET", "<?= base_url('QuizManage/deleteQuestion/') ?>" + questionID, true);
                 xhttp.send();
             }
         }
@@ -185,7 +185,7 @@
             // Make an AJAX request to update the data in the database
             $.ajax({
                 type: 'POST', // Use POST method for updating data
-                url: 'http://localhost/Kinder-Korner/questions/updateQuestion/' + questionID,
+                url: 'http://localhost/Kinder-Korner/QuizManage/updateQuestion/' + questionID,
                 dataType: 'json',
                 data: editedData,
                 success: function(response) {

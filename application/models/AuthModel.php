@@ -1,5 +1,5 @@
 <?php
-class auth_model extends CI_Model
+class AuthModel extends CI_Model
 {
     function __construct()
     {
