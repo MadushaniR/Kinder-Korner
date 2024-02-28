@@ -11,8 +11,8 @@ class Questions extends CI_Controller
 
     public function getQuestionDetails($questionID)
     {
-        $this->load->model('quizmodel');
-        $questionDetails = $this->quizmodel->getQuestionDetails($questionID);
+        $this->load->model('QuizDisplayModel');
+        $questionDetails = $this->QuizDisplayModel->getQuestionDetails($questionID);
         echo json_encode($questionDetails);
     }
 
@@ -26,7 +26,9 @@ class Questions extends CI_Controller
             redirect(base_url());
         }
 
-        $this->load->model('quizmodel');
+        // $this->load->model('quizmodel');
+        $this->load->model('UserAnswerModel');
+        $this->load->model('QuizDisplayModel');
 
         if ($this->input->post()) {
             $userAnswers = array();
@@ -41,13 +43,13 @@ class Questions extends CI_Controller
             }
 
             // Store user answers in the database
-            $this->quizmodel->storeUserAnswers($userAnswers);
+            $this->UserAnswerModel->storeUserAnswers($userAnswers);
 
             redirect('Questions/resultdisplay?quizID=' . $quizID);
         }
 
 
-        $this->data['questions'] = $this->quizmodel->getQuestions($quizID);
+        $this->data['questions'] = $this->QuizDisplayModel->getQuestions($quizID);
         $this->data['quizID'] = $quizID;
         $this->data['user_name'] = $user_name;
         $this->data['userID'] = $userID;
@@ -55,14 +57,15 @@ class Questions extends CI_Controller
         // Initialize the currentPage variable
         $this->data['currentPage'] = 0;
 
-        $this->load->model('auth_model');
+        $this->load->model('AuthModel');
         $this->load->view('Quiz/play_quiz', $this->data);
     }
 
 
     public function createquiz()
     {
-        $this->load->model('quizmodel');
+        // $this->load->model('quizmodel');
+        $this->load->model('QuizDisplayModel');
 
         if ($this->input->post()) {
             $quizName = $this->input->post('quizName');
@@ -124,15 +127,15 @@ class Questions extends CI_Controller
         }
 
         // Retrieve quiz details
-        $this->data['quizzes'] = $this->quizmodel->getQuizDetails();
+        $this->data['quizzes'] = $this->QuizDisplayModel->getQuizDetails();
 
         $this->load->view('Quiz/create_quiz', $this->data);
     }
 
     public function deleteQuestion($questionID)
     {
-        $this->load->model('quizmodel');
-        $this->quizmodel->deleteQuestion($questionID);
+        $this->load->model('QuizManagementModel');
+        $this->QuizManagementModel->deleteQuestion($questionID);
         // You can redirect to the same page or send a success message if needed
     }
 
@@ -145,24 +148,25 @@ class Questions extends CI_Controller
             redirect(base_url());
         }
 
-        $this->load->model('quizmodel');
-        $this->data['questions'] = $this->quizmodel->getResults($quizID);
+        // $this->load->model('quizmodel');
+        $this->load->model('ResultsModel');
+        $this->data['questions'] = $this->ResultsModel->getResults($quizID);
         $this->data['quizID'] = $quizID;
         $this->data['user_name'] = $user_name;
         $this->data['userID'] = $userID;
-        $this->load->model('auth_model');
+        $this->load->model('AuthModel');
         $this->load->view('Quiz/results_display', $this->data);
     }
 
     public function updateQuestion($questionID)
     {
-        $this->load->model('quizmodel');
+        $this->load->model('QuizManagementModel');
 
         // Retrieve edited data from the POST request
         $editedData = $this->input->post();
 
         // Update the question details in the database
-        $this->quizmodel->updateQuestionDetails($questionID, $editedData);
+        $this->QuizManagementModel->updateQuestionDetails($questionID, $editedData);
 
         // Send a success response
         echo json_encode(['success' => true]);
