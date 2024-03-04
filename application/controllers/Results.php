@@ -18,13 +18,35 @@ class Results extends CI_Controller
             redirect(base_url());
         }
 
-        // $this->load->model('quizmodel');
         $this->load->model('ResultsModel');
         $this->data['questions'] = $this->ResultsModel->getResults($quizID);
         $this->data['quizID'] = $quizID;
         $this->data['user_name'] = $user_name;
         $this->data['userID'] = $userID;
+
+        $totalQuestions = count($this->data['questions']);
+        $correctAnswers = 0;
+
+        foreach ($this->data['questions'] as $row) {
+            $userAnswerText = '';
+            $questionID = $row->questionID;
+
+            if (isset($_POST['selectedOption'][$questionID])) {
+                $userAnswerText = $_POST['selectedOption'][$questionID];
+                $this->ResultsModel->updateUserAnswers($userID, $quizID, $questionID, $userAnswerText);
+            }
+
+            $isCorrect = ($userAnswerText == $row->correctAnswer);
+
+            if ($isCorrect) {
+                $correctAnswers++;
+            }
+        }
+
+        $this->ResultsModel->updateQuizResult($userID, $quizID, $correctAnswers, $totalQuestions);
+
         $this->load->model('AuthModel');
         $this->load->view('Quiz/results_display', $this->data);
     }
 }
+?>
