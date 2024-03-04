@@ -59,6 +59,7 @@ class QuizDisplay extends CI_Controller
         $this->load->view('Quiz/play_quiz', $this->data);
     }
 
+    
     public function updateFeedback($userID, $quizID, $action)
     {
         // Check if the user already has feedback for the quiz
@@ -67,29 +68,37 @@ class QuizDisplay extends CI_Controller
             ->where('quizID', $quizID)
             ->get('feedback')
             ->row();
-
+    
+        // If the user already has feedback, allow them to change it
         if ($existingFeedback) {
-            // User already has feedback for this quiz, do not update
-            return $this->getLikesDislikesCount($quizID);
+            $data = array(
+                'isLike' => ($action == 'like') ? TRUE : FALSE,
+                'isDislike' => ($action == 'dislike') ? TRUE : FALSE,
+            );
+    
+            $this->db
+                ->where('userID', $userID)
+                ->where('quizID', $quizID)
+                ->update('feedback', $data);
+        } else {
+            // If no existing feedback, proceed to update
+            $data = array(
+                'userID' => $userID,
+                'quizID' => $quizID,
+                'isLike' => ($action == 'like') ? TRUE : FALSE,
+                'isDislike' => ($action == 'dislike') ? TRUE : FALSE,
+            );
+    
+            $this->db->insert('feedback', $data);
         }
-
-        // If no existing feedback, proceed to update
-        $data = array(
-            'userID' => $userID,
-            'quizID' => $quizID,
-            'isLike' => ($action == 'like') ? TRUE : FALSE,
-            'isDislike' => ($action == 'dislike') ? TRUE : FALSE,
-        );
-
-        $this->db->replace('feedback', $data);
-
+    
         // Update total likes and dislikes for the quiz in quizdetails table
         $this->updateQuizDetails($quizID);
-
+    
         // Return updated likes and dislikes count
         return $this->getLikesDislikesCount($quizID);
     }
-
+    
     public function getLikesDislikesCount($quizID)
     {
         $this->db->select('SUM(isLike) as totalLikes, SUM(isDislike) as totalDislikes');
