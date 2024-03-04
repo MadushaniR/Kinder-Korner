@@ -41,5 +41,64 @@ class QuizDisplayModel extends CI_Model
         return $query->row_array();
     }
 
+//     public function updateFeedback($userID, $quizID, $action)
+// {
+//     $data = array(
+//         'userID' => $userID,
+//         'quizID' => $quizID,
+//         'isLike' => ($action == 'like') ? TRUE : FALSE,
+//         'isDislike' => ($action == 'dislike') ? TRUE : FALSE,
+//     );
+
+//     $this->db->replace('feedback', $data);
+
+//     // Return updated likes and dislikes count
+//     return $this->getLikesDislikesCount($quizID);
+// }
+
+// private function getLikesDislikesCount($quizID)
+// {
+//     $this->db->select('SUM(isLike) as likes, SUM(isDislike) as dislikes');
+//     $this->db->where('quizID', $quizID);
+//     $query = $this->db->get('feedback');
+
+//     return $query->row_array();
+// }
+public function updateFeedback($userID, $quizID, $action)
+{
+    // Check if the user already has feedback for the quiz
+    $existingFeedback = $this->db
+        ->where('userID', $userID)
+        ->where('quizID', $quizID)
+        ->get('feedback')
+        ->row();
+
+    if ($existingFeedback) {
+        // User already has feedback for this quiz, do not update
+        return $this->getLikesDislikesCount($quizID);
+    }
+
+    // If no existing feedback, proceed to update
+    $data = array(
+        'userID' => $userID,
+        'quizID' => $quizID,
+        'isLike' => ($action == 'like') ? TRUE : FALSE,
+        'isDislike' => ($action == 'dislike') ? TRUE : FALSE,
+    );
+
+    $this->db->replace('feedback', $data);
+
+    // Return updated likes and dislikes count
+    return $this->getLikesDislikesCount($quizID);
+}
+
+private function getLikesDislikesCount($quizID)
+{
+    $this->db->select('SUM(isLike) as likes, SUM(isDislike) as dislikes');
+    $this->db->where('quizID', $quizID);
+    $query = $this->db->get('feedback');
+
+    return $query->row_array();
+}
     
 }

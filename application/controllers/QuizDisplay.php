@@ -58,4 +58,27 @@ class QuizDisplay extends CI_Controller
         $this->load->model('AuthModel');
         $this->load->view('Quiz/play_quiz', $this->data);
     }
+
+    public function updateFeedback()
+{
+    $userID = $this->session->userdata('userID');
+    $quizID = $this->input->post('quizID');
+    $action = $this->input->post('action');
+
+    if (!$userID || !$quizID || !$action) {
+        echo json_encode(['success' => false, 'message' => 'Invalid parameters']);
+        return;
+    }
+
+    $this->load->model('QuizDisplayModel');
+
+    $result = $this->QuizDisplayModel->updateFeedback($userID, $quizID, $action);
+
+    if ($result) {
+        echo json_encode(['success' => true, 'message' => 'Feedback updated successfully']);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Error updating feedback']);
+    }
+}
+
 }
