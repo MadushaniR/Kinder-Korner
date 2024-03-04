@@ -77,7 +77,7 @@
 		function updateCount(quizID, type) {
 			var userID = <?php echo $userID; ?>; // Assuming $userID is available in your view
 			var xhr = new XMLHttpRequest();
-			var url = '<?php echo base_url("index.php/QuizDisplay/updateFeedback"); ?>/' + userID + '/' + quizID + '/' + type;
+			var url = '<?php echo base_url("index.php/UserFeedback/updateFeedback"); ?>/' + userID + '/' + quizID + '/' + type;
 			xhr.open('POST', url, true);
 			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 

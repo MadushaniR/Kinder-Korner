@@ -58,22 +58,5 @@ class QuizDisplay extends CI_Controller
         $this->load->model('AuthModel');
         $this->load->view('Quiz/play_quiz', $this->data);
     }
-    public function updateFeedback($userID, $quizID, $action)
-    {
-        $this->load->model('QuizDisplayModel');
-        return $this->QuizDisplayModel->updateFeedback($userID, $quizID, $action);
-    }
-
-    public function getLikesDislikesCount($quizID)
-    {
-        $this->load->model('QuizDisplayModel');
-        return $this->QuizDisplayModel->getLikesDislikesCount($quizID);
-    }
-
-    public function updateQuizDetails($quizID)
-    {
-        $this->load->model('QuizDisplayModel');
-        return $this->QuizDisplayModel->updateQuizDetails($quizID);
-    }
     
 }
