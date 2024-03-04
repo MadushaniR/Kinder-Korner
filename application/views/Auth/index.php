@@ -25,23 +25,29 @@
 					<div id="main-container">
 						<h1>Welcome to Quiz!</h1>
 						<form method="get" action="<?php echo base_url(); ?>index.php/QuizManage/createquiz">
-        					<input type="submit" value="Create New Quiz">
-   						 </form>
+							<input type="submit" value="Create New Quiz">
+						</form>
 						<h1>Welcome,
 							<?= $user_name ?>
 							!</h1>
-							<h1>user id,
+						<h1>user id,
 							<?= $userID ?>
 							!</h1>
 						<?php
-						$this->db->select('quizID');
+						$this->db->select('quizID,quizName');
 						$this->db->distinct();
 						$query = $this->db->get('quizdetails');
 						$uniquequizIDs = $query->result_array();
+						// foreach ($uniquequizIDs as $quizID) {
+						// 	echo '<form method="" action="' . base_url() . 'index.php/QuizDisplay/quizdisplay">';
+						// 	echo '<input type="hidden" name="quizID" value="' . $quizID['quizID'] . '">';
+						// 	echo '<input type="submit" value="Start Quiz ' . $quizID['quizID'] . '">';
+						// 	echo '</form>';
+						// }
 						foreach ($uniquequizIDs as $quizID) {
 							echo '<form method="" action="' . base_url() . 'index.php/QuizDisplay/quizdisplay">';
 							echo '<input type="hidden" name="quizID" value="' . $quizID['quizID'] . '">';
-							echo '<input type="submit" value="Start Quiz ' . $quizID['quizID'] . '">';
+							echo '<input type="submit" value="Start Quiz ' . $quizID['quizName'] . '">';
 							echo '</form>';
 						}
 						?>
