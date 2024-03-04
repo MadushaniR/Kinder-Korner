@@ -70,19 +70,27 @@
             });
         });
 
-        function updateCount(quizID, type) {
-            var countSpan = document.getElementById('quizCount_' + quizID);
-            var likes = parseInt(countSpan.innerText.split(',')[0].split(':')[1].trim());
-            var dislikes = parseInt(countSpan.innerText.split(',')[1].split(':')[1].trim());
-
-            if (type === 'like') {
-                likes++;
-            } else if (type === 'dislike') {
-                dislikes++;
+		function updateCount(quizID, type) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '<?php echo base_url() . 'index.php/QuizDisplay/updateFeedback'; ?>', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+                var likes = response.likes || 0;
+                var dislikes = response.dislikes || 0;
+                var countSpan = document.getElementById('quizCount_' + quizID);
+                countSpan.innerText = 'Likes: ' + likes + ', Dislikes: ' + dislikes;
+            } else {
+                console.error(response.message);
             }
-
-            countSpan.innerText = 'Likes: ' + likes + ', Dislikes: ' + dislikes;
         }
+    };
+
+    xhr.send('quizID=' + quizID + '&action=' + type);
+}
+
     </script>
 
     <!-- Your existing toastr script -->
