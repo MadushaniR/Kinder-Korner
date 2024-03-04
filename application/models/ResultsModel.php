@@ -17,20 +17,44 @@ class ResultsModel extends CI_Model
     {
         $data = array(
             'userID' => $userID,
-            'quizID' => $quizID,
+            'quizID' => $quizID,  // Assuming quizID is the correct column name in the 'useranswer' table
             'questionID' => $questionID,
             'selectedOption' => $selectedOption,
         );
-
+    
+        // Check if the user has already answered the question for this quiz
         $existingAnswer = $this->db->get_where('useranswer', array('userID' => $userID, 'quizID' => $quizID, 'questionID' => $questionID))->row();
-
+    
         if ($existingAnswer) {
+            // Update existing answer
             $this->db->where('answerID', $existingAnswer->answerID);
             $this->db->update('useranswer', $data);
         } else {
+            // Insert a new answer
             $this->db->insert('useranswer', $data);
         }
     }
+    
+
+
+    // public function updateUserAnswers($userID, $quizID, $questionID, $selectedOption)
+    // {
+    //     $data = array(
+    //         'userID' => $userID,
+    //         'quizID' => $quizID,
+    //         'questionID' => $questionID,
+    //         'selectedOption' => $selectedOption,
+    //     );
+
+    //     $existingAnswer = $this->db->get_where('useranswer', array('userID' => $userID, 'quizID' => $quizID, 'questionID' => $questionID))->row();
+
+    //     if ($existingAnswer) {
+    //         $this->db->where('answerID', $existingAnswer->answerID);
+    //         $this->db->update('useranswer', $data);
+    //     } else {
+    //         $this->db->insert('useranswer', $data);
+    //     }
+    // }
 
     public function updateQuizResult($userID, $quizID, $score, $totalQuestions)
     {

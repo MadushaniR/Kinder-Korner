@@ -7,6 +7,7 @@ class Results extends CI_Controller
     {
         parent::__construct();
         $this->load->database();
+        $this->load->model('ResultsModel');
     }
 
     public function resultdisplay()
@@ -18,7 +19,6 @@ class Results extends CI_Controller
             redirect(base_url());
         }
 
-        $this->load->model('ResultsModel');
         $this->data['questions'] = $this->ResultsModel->getResults($quizID);
         $this->data['quizID'] = $quizID;
         $this->data['user_name'] = $user_name;
