@@ -3,7 +3,6 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="author" content="Muhamad Nauval Azhar">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="description" content="This is a login page template based on Bootstrap 5">
 	<title>Kinder Koner</title>
@@ -23,25 +22,32 @@
 				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
 					<div class="text-center my-5"></div>
 					<div id="main-container">
-						<h1>Welcome to Quiz!</h1>
+						<!-- Add search bar input field -->
+						<input type="text" id="quizSearch" placeholder="Search quiz names">
+
 						<form method="get" action="<?php echo base_url(); ?>index.php/QuizManage/createquiz">
-        					<input type="submit" value="Create New Quiz">
-   						 </form>
+							<input type="submit" value="Create New Quiz">
+						</form>
+
 						<h1>Welcome,
 							<?= $user_name ?>
-							!</h1>
-							<h1>user id,
+							!
+						</h1>
+						<h1>user id,
 							<?= $userID ?>
-							!</h1>
+							!
+						</h1>
+
 						<?php
-						$this->db->select('quizID');
+						$this->db->select('quizID,quizName');
 						$this->db->distinct();
 						$query = $this->db->get('quizdetails');
 						$uniquequizIDs = $query->result_array();
+
 						foreach ($uniquequizIDs as $quizID) {
 							echo '<form method="" action="' . base_url() . 'index.php/QuizDisplay/quizdisplay">';
 							echo '<input type="hidden" name="quizID" value="' . $quizID['quizID'] . '">';
-							echo '<input type="submit" value="Start Quiz ' . $quizID['quizID'] . '">';
+							echo '<input type="submit" value="' . $quizID['quizName'] . '">';
 							echo '</form>';
 						}
 						?>
@@ -50,6 +56,23 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- JavaScript for search functionality -->
+	<script>
+		document.getElementById('quizSearch').addEventListener('input', function() {
+			var searchValue = this.value.toLowerCase();
+			var quizNames = document.querySelectorAll('#main-container input[type="submit"]');
+
+			quizNames.forEach(function(quizName) {
+				var quizNameText = quizName.value.toLowerCase();
+				if (quizNameText.includes(searchValue)) {
+					quizName.style.display = 'block';
+				} else {
+					quizName.style.display = 'none';
+				}
+			});
+		});
+	</script>
 
 	<script type="text/javascript">
 		<?php if ($this->session->flashdata('suc')) { ?>
