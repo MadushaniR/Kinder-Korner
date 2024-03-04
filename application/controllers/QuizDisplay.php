@@ -59,26 +59,69 @@ class QuizDisplay extends CI_Controller
         $this->load->view('Quiz/play_quiz', $this->data);
     }
 
-    public function updateFeedback()
-{
-    $userID = $this->session->userdata('userID');
-    $quizID = $this->input->post('quizID');
-    $action = $this->input->post('action');
+    public function updateFeedback($userID, $quizID, $action)
+    {
+        // Check if the user already has feedback for the quiz
+        $existingFeedback = $this->db
+            ->where('userID', $userID)
+            ->where('quizID', $quizID)
+            ->get('feedback')
+            ->row();
 
-    if (!$userID || !$quizID || !$action) {
-        echo json_encode(['success' => false, 'message' => 'Invalid parameters']);
-        return;
+        if ($existingFeedback) {
+            // User already has feedback for this quiz, do not update
+            return $this->getLikesDislikesCount($quizID);
+        }
+
+        // If no existing feedback, proceed to update
+        $data = array(
+            'userID' => $userID,
+            'quizID' => $quizID,
+            'isLike' => ($action == 'like') ? TRUE : FALSE,
+            'isDislike' => ($action == 'dislike') ? TRUE : FALSE,
+        );
+
+        $this->db->replace('feedback', $data);
+
+        // Update total likes and dislikes for the quiz in quizdetails table
+        $this->updateQuizDetails($quizID);
+
+        // Return updated likes and dislikes count
+        return $this->getLikesDislikesCount($quizID);
     }
 
-    $this->load->model('QuizDisplayModel');
+    public function getLikesDislikesCount($quizID)
+    {
+        $this->db->select('SUM(isLike) as totalLikes, SUM(isDislike) as totalDislikes');
+        $this->db->where('quizID', $quizID);
+        $query = $this->db->get('feedback');
 
-    $result = $this->QuizDisplayModel->updateFeedback($userID, $quizID, $action);
-
-    if ($result) {
-        echo json_encode(['success' => true, 'message' => 'Feedback updated successfully']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Error updating feedback']);
+        return $query->row_array();
     }
-}
 
+
+    public function updateQuizDetails($quizID)
+    {
+        // Calculate total likes and dislikes for the quiz
+        $totalLikesDislikes = $this->getLikesDislikesCount($quizID);
+
+        // Update quizdetails table with the calculated values
+        $this->db
+            ->where('quizID', $quizID)
+            ->update('quizdetails', $totalLikesDislikes);
+
+        // Check for database errors
+        $db_error = $this->db->error();
+        if (!empty($db_error['code'])) {
+            // Database error occurred
+            log_message('error', 'Database error: ' . $db_error['code'] . ' ' . $db_error['message']);
+        } else {
+            // Check if the update was successful
+            if ($this->db->affected_rows() > 0) {
+                // Quiz details updated successfully!
+            } else {
+                log_message('error', 'No rows affected. Error updating quiz details!');
+            }
+        }
+    }
 }
