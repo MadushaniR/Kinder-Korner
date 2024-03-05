@@ -27,7 +27,7 @@ class QuizDisplay extends CI_Controller
         }
 
         // $this->load->model('quizmodel');
-        $this->load->model('UserAnswerModel');
+        // $this->load->model('UserAnswerModel');
         $this->load->model('QuizDisplayModel');
 
         if ($this->input->post()) {
@@ -43,7 +43,7 @@ class QuizDisplay extends CI_Controller
             }
 
             // Store user answers in the database
-            $this->UserAnswerModel->storeUserAnswers($userAnswers);
+            // $this->UserAnswerModel->storeUserAnswers($userAnswers);
 
             redirect('Results/resultdisplay?quizID=' . $quizID);
         }
