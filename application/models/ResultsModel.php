@@ -34,27 +34,6 @@ class ResultsModel extends CI_Model
             $this->db->insert('useranswer', $data);
         }
     }
-    
-
-
-    // public function updateUserAnswers($userID, $quizID, $questionID, $selectedOption)
-    // {
-    //     $data = array(
-    //         'userID' => $userID,
-    //         'quizID' => $quizID,
-    //         'questionID' => $questionID,
-    //         'selectedOption' => $selectedOption,
-    //     );
-
-    //     $existingAnswer = $this->db->get_where('useranswer', array('userID' => $userID, 'quizID' => $quizID, 'questionID' => $questionID))->row();
-
-    //     if ($existingAnswer) {
-    //         $this->db->where('answerID', $existingAnswer->answerID);
-    //         $this->db->update('useranswer', $data);
-    //     } else {
-    //         $this->db->insert('useranswer', $data);
-    //     }
-    // }
 
     public function updateQuizResult($userID, $quizID, $score, $totalQuestions)
     {
