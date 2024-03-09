@@ -16,6 +16,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
         .question-container.active {
             display: block;
         }
+
+        .optionButton.selected {
+            background-color: blue;
+            color: white;
+        }
     </style>
 
     <script>
@@ -30,16 +35,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 });
             }
 
-            function selectOption(button) {
-                const questionID = button.getAttribute('data-question');
-                const selectedOption = button.getAttribute('data-value');
-
-                // Set the selected option in the hidden input field
-                const hiddenInput = document.getElementById('selectedOption' + questionID);
-                if (hiddenInput) {
-                    hiddenInput.value = selectedOption;
-                }
-            }
 
             function updateButtonsState() {
                 // Enable or disable previous and next buttons based on the current page
@@ -74,12 +69,35 @@ defined('BASEPATH') or exit('No direct script access allowed');
             const questionID = button.getAttribute('data-question');
             const selectedOption = button.getAttribute('data-value');
 
+            // Remove the "selected" class from all buttons in the same question
+            const allButtons = document.querySelectorAll('.optionButton[data-question="' + questionID + '"]');
+            allButtons.forEach(function(btn) {
+                btn.classList.remove('selected');
+            });
+
+            // Add the "selected" class to the clicked button
+            button.classList.add('selected');
+
             // Set the selected option in the hidden input field
             const hiddenInput = document.getElementById('selectedOption' + questionID);
             if (hiddenInput) {
                 hiddenInput.value = selectedOption;
             }
         }
+
+
+
+        // function selectOption(button) {
+
+        //     const questionID = button.getAttribute('data-question');
+        //     const selectedOption = button.getAttribute('data-value');
+
+        //     // Set the selected option in the hidden input field
+        //     const hiddenInput = document.getElementById('selectedOption' + questionID);
+        //     if (hiddenInput) {
+        //         hiddenInput.value = selectedOption;
+        //     }
+        // }
     </script>
 </head>
 
@@ -112,4 +130,5 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </form>
     </div>
 </body>
+
 </html>
