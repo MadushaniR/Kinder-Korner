@@ -72,9 +72,9 @@
         <h1>Kinder Koner</h1>
       </div>
       <nav>
-        <a href="<?php echo site_url('Auth/main'); ?>">Home</a> |
-        <a href="<?php echo site_url('Auth/main'); ?>">Quiz</a> |
-        <a href="<?php echo site_url('index.php/QuizManage/createquiz?'); ?>">Manage</a>
+        <a href="<?php echo site_url('Auth/main'); ?>">&nbsp;Home</a> |
+        <a href="<?php echo site_url('Auth/main'); ?>">&nbsp;Quiz</a> |
+        <a href="<?php echo site_url('index.php/QuizManage/createquiz?'); ?>">&nbsp;Manage</a>
       </nav>
       <div class="user-info">
         <?php if ($this->session->userdata('userID') && $this->session->userdata('user_name')) { ?>
