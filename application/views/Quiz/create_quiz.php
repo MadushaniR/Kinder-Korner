@@ -26,17 +26,32 @@
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
-        body {
-			background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
-			background-size: cover;
-			background-position: center top;
 
-		}
+        body {
+            background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
+            background-size: cover;
+            background-position: center top;
+
+        }
+        table {
+    border-collapse: collapse; /* Ensures table borders collapse into a single border */
+    width: 100%; /* Optionally, set the width of the table */
+}
+
+th, td {
+    border: 1px solid black; /* Set border for table cells */
+    padding: 8px; /* Add padding to the cells for better readability */
+    text-align: left; /* Align text to the left within cells */
+}
+
     </style>
 </head>
 
 <body>
-    <h1>Create New Quiz</h1>
+    <header>
+        <?php $this->load->view('Comman/header'); ?>
+    </header>
+    <h1>Manage Quiz</h1>
 
     <?php echo form_open('QuizManage/createquiz'); ?>
 
@@ -252,7 +267,7 @@
     </script>
 
     <h2>Quiz Details</h2>
-    <table border="1">
+    <table>
         <thead>
             <tr>
                 <th>Username</th>
