@@ -140,7 +140,7 @@
 	</script>
 
 	<!-- Your existing toastr script -->
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		<?php if ($this->session->flashdata('suc')) { ?>
 			toastr.success("<?php echo $this->session->flashdata('suc'); ?>");
 		<?php } else if ($this->session->flashdata('wrong')) {  ?>
@@ -154,7 +154,7 @@
 		$this->session->unset_userdata('suc'); ?>
 		<?php
 		$this->session->unset_userdata('wrong'); ?>
-	</script>
+	</script> -->
 </body>
 
 </html>
