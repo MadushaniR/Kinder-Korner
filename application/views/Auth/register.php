@@ -11,23 +11,85 @@
 	<link rel="stylesheet" href="<?php echo site_url(); ?>assets/toast/toast.min.css">
 	<script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
 	<script src="<?php echo site_url(); ?>assets/toast/toast.js"></script>
+	<style>
+		body {
+			background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
+			background-size: cover;
+			background-position: center top;
+
+		}
+
+		.card {
+			margin-top: 40%;
+			margin-bottom: auto;
+			max-width: 400px;
+			width: 100%;
+			/* border: 2px dashed black;  */
+			box-sizing: border-box;
+		}
+
+		.register-img {
+			position: absolute;
+			top: 50px;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 1;
+		}
+
+		.card label,
+		.card h1 {
+			color: black !important;
+			font-weight: bold;
+			font-size: larger;
+		}
+
+		.card input[type="email"],
+		.card input[type="text"] {
+			box-shadow: 0px 0px 6px 2px #ffe6e6;
+		}
+
+		.card input[type="password"] {
+			box-shadow: 0px 0px 6px 2px #ccffff;
+		}
+
+		.card .btn-login {
+			background-color: #EEAAAB;
+			color: black;
+			border: 2px solid black;
+			border-radius: 30px;
+			width: 50%;
+			font-weight: bolder;
+			font-size: larger;
+			margin: auto;
+			margin-top: 10px;
+			margin-bottom: -15px;
+		}
+		.card .btn-login:hover {
+			background-color: #D89DA5;
+		}
+
+		.card-footer {
+			background-color: #bfecf2;
+		}
+	</style>
 </head>
 
 <body>
+	<img src="<?php echo base_url('assets/images/register.png'); ?>" alt="Register Image" class="register-img">
 	<section class="h-100">
 		<div class="container h-100">
 			<div class="row justify-content-sm-center h-100">
 				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
-							<h1 class="fs-4 card-title fw-bold mb-4">Register</h1>
+							<!-- <h1 class="fs-4 card-title fw-bold mb-4">Register</h1> -->
 							<?php echo form_open('Auth/registration_form'); ?>
 							<div class="mb-3">
-								<label class="mb-2 text-muted" for="email">Full Name</label>
+								<label class="mb-2 text-muted" for="email">Username</label>
 								<input id="username" name="username" type="text" class="form-control" value="" required autofocus>
 							</div>
 							<div class="mb-3">
-								<label class="mb-2 text-muted" for="email">E-Mail Address</label>
+								<label class="mb-2 text-muted" for="email">E-Mail</label>
 								<input id="email" name="email" type="email" class="form-control" value="" required autofocus>
 							</div>
 							<div class="mb-3">
@@ -39,9 +101,7 @@
 								<input id="password" name="con_password" type="password" class="form-control" required>
 							</div>
 							<div class="d-flex align-items-center">
-								<button type="submit" class="btn btn-primary ">
-									Register
-								</button>
+							<button type="submit" class="btn btn-login ms-auto">Register</button>
 							</div>
 							<?php echo form_close(); ?>
 						</div>
