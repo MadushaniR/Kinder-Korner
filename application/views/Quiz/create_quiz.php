@@ -26,6 +26,12 @@
             background: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
+        body {
+			background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
+			background-size: cover;
+			background-position: center top;
+
+		}
     </style>
 </head>
 
