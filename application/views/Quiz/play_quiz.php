@@ -56,12 +56,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
             font-size: 20px;
         }
 
-        */ #container {
-            width: 50%;
+        #container {
+            /* width: 50%;
             margin-top: 100px;
             margin-left: auto;
             margin-right: auto;
-            border: 2px solid black;
+            border: 2px solid black; */
             /* padding: 20px; */
         }
 
