@@ -25,10 +25,10 @@
 
         }
 
-        /* Custom CSS for visible borders */
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-bottom: 5%;
         }
 
         th,
@@ -48,6 +48,7 @@
 
         .manage-quiz th {
             border-width: 2px;
+            background-color: #ffffe6;
         }
 
         .manage-quiz td {
@@ -57,6 +58,77 @@
         .manage-quiz tr {
             border-width: 2px;
         }
+
+        .add-container {
+            width: 97%;
+            margin-left: 1%;
+            margin-right: auto;
+
+        }
+
+        .add-container label {
+            font-size: 20px;
+            font-weight: 600;
+
+        }
+
+        .add-container input {
+            border: 2px solid lightblue;
+            box-shadow: 0 0 5px lightblue;
+            padding: 6px;
+            margin-bottom: 10px;
+        }
+
+        .add-container textarea {
+            border: 2px solid lightblue;
+            box-shadow: 0 0 5px lightblue;
+            padding: 6px;
+            margin-bottom: 10px;
+        }
+
+        .add-container button {
+            padding: 10px 20px;
+            /* Add padding to the buttons */
+            margin: 10px 0;
+            /* Add margin to create space between buttons */
+            background-color: #5DADE2;
+            /* Set background color */
+            color: white;
+            /* Set text color */
+            border: none;
+            /* Remove border */
+            border-radius: 5px;
+            /* Add border radius */
+            cursor: pointer;
+            /* Add pointer cursor on hover */
+        }
+
+        .add-container button:hover {
+            background-color: #7dbde8;
+            /* Change background color on hover */
+        }
+
+        .add-container input[type="submit"] {
+            padding: 10px 20px;
+            /* Add padding to the submit button */
+            margin: 10px 0;
+            /* Add margin to create space */
+            background-color: #ff4d88;
+            /* Set background color */
+            color: white;
+            /* Set text color */
+            border: none;
+            /* Remove border */
+            border-radius: 5px;
+            /* Add border radius */
+            cursor: pointer;
+            /* Add pointer cursor on hover */
+        }
+
+        .add-container input[type="submit"]:hover {
+            background-color: #ff80aa;
+            /* Change background color on hover */
+        }
     </style>
 </head>
 
@@ -64,42 +136,45 @@
     <header>
         <?php $this->load->view('Comman/header'); ?>
     </header>
-    <h1>Manage Quiz</h1>
+    <!-- <h1>Manage Quiz</h1> -->
 
     <?php echo form_open('QuizManage/createquiz'); ?>
 
-    <label for="quizName">Quiz Name:</label>
-    <input type="text" name="quizName" required>
+    <div class=add-container>
+        <label for="quizName">Quiz Name:</label>
+        <input type="text" name="quizName" required style="width: 30%;">
 
-    <label for="quizDescription">Quiz Description:</label>
-    <textarea name="quizDescription" required></textarea>
+        <label for="quizDescription">Quiz Description:</label>
+        <input type="text" name="quizDescription" required style="width: 48%;">
 
-    <div id="questions-container">
-        <!-- This div provides space for a single set of question and answers -->
-        <div class="question">
-            <label for="question">Question:</label>
-            <input type="text" name="question[]" required>
+        <div id="questions-container">
+            <!-- This div provides space for a single set of question and answers -->
+            <div class="question">
+                <label for="question">Question:</label>
+                <input type="text" name="question[]" required style="width: 90%;"><br>
 
-            <label for="choice1">Choice 1:</label>
-            <input type="text" name="choice1[]" required>
+                <label for="answer">Correct Answer:</label>
+                <input type="text" name="answer[]" required style="width: 10%;">
 
-            <label for="choice2">Choice 2:</label>
-            <input type="text" name="choice2[]" required>
+                <label for="choice1">Choice 1:</label>
+                <input type="text" name="choice1[]" required>
 
-            <label for="choice3">Choice 3:</label>
-            <input type="text" name="choice3[]" required>
+                <label for="choice2">Choice 2:</label>
+                <input type="text" name="choice2[]" required>
 
-            <label for="choice4">Choice 4:</label>
-            <input type="text" name="choice4[]" required>
+                <label for="choice3">Choice 3:</label>
+                <input type="text" name="choice3[]" required>
 
-            <label for="answer">Correct Answer:</label>
-            <input type="text" name="answer[]" required>
+                <label for="choice4">Choice 4:</label>
+                <input type="text" name="choice4[]" required>
+                <hr>
+            </div>
         </div>
+
+        <button type="button" onclick="addQuestion()">+ Add More </button>
+
+        <input type="submit" value="Create Quiz">
     </div>
-
-    <button type="button" onclick="addQuestion()">Add More</button>
-
-    <input type="submit" value="Create Quiz">
 
     <?php echo form_close(); ?>
 
@@ -311,15 +386,23 @@
                     <td><?= $quiz->option4 ?></td>
                     <td><?= $quiz->correctAnswer ?></td>
                     <td>
-                        <button onclick="editRow(<?= $quiz->questionID ?>)">Edit</button>
-                        <button onclick="deleteRow(<?= $quiz->questionID ?>)">Delete</button>
+                        <button onclick="editRow(<?= $quiz->questionID ?>)">
+                            <img src="<?php echo base_url('assets/images/edit.png'); ?>" alt="Edit" style="width:35px; height:35px">
+                        </button>
+                        <button onclick="deleteRow(<?= $quiz->questionID ?>)">
+                            <img src="<?php echo base_url('assets/images/delete.png'); ?>" alt="Delete" style="width:35px; height:35px">
+                        </button>
+
+                        <!-- <button onclick="editRow(<?= $quiz->questionID ?>)">Edit</button>
+                        <button onclick="deleteRow(<?= $quiz->questionID ?>)">Delete</button> -->
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 
-    <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
+
+    <!-- <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a> -->
 
     <script>
         function sortTable(n) {
