@@ -19,9 +19,10 @@
         }
 
         body {
-            background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
+            background-image: url(<?php echo base_url('assets/images/5555.png'); ?>);
             background-size: cover;
             background-position: center top;
+    
 
         }
 

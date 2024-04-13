@@ -261,6 +261,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <img src="<?php echo base_url('assets/images/home.png'); ?>" alt="Home" width="100" height="100">
             </div>
         </a>
+        <!-- <a href="<?php echo base_url(); ?>index.php/Results/score?score=<?= $correctAnswers ?>">
+    <button>Next</button>
+</a> -->
+
+<a href="<?php echo base_url(); ?>index.php/Results/score?correctAnswers=<?= $correctAnswers ?>&totalQuestions=<?= $totalQuestions ?>">
+    <button>Next</button>
+</a>
+
+
+
 
         <!-- <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a> -->
     </div>
