@@ -104,7 +104,7 @@
         }
 
         .add-container button:hover {
-            background-color: #7dbde8;
+            background-color: #3c9cdd;
             /* Change background color on hover */
         }
 
@@ -126,7 +126,7 @@
         }
 
         .add-container input[type="submit"]:hover {
-            background-color: #ff80aa;
+            background-color: #ff1a66;
             /* Change background color on hover */
         }
     </style>
