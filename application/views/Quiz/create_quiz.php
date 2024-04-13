@@ -87,34 +87,48 @@
         }
 
         .add-container button {
-    padding: 10px 20px; /* Add padding to the buttons */
-    margin: 10px 0; /* Add margin to create space between buttons */
-    background-color: #5DADE2; /* Set background color */
-    color: white; /* Set text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Add border radius */
-    cursor: pointer; /* Add pointer cursor on hover */
-}
+            padding: 10px 20px;
+            /* Add padding to the buttons */
+            margin: 10px 0;
+            /* Add margin to create space between buttons */
+            background-color: #5DADE2;
+            /* Set background color */
+            color: white;
+            /* Set text color */
+            border: none;
+            /* Remove border */
+            border-radius: 5px;
+            /* Add border radius */
+            cursor: pointer;
+            /* Add pointer cursor on hover */
+        }
 
-.add-container button:hover {
-    background-color: #7dbde8; /* Change background color on hover */
-}
+        .add-container button:hover {
+            background-color: #7dbde8;
+            /* Change background color on hover */
+        }
 
-.add-container input[type="submit"] {
-    padding: 10px 20px; /* Add padding to the submit button */
-    margin: 10px 0; /* Add margin to create space */
-    background-color:#ff4d88; /* Set background color */
-    color: white; /* Set text color */
-    border: none; /* Remove border */
-    border-radius: 5px; /* Add border radius */
-    cursor: pointer; /* Add pointer cursor on hover */
-}
+        .add-container input[type="submit"] {
+            padding: 10px 20px;
+            /* Add padding to the submit button */
+            margin: 10px 0;
+            /* Add margin to create space */
+            background-color: #ff4d88;
+            /* Set background color */
+            color: white;
+            /* Set text color */
+            border: none;
+            /* Remove border */
+            border-radius: 5px;
+            /* Add border radius */
+            cursor: pointer;
+            /* Add pointer cursor on hover */
+        }
 
-.add-container input[type="submit"]:hover {
-    background-color: #ff80aa; /* Change background color on hover */
-}
-
-
+        .add-container input[type="submit"]:hover {
+            background-color: #ff80aa;
+            /* Change background color on hover */
+        }
     </style>
 </head>
 
@@ -372,8 +386,15 @@
                     <td><?= $quiz->option4 ?></td>
                     <td><?= $quiz->correctAnswer ?></td>
                     <td>
-                        <button onclick="editRow(<?= $quiz->questionID ?>)">Edit</button>
-                        <button onclick="deleteRow(<?= $quiz->questionID ?>)">Delete</button>
+                        <button onclick="editRow(<?= $quiz->questionID ?>)">
+                            <img src="<?php echo base_url('assets/images/edit.png'); ?>" alt="Edit" style="width:35px; height:35px">
+                        </button>
+                        <button onclick="deleteRow(<?= $quiz->questionID ?>)">
+                            <img src="<?php echo base_url('assets/images/delete.png'); ?>" alt="Delete" style="width:35px; height:35px">
+                        </button>
+
+                        <!-- <button onclick="editRow(<?= $quiz->questionID ?>)">Edit</button>
+                        <button onclick="deleteRow(<?= $quiz->questionID ?>)">Delete</button> -->
                     </td>
                 </tr>
             <?php endforeach; ?>
