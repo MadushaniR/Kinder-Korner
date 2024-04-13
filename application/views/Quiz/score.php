@@ -14,18 +14,68 @@ $userName = isset($_GET['user_name']) ? $_GET['user_name'] : ''; // Get user nam
 <head>
     <meta charset="utf-8">
     <title>Quiz Results</title>
-    <!-- Add your CSS and other head elements here -->
+    <style>
+      
+        body {
+            background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
+            background-size: cover;
+            background-position: center top;
+
+
+        }
+
+        .score {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .congrats-img {
+            margin-bottom: 20px;
+        }
+        .results-container{
+            width: 50%;
+          margin-left: 35%;
+          margin-right: 50%;
+
+        }
+        .score{
+            font-size: 50px;
+font-weight: 800;
+text-align: center;
+/* margin-left: -40%; */
+margin-top: -3%;
+background-color: yellow;
+width: 58%;
+
+        }
+        .congrats-img{
+
+        }
+        .title-congrats{
+font-size: 50px;
+font-weight: 800;
+text-align: center;
+margin-left: -40%;
+margin-bottom: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <header>
         <?php $this->load->view('Comman/header'); ?>
     </header>
-
-    <div>CONGRATULATIONS <?php echo $user_name; ?></div>
-
-    <div class="score">Score: <?= $correctAnswers ?>/<?= $totalQuestions ?></div>
-    <!-- Rest of your score.php content -->
+    <div class="results-container">
+        <div class="title-congrats">Congratulations <?php echo $user_name; ?>!</div>
+        <div class="congrat-img">
+            <img src="<?php echo base_url('assets/images/congrats.png'); ?>" alt="Congratulations" class="congrats-img">
+        </div>
+        <div class="score">Your Score: <?= $correctAnswers ?>/<?= $totalQuestions ?></div>
+    </div>
+    <div>
+            <button class="kid-friendly-button" onclick="window.location.href='<?php echo base_url(); ?>index.php/Results/score?correctAnswers=<?= $correctAnswers ?>&totalQuestions=<?= $totalQuestions ?>'">Replay</button>
+            <button class="kid-friendly-button" onclick="window.location.href='<?php echo base_url(); ?>index.php/Auth/main'">Home</button>
+        </div>
 </body>
 
 </html>
