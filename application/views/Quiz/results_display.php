@@ -198,6 +198,23 @@ defined('BASEPATH') or exit('No direct script access allowed');
             margin-top: 2%;
             margin-bottom: 2%;
         }
+        /* Kid-friendly button style */
+.next {
+    background-color: #ffd700; /* Yellow color */
+    color: #000; /* Black text */
+    border: none;
+    padding: 15px 40px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.next:hover {
+    background-color: #ffec80; /* Lighter shade of yellow on hover */
+}
+
     </style>
 
     </style>
@@ -258,16 +275,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="score">Score: <?= $correctAnswers ?>/<?= $totalQuestions ?></div>
         <a href="<?php echo base_url(); ?>index.php/Auth/main">
             <div id="home">
-                <img src="<?php echo base_url('assets/images/home.png'); ?>" alt="Home" width="100" height="100">
+            <a href="<?php echo base_url(); ?>index.php/Results/score?correctAnswers=<?= $correctAnswers ?>&totalQuestions=<?= $totalQuestions ?>">
+    <button class="next">Next -> </button>
+</a>
+                <!-- <img src="<?php echo base_url('assets/images/home.png'); ?>" alt="Home" width="100" height="100"> -->
             </div>
         </a>
         <!-- <a href="<?php echo base_url(); ?>index.php/Results/score?score=<?= $correctAnswers ?>">
     <button>Next</button>
 </a> -->
 
-<a href="<?php echo base_url(); ?>index.php/Results/score?correctAnswers=<?= $correctAnswers ?>&totalQuestions=<?= $totalQuestions ?>">
-    <button>Next</button>
-</a>
+
 
 
 
