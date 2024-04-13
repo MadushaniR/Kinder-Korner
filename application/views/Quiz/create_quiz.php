@@ -4,18 +4,9 @@
 <head>
     <meta charset="utf-8">
     <title>Create New Quiz</title>
-    <!-- Include Toastr.js -->
-    <script src="path/to/toastr.min.js"></script>
-    <link rel="stylesheet" href="path/to/toastr.min.css">
-    <script src="path/to/toastr.min.js"></script>
-    <link rel="stylesheet" href="path/to/toastr.min.css">
-
-    <!-- Add jQuery for handling AJAX requests -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link rel="stylesheet" href="<?php echo site_url(); ?>assets/all.css">
-    <link rel="stylesheet" href="<?php echo site_url(); ?>assets/toast/toast.min.css">
-    <script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
-    <script src="<?php echo site_url(); ?>assets/toast/toast.js"></script>
+    <!-- Include SweetAlert library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         .popup {
             position: fixed;
@@ -33,17 +24,39 @@
             background-position: center top;
 
         }
+
+        /* Custom CSS for visible borders */
         table {
-    border-collapse: collapse; /* Ensures table borders collapse into a single border */
-    width: 100%; /* Optionally, set the width of the table */
-}
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-th, td {
-    border: 1px solid black; /* Set border for table cells */
-    padding: 8px; /* Add padding to the cells for better readability */
-    text-align: left; /* Align text to the left within cells */
-}
+        th,
+        td {
+            border: 10px solid black;
+            padding: 8px;
+            text-align: left;
+        }
 
+        th {
+            cursor: pointer;
+        }
+
+        th:hover {
+            background-color: #f2f2f2;
+        }
+
+        .manage-quiz th {
+            border-width: 2px;
+        }
+
+        .manage-quiz td {
+            border-width: 2px;
+        }
+
+        .manage-quiz tr {
+            border-width: 2px;
+        }
     </style>
 </head>
 
@@ -151,7 +164,8 @@ th, td {
                     $('#editCorrectAnswer').val(data.correctAnswer);
                 },
                 error: function() {
-                    toastr.error('Error fetching question details.');
+                    // Display an error message using Swal
+                    Swal.fire('Error', 'Error fetching question details.', 'error');
                 }
             });
         }
@@ -172,6 +186,8 @@ th, td {
                     if (this.readyState == 4 && this.status == 200) {
                         // Reload the page or update the table
                         window.location.reload();
+                        // Display success message using Swal
+                        Swal.fire('Success', 'Question deleted successfully!', 'success');
                     }
                 };
                 xhttp.open("GET", "<?= base_url('QuizManage/deleteQuestion/') ?>" + questionID, true);
@@ -213,15 +229,15 @@ th, td {
                     // Close the popup after successful update
                     closePopup();
 
-                    // Display success message using Toastr.js
-                    toastr.success('Question details updated successfully!');
+                    // Display success message using Swal
+                    Swal.fire('Success', 'Question details updated successfully!', 'success');
 
                     // Optionally, you can update the table or reload the page
                     window.location.reload();
                 },
                 error: function() {
-                    // Display an error message using Toastr.js
-                    toastr.error('Error updating question details.');
+                    // Display an error message using Swal
+                    Swal.fire('Error', 'Error updating question details.', 'error');
                 }
             });
         }
@@ -256,29 +272,29 @@ th, td {
             document.getElementById('questions-container').appendChild(newQuestionDiv);
         }
 
-        // Display success or fail message using Toastr.js
+        // Display success or fail message using Swal
         <?php
-        if ($this->session->flashdata('success')) {
-            echo "toastr.success('" . $this->session->flashdata('success') . "');";
+        if ($this->session->flashdata('success') && strpos($this->session->flashdata('success'), 'Quiz created') === false) {
+            echo "Swal.fire('Success', '" . $this->session->flashdata('success') . "', 'success');";
         } elseif ($this->session->flashdata('error')) {
-            echo "toastr.error('" . $this->session->flashdata('error') . "');";
+            echo "Swal.fire('Error', '" . $this->session->flashdata('error') . "', 'error');";
         }
         ?>
     </script>
 
     <h2>Quiz Details</h2>
-    <table>
+    <table class="manage-quiz">
         <thead>
             <tr>
-                <th>Username</th>
-                <th>Quiz Name</th>
-                <th>Quiz Description</th>
-                <th>Question</th>
-                <th>Choice 1</th>
-                <th>Choice 2</th>
-                <th>Choice 3</th>
-                <th>Choice 4</th>
-                <th>Correct Answer</th>
+                <th onclick="sortTable(0)">Username</th>
+                <th onclick="sortTable(1)">Quiz Name</th>
+                <th onclick="sortTable(2)">Quiz Description</th>
+                <th onclick="sortTable(3)">Question</th>
+                <th onclick="sortTable(4)">Choice 1</th>
+                <th onclick="sortTable(5)">Choice 2</th>
+                <th onclick="sortTable(6)">Choice 3</th>
+                <th onclick="sortTable(7)">Choice 4</th>
+                <th onclick="sortTable(8)">Correct Answer</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -305,6 +321,54 @@ th, td {
 
     <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a>
 
+    <script>
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.querySelector("table");
+            switching = true;
+            dir = "asc";
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("td")[n];
+                    y = rows[i + 1].getElementsByTagName("td")[n];
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchcount++;
+                } else {
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+
+            // Remove all arrow symbols from table headers
+            var headers = table.querySelectorAll("th");
+            headers.forEach(header => {
+                header.innerHTML = header.innerHTML.replace(/ ▲| ▼/g, '');
+            });
+
+            // Add arrow symbol to the sorted column header
+            var arrow = dir === 'asc' ? ' ▲' : ' ▼';
+            headers[n].innerHTML += arrow;
+        }
+    </script>
 </body>
 
 </html>
