@@ -33,7 +33,7 @@
 
         th,
         td {
-            border: 1px solid black;
+            border: 10px solid black;
             padding: 8px;
             text-align: left;
         }
@@ -44,6 +44,18 @@
 
         th:hover {
             background-color: #f2f2f2;
+        }
+
+        .manage-quiz th {
+            border-width: 2px;
+        }
+
+        .manage-quiz td {
+            border-width: 2px;
+        }
+
+        .manage-quiz tr {
+            border-width: 2px;
         }
     </style>
 </head>
@@ -271,7 +283,7 @@
     </script>
 
     <h2>Quiz Details</h2>
-    <table>
+    <table class="manage-quiz">
         <thead>
             <tr>
                 <th onclick="sortTable(0)">Username</th>
@@ -345,6 +357,16 @@
                     }
                 }
             }
+
+            // Remove all arrow symbols from table headers
+            var headers = table.querySelectorAll("th");
+            headers.forEach(header => {
+                header.innerHTML = header.innerHTML.replace(/ ▲| ▼/g, '');
+            });
+
+            // Add arrow symbol to the sorted column header
+            var arrow = dir === 'asc' ? ' ▲' : ' ▼';
+            headers[n].innerHTML += arrow;
         }
     </script>
 </body>
