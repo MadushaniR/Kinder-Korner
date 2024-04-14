@@ -3,8 +3,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $correctAnswers = isset($_GET['correctAnswers']) ? $_GET['correctAnswers'] : 0;
 $totalQuestions = isset($_GET['totalQuestions']) ? $_GET['totalQuestions'] : 0;
-$userName = isset($_GET['user_name']) ? $_GET['user_name'] : ''; 
-$quizID = isset($_GET['quizID']) ? $_GET['quizID'] : ''; 
+$userName = isset($_GET['user_name']) ? $_GET['user_name'] : '';
+$quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
 
 ?>
 
@@ -67,7 +67,12 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
         .btn-wrapper {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: -200px;
+            width: 75%;
+            margin-left: auto;
+            margin-right: auto;
+            /* margin: 0 auto; */
+            text-align: center;
         }
     </style>
 </head>
