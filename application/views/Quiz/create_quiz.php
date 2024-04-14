@@ -22,7 +22,7 @@
             background-image: url(<?php echo base_url('assets/images/5555.png'); ?>);
             background-size: cover;
             background-position: center top;
-    
+
 
         }
 
@@ -49,7 +49,7 @@
 
         .manage-quiz th {
             border-width: 2px;
-            background-color: #ffffe6;
+            background-color: #e6ffff;
         }
 
         .manage-quiz td {
@@ -129,6 +129,9 @@
         .add-container input[type="submit"]:hover {
             background-color: #ff1a66;
             /* Change background color on hover */
+        }
+        .quiz-header{
+            text-align: center;
         }
     </style>
 </head>
@@ -358,7 +361,10 @@
         ?>
     </script>
 
-    <h2>Quiz Details</h2>
+    <div class="quiz-header">
+        <h2>Quiz Details</h2>
+    </div>
+
     <table class="manage-quiz">
         <thead>
             <tr>
