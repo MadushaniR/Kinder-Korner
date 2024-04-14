@@ -9,43 +9,23 @@ class Results extends CI_Controller
         $this->load->database();
         $this->load->model('ResultsModel');
     }
-//     public function score()
-// {
-//     $this->load->view('Quiz/score');
-// }
-// public function score()
-// {
-//     // Retrieve score from the query parameter
-//     $correctAnswers = $this->input->get('correctAnswers');
+    public function score()
+    {
+        // Retrieve correctAnswers, totalQuestions, user name, and quiz ID from the URL query parameters
+        $correctAnswers = $this->input->get('correctAnswers');
+        $totalQuestions = $this->input->get('totalQuestions');
+        $user_name = $this->session->userdata('user_name');
+        $quizID = $this->input->get('quizID');
     
-//     // Get total questions from the query parameter
-//     $totalQuestions = $this->input->get('totalQuestions');
+        // Load the view and pass the score, total questions, user name, and quiz ID as data
+        $this->load->view('Quiz/score', array(
+            'correctAnswers' => $correctAnswers,
+            'totalQuestions' => $totalQuestions,
+            'user_name' => $user_name,
+            'quizID' => $quizID // Pass the quiz ID to the score view
+        ));
+    }
     
-//     // Load the view and pass the score and total questions as data
-//     $this->load->view('Quiz/score', array('correctAnswers' => $correctAnswers, 'totalQuestions' => $totalQuestions));
-// }
-// public function score()
-// {
-//     // Retrieve correctAnswers, totalQuestions, and user name from the URL query parameters
-//     $correctAnswers = $this->input->get('correctAnswers');
-//     $totalQuestions = $this->input->get('totalQuestions');
-//     $user_name = $this->session->userdata('user_name');
-//     $this->data['user_name'] = $user_name;
-
-//     // Load the view and pass the score, total questions, and user name as data
-//     $this->load->view('Quiz/score', array('correctAnswers' => $correctAnswers, 'totalQuestions' => $totalQuestions, 'userName' => $user_name));
-// }
-
-public function score()
-{
-    // Retrieve correctAnswers, totalQuestions, and user name from the URL query parameters
-    $correctAnswers = $this->input->get('correctAnswers');
-    $totalQuestions = $this->input->get('totalQuestions');
-    $user_name = $this->session->userdata('user_name');
-
-    // Load the view and pass the score, total questions, and user name as data
-    $this->load->view('Quiz/score', array('correctAnswers' => $correctAnswers, 'totalQuestions' => $totalQuestions, 'user_name' => $user_name));
-}
 
     public function resultdisplay()
     {

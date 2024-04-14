@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-// Retrieve correctAnswers and totalQuestions from the URL query parameters
 $correctAnswers = isset($_GET['correctAnswers']) ? $_GET['correctAnswers'] : 0;
 $totalQuestions = isset($_GET['totalQuestions']) ? $_GET['totalQuestions'] : 0;
-$userName = isset($_GET['user_name']) ? $_GET['user_name'] : ''; // Get user name from query parameters
+$userName = isset($_GET['user_name']) ? $_GET['user_name'] : ''; 
+$quizID = isset($_GET['quizID']) ? $_GET['quizID'] : ''; 
 
 ?>
 
@@ -15,13 +15,10 @@ $userName = isset($_GET['user_name']) ? $_GET['user_name'] : ''; // Get user nam
     <meta charset="utf-8">
     <title>Quiz Results</title>
     <style>
-      
         body {
             background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
             background-size: cover;
             background-position: center top;
-
-
         }
 
         .score {
@@ -32,31 +29,45 @@ $userName = isset($_GET['user_name']) ? $_GET['user_name'] : ''; // Get user nam
         .congrats-img {
             margin-bottom: 20px;
         }
-        .results-container{
+
+        .results-container {
             width: 50%;
-          margin-left: 35%;
-          margin-right: 50%;
-
+            margin-left: 35%;
+            margin-right: 50%;
         }
-        .score{
+
+        .score {
             font-size: 50px;
-font-weight: 800;
-text-align: center;
-/* margin-left: -40%; */
-margin-top: -3%;
-background-color: yellow;
-width: 58%;
-
+            font-weight: 800;
+            text-align: center;
+            margin-top: -3%;
+            background-color: yellow;
+            width: 58%;
         }
-        .congrats-img{
 
+        .title-congrats {
+            font-size: 50px;
+            font-weight: 800;
+            text-align: center;
+            margin-left: -40%;
+            margin-bottom: 10px;
         }
-        .title-congrats{
-font-size: 50px;
-font-weight: 800;
-text-align: center;
-margin-left: -40%;
-margin-bottom: 10px;
+
+        #replay,
+        #home {
+            margin-top: 20px;
+        }
+
+        #replay img,
+        #home img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .btn-wrapper {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -72,10 +83,21 @@ margin-bottom: 10px;
         </div>
         <div class="score">Your Score: <?= $correctAnswers ?>/<?= $totalQuestions ?></div>
     </div>
-    <div>
-            <button class="kid-friendly-button" onclick="window.location.href='<?php echo base_url(); ?>index.php/Results/score?correctAnswers=<?= $correctAnswers ?>&totalQuestions=<?= $totalQuestions ?>'">Replay</button>
-            <button class="kid-friendly-button" onclick="window.location.href='<?php echo base_url(); ?>index.php/Auth/main'">Home</button>
+    <div class="btn-wrapper">
+        <!-- Replay button with image -->
+        <div id="replay">
+            <a href="<?php echo base_url(); ?>index.php/QuizDisplay/quizdisplay?quizID=<?= $quizID ?>">
+                <img src="<?php echo base_url('assets/images/play_again.png'); ?>" alt="Replay">
+            </a>
         </div>
+
+        <!-- Home button with image -->
+        <div id="home">
+            <a href="<?php echo base_url(); ?>index.php/Auth/main">
+                <img src="<?php echo base_url('assets/images/home.png'); ?>" alt="Home">
+            </a>
+        </div>
+    </div>
 </body>
 
 </html>
