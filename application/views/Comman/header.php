@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="author" content="Your Name">
@@ -64,7 +63,6 @@
     }
   </style>
 </head>
-
 <body>
   <header>
     <div class="container">
@@ -87,5 +85,4 @@
     </div>
   </header>
   </body>
-
 </html>
