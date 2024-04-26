@@ -134,7 +134,7 @@
             <div class="container">
                 <div class="site-name">Kinder Koner</div>
                 <!-- <div class="login-button">Login</div> -->
-                <div class="login-button"><a href="<?php echo base_url('index.php/Auth/main'); ?>">Login</a></div>
+                <div class="login-button"><a href="<?php echo base_url('Auth/login'); ?>">Login</a></div>
             </div>
         </div>
     </header>
@@ -142,7 +142,9 @@
         <div class="landing-title">
             <h1>Inspire a Lifetime of Learning and Discovery!</h1>
         </div>
-        <button>Get Started </button>
+        <!-- <button>Get Started </button> -->
+        <button onclick="location.href='<?php echo base_url('Auth/login'); ?>'">Get Started</button>
+
     </div>
 </body>
 </html>

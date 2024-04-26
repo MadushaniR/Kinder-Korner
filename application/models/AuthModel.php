@@ -26,7 +26,7 @@ class AuthModel extends CI_Model
 
             $this->db->insert('users', $data);
             $this->session->set_flashdata('suc', 'You are registered please login');
-            redirect('Auth/');
+            redirect('Auth/login');
         }
     }
     
@@ -47,7 +47,7 @@ class AuthModel extends CI_Model
             redirect('Auth/main');
         } else {
             $this->session->set_flashdata('warning', 'Incorrect Authentication!!!');
-            redirect('Auth/');
+            redirect('Auth/login');
         }
     }
 

@@ -21,6 +21,12 @@ class Auth extends CI_Controller
 		$this->load->view('Auth/register');
 	}
 
+	public function login()
+	{
+		$this->load->view('Auth/login');
+	}
+
+
 	public function registration_form()
 	{
 		$this->AuthModel->register_user();
@@ -37,7 +43,7 @@ class Auth extends CI_Controller
 			redirect('auth/main');
 		} else {
 			$this->session->set_flashdata('warning', 'Incorrect Authentication!!!');
-			redirect('Auth/');
+			redirect('Auth/login');
 		}
 	}
 
@@ -53,6 +59,6 @@ class Auth extends CI_Controller
 	{
 		$this->session->unset_userdata('userID');
 		$this->session->set_flashdata('suc', 'You have been logged out successfully.');
-		redirect('/');
+		redirect('Auth/login');
 	}
 }

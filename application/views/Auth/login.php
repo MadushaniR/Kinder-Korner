@@ -100,7 +100,7 @@
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								Don't have an account? <a href="Auth/register" class="text-dark">Create One</a>
+								Don't have an account? <a href="<?php echo base_url('Auth/register'); ?>" class="text-dark">Create One</a>
 							</div>
 						</div>
 					</div>
