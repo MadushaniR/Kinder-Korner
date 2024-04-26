@@ -104,5 +104,4 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
         </div>
     </div>
 </body>
-
 </html>

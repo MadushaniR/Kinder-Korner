@@ -127,12 +127,14 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="nav">
             <div class="container">
                 <div class="site-name">Kinder Koner</div>
-                <div class="login-button">Login</div>
+                <!-- <div class="login-button">Login</div> -->
+                <div class="login-button"><a href="<?php echo base_url('index.php/Auth/main'); ?>">Login</a></div>
             </div>
         </div>
     </header>
