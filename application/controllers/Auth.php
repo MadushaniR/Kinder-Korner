@@ -13,7 +13,7 @@ class Auth extends CI_Controller
 	{
 		$data['user_name'] = $this->session->userdata('user_name');
 		$data['userID'] = $this->session->userdata('userID');
-		$this->load->view('Auth/login');
+		$this->load->view('LandingPage/LandingPageView');
 	}
 
 	public function register()
