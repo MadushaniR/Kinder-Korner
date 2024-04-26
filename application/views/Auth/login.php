@@ -3,7 +3,6 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="author" content="Muhamad Nauval Azhar">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<meta name="description" content="This is a login page template based on Bootstrap 5">
 	<title>Kinder Koner</title>
@@ -101,7 +100,7 @@
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center">
-								Don't have an account? <a href="Auth/register" class="text-dark">Create One</a>
+								Don't have an account? <a href="<?php echo base_url('Auth/register'); ?>" class="text-dark">Create One</a>
 							</div>
 						</div>
 					</div>
