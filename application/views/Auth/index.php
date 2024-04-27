@@ -36,7 +36,7 @@
 
 		.card-title {
 			text-align: center;
-			font-size: 30px;
+			font-size: 40px;
 		}
 
 		.total-feedback {
@@ -72,10 +72,10 @@
 
 				foreach ($quizDetails as $quiz) {
 
-					echo '<div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-12 mb-3">';
+					echo '<div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-4">';
 					echo '<div class="card">';
 					echo '<div class="card-body">';
-					echo '<h5 class="card-title">' . $quiz['quizName'] . '</h5>';
+					echo '<h2 class="card-title">' . $quiz['quizName'] . '</h2>';
 					echo '<form method="" action="' . base_url() . 'index.php/QuizDisplay/quizdisplay">';
 					echo '<input type="hidden" name="quizID" value="' . $quiz['quizID'] . '">';
 					echo '<div class="play-quiz">';
