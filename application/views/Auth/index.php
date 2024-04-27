@@ -61,9 +61,9 @@
 	<section class="h-100">
 		<div class="container h-100">
 			<div class="row justify-content-sm-center h-100">
-				<form method="get" action="<?php echo base_url(); ?>index.php/QuizManage/createquiz">
+				<!-- <form method="get" action="<?php echo base_url(); ?>index.php/QuizManage/createquiz">
 					<input type="submit" value="Create New Quiz">
-				</form>
+				</form> -->
 				<div class="col-12 mb-3">
 					<!-- Add search bar input field -->
 					<input type="text" id="quizSearch" class="form-control" placeholder="Search quiz names">
@@ -87,15 +87,10 @@
 					echo '</div>';
 					echo '</form>';
 					echo '<div class="mt-2">';
-					// echo '<div class="feedback">';
-					// echo '<button class="btn btn-success" onclick="updateCount(' . $quiz['quizID'] . ', \'like\')">Like</button>';
-					// echo '<button class="btn btn-danger" onclick="updateCount(' . $quiz['quizID'] . ', \'dislike\')">Dislike</button>';
-					// echo '</div>';
 					echo '<div class="feedback">';
 					echo '<img src="' . base_url('assets/images/like.png') . '" alt="Like" onclick="updateCount(' . $quiz['quizID'] . ', \'like\')" class="feedback-btn" style="width: 50px; height: 50px;">';
 					echo '<img src="' . base_url('assets/images/dislike.png') . '" alt="Dislike" onclick="updateCount(' . $quiz['quizID'] . ', \'dislike\')" class="feedback-btn" style="width: 50px; height: 50px;">';
 					echo '</div>';
-
 					echo '<div class="total-feedback">';
 					echo '<div id="totalCount_' . $quiz['quizID'] . '">Total Likes: ' . $quiz['totalLikes'] . ', Total Dislikes: ' . $quiz['totalDislikes'] . '</div>';
 					echo '</div>';

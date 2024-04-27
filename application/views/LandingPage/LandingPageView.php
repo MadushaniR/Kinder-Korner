@@ -133,8 +133,7 @@
         <div class="nav">
             <div class="container">
                 <div class="site-name">Kinder Koner</div>
-                <!-- <div class="login-button">Login</div> -->
-                <div class="login-button"><a href="<?php echo base_url('Auth/login'); ?>">Login</a></div>
+                <button class="login-button" onclick="location.href='<?php echo base_url('Auth/login'); ?>'">Login</button>
             </div>
         </div>
     </header>
@@ -142,7 +141,6 @@
         <div class="landing-title">
             <h1>Inspire a Lifetime of Learning and Discovery!</h1>
         </div>
-        <!-- <button>Get Started </button> -->
         <button onclick="location.href='<?php echo base_url('Auth/login'); ?>'">Get Started</button>
 
     </div>
