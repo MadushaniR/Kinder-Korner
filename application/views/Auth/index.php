@@ -55,6 +55,23 @@
         .feedback {
             text-align: center;
         }
+		.search-box {
+        margin: 0 auto; 
+        text-align: center; 
+    }
+
+    .search-box input[type="text"] {
+        border-radius: 20px; 
+        padding: 8px 12px; 
+        font-size: 16px; 
+        border: 3px solid pink; 
+		width: 60%;
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 3%;
+		margin-bottom: 3%;
+    }
     </style>
 </head>
 
@@ -66,7 +83,7 @@
     <section class="h-100">
         <div class="container h-100">
             <div class="row justify-content-sm-center h-100">
-                <div class="col-12 mb-3">
+                <div class="search-box">
                     <input type="text" id="quizSearch" class="form-control" placeholder="Search quiz names">
                 </div>
 
