@@ -15,6 +15,7 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Quiz Results</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
     <style>
         body {
             background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
@@ -83,11 +84,11 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
         <?php $this->load->view('Comman/header'); ?>
     </header>
     <div class="results-container">
-        <div class="title-congrats">Congratulations <?php echo $user_name; ?>!</div>
+        <div class="title-congrats">Congratulations <?php echo $userName; ?>!</div>
         <div class="congrat-img">
             <img src="<?php echo base_url('assets/images/congrats.png'); ?>" alt="Congratulations" class="congrats-img">
         </div>
-        <div class="score">Your Score: <?= $correctAnswers ?>/<?= $totalQuestions ?></div>
+        <div class="score" id="score">Your Score: <?= $correctAnswers ?>/<?= $totalQuestions ?></div>
     </div>
     <div class="btn-wrapper">
         <!-- Replay button with image -->
@@ -104,5 +105,22 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
             </a>
         </div>
     </div>
+
+    <script>
+        var ScoreView = Backbone.View.extend({
+            el: '#score',
+            initialize: function() {
+                this.render();
+            },
+            render: function() {
+                this.$el.html('Your Score: ' + <?= $correctAnswers ?> + '/' + <?= $totalQuestions ?>);
+                return this;
+            }
+        });
+
+        var scoreView = new ScoreView();
+
+    </script>
 </body>
+
 </html>
