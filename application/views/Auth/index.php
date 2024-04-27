@@ -93,7 +93,7 @@ foreach ($quizDetails as $quiz) {
     echo '<div class="card" style="position: relative;">'; // Set position relative for overlay positioning
     echo '<img src="' . base_url($currentImagePath) . '" class="card-img-top" alt="Quiz Image" style="width: 100%; height: 200px; object-fit: cover;">'; // Added object-fit property
     echo '<div class="overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white;">'; // Overlay for text positioning
-    echo '<h2 class="card-title" style="color: white; text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black, 2px 2px 0 black; letter-spacing: 3px;">' . $quiz['quizName'] . '</h2>'; // Quiz title with increased stroke width and letter spacing
+    echo '<h2 class="card-title" style="color: white; text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black, 2px 2px 0 black; letter-spacing: 1px; font-family: \'Comic Sans MS\', cursive;">' . $quiz['quizName'] . '</h2>'; // Quiz title with increased stroke width, letter spacing, and kids-friendly font
     echo '<form method="" action="' . base_url() . 'index.php/QuizDisplay/quizdisplay" style="margin-top: 10px;">'; // Form for button positioning
     echo '<input type="hidden" name="quizID" value="' . $quiz['quizID'] . '">';
     echo '<input type="submit" class="btn btn-primary" value="Start Quiz">';
