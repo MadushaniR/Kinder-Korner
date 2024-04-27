@@ -68,15 +68,16 @@
 				<?php
 // Define image paths
 $imagePaths = [
-    'assets/images/3d-cartoon-background-children_23-2150473153.jpg',
-    'assets/images/back-to-school-vector-banner-design-with-colorfull_951778-44453-7.jpg',
-    'assets/images/cute-kids-school-objects-tag_110279-169.jpg',
-    'assets/images/flat-design-back-school-background_23-2148594824.jpg',
-    'assets/images/hand-drawn-abc-background_52683-123019.jpg',
     'assets/images/hand-drawn-back-school-background_23-2149458512.jpg',
-    'assets/images/school-supply-stationary-background-free-vector.png'
+    'assets/images/q3.avif',
+    'assets/images/cute-kids-school-objects-tag_110279-169.jpg',
+    'assets/images/80175e8f1b3f1afff108bd5c0081db96.jpg',
+    'assets/images/q4.avif',
+	'assets/images/3d-cartoon-background-children_23-2150473153.jpg',
+	'assets/images/back-to-school-vector-banner-design-with-colorfull_951778-44453-7.jpg',
+    'assets/images/school-supply-stationary-background-free-vector.png',
+    
 ];
-
 $this->db->select('quizID,quizName,totalLikes,totalDislikes');
 $this->db->distinct();
 $query = $this->db->get('quizdetails');
@@ -92,7 +93,7 @@ foreach ($quizDetails as $quiz) {
     echo '<div class="card" style="position: relative;">'; // Set position relative for overlay positioning
     echo '<img src="' . base_url($currentImagePath) . '" class="card-img-top" alt="Quiz Image" style="width: 100%; height: 200px; object-fit: cover;">'; // Added object-fit property
     echo '<div class="overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white;">'; // Overlay for text positioning
-    echo '<h2 class="card-title">' . $quiz['quizName'] . '</h2>'; // Quiz title
+    echo '<h2 class="card-title" style="color: white; text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black, 2px 2px 0 black; letter-spacing: 3px;">' . $quiz['quizName'] . '</h2>'; // Quiz title with increased stroke width and letter spacing
     echo '<form method="" action="' . base_url() . 'index.php/QuizDisplay/quizdisplay" style="margin-top: 10px;">'; // Form for button positioning
     echo '<input type="hidden" name="quizID" value="' . $quiz['quizID'] . '">';
     echo '<input type="submit" class="btn btn-primary" value="Start Quiz">';
@@ -101,11 +102,11 @@ foreach ($quizDetails as $quiz) {
     echo '</div>'; // End of card
     echo '<div class="mt-2" style="background-color: #fff; padding: 10px; border-radius: 5px;">'; // Feedback section with white background
     echo '<div class="feedback" style="text-align: center;">'; // Feedback section
-    echo '<img src="' . base_url('assets/images/like.png') . '" alt="Like" onclick="updateCount(' . $quiz['quizID'] . ', \'like\')" class="feedback-btn" style="width: 50px; height: 50px;">'; // Like button
-    echo '<img src="' . base_url('assets/images/dislike.png') . '" alt="Dislike" onclick="updateCount(' . $quiz['quizID'] . ', \'dislike\')" class="feedback-btn" style="width: 50px; height: 50px;">'; // Dislike button
+    echo '<img src="' . base_url('assets/images/like.png') . '" alt="Like" onclick="updateCount(' . $quiz['quizID'] . ', \'like\')" class="feedback-btn" style="width: 50px; height: 50px; cursor: pointer; margin-right: 10px;">'; // Like button with right margin
+    echo '<img src="' . base_url('assets/images/dislike.png') . '" alt="Dislike" onclick="updateCount(' . $quiz['quizID'] . ', \'dislike\')" class="feedback-btn" style="width: 50px; height: 50px; cursor: pointer;">'; // Dislike button
     echo '</div>';
-    echo '<div class="total-feedback" style="text-align: center;">'; // Total likes and dislikes section
-    echo '<div id="totalCount_' . $quiz['quizID'] . '">Total Likes: ' . $quiz['totalLikes'] . ', Total Dislikes: ' . $quiz['totalDislikes'] . '</div>';
+    echo '<div class="total-feedback" style="text-align: center; font-size: 18px; color: #555; margin-top: 5px;">'; // Total likes and dislikes section
+    echo '<div id="totalCount_' . $quiz['quizID'] . '">Total Likes: <span style="color: #4CAF50;">' . $quiz['totalLikes'] . '</span>, Total Dislikes: <span style="color: #F44336;">' . $quiz['totalDislikes'] . '</span></div>';
     echo '</div>';
     echo '</div>';
     echo '</div>'; // End of column
@@ -113,8 +114,6 @@ foreach ($quizDetails as $quiz) {
     $imageIndex++; // Increment image index
 }
 ?>
-
-
 			</div>
 	</section>
 
