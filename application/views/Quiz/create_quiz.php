@@ -12,10 +12,124 @@
             position: fixed;
             top: 50%;
             left: 50%;
+            max-height: 80%;
+            /* Adjusted max-height */
             transform: translate(-50%, -50%);
             padding: 20px;
-            background: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            background: #f6f6f6;
+            /* Light background color */
+            border-radius: 10px;
+            /* Rounded corners */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            /* Soft shadow */
+            border: 2px solid #00a3e0;
+            /* Blue border */
+            max-width: 70%;
+            /* Adjusted max-width */
+            overflow-y: auto;
+            /* Enable vertical scrolling if needed */
+        }
+
+        .edit-title {
+            text-align: center;
+            color: black;
+        }
+
+        .popup input[type="text"],
+        .popup textarea {
+            width: calc(100% - 20px);
+            /* Adjust width */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #00a3e0;
+            /* Blue border */
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .popup #save {
+            background-color: #ff1a66;
+            /* Pink button background */
+            color: #e6ffff;
+            /* White text color */
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Close button style */
+        .popup #close {
+            background-color: #00a3e0;
+            /* Blue button background */
+            color: white;
+            /* White text color */
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Button hover effect */
+        .popup #save:hover,
+        .popup #close:hover {
+            filter: brightness(110%);
+            /* Lighten button on hover */
+        }
+
+        /* Focus effect for text boxes */
+        .popup input[type="text"]:focus,
+        .popup textarea:focus {
+            border-color: #ff6961;
+            /* Red border on focus */
+        }
+
+        /* Label styles */
+        .popup label {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6961;
+            /* Red color */
+        }
+
+        .popup .close-btn,
+        .popup .save-btn,
+        .popup .cancel-btn {
+            background-color: #ff6961;
+            /* Red button background */
+            color: #fff;
+            /* White text color */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Save changes button style */
+        .popup .save-btn {
+            background-color: #00a3e0;
+            /* Blue button background */
+        }
+
+        /* Cancel button style */
+        .popup .cancel-btn {
+            background-color: #ff6961;
+            /* Red button background */
+        }
+
+        /* Button hover effect */
+        .popup .close-btn:hover,
+        .popup .save-btn:hover,
+        .popup .cancel-btn:hover {
+            background-color: #ff4d4d;
+            /* Darker red/blue on hover */
         }
 
         body {
@@ -130,7 +244,8 @@
             background-color: #ff1a66;
             /* Change background color on hover */
         }
-        .quiz-header{
+
+        .quiz-header {
             text-align: center;
         }
     </style>
@@ -191,6 +306,7 @@
             // Define HTML structure for the popup
             popupDiv.innerHTML = `
         <div id="editQuestionForm">
+        <h1 class="edit-title">Edit Quiz</h1>
             <label for="editQuizName">Quiz Name:</label>
             <input type="text" name="editQuizName" id="editQuizName" required>
 
@@ -218,8 +334,8 @@
             <!-- Add a hidden input field to store the question ID in the form -->
             <input type="hidden" name="editQuestionID" id="editQuestionID" value="${questionID}">
 
-            <button onclick="saveChanges()">Save Changes</button>
-            <button onclick="closePopup()">Close</button>
+            <button id ="save" onclick="saveChanges()">Save Changes</button>
+            <button id="close" onclick="closePopup()">Cancel</button>
         </div>
     `;
 
