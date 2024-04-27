@@ -13,6 +13,7 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Quiz Results</title>
     <style>
         body {
