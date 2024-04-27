@@ -61,11 +61,7 @@
 	<section class="h-100">
 		<div class="container h-100">
 			<div class="row justify-content-sm-center h-100">
-				<!-- <form method="get" action="<?php echo base_url(); ?>index.php/QuizManage/createquiz">
-					<input type="submit" value="Create New Quiz">
-				</form> -->
 				<div class="col-12 mb-3">
-					<!-- Add search bar input field -->
 					<input type="text" id="quizSearch" class="form-control" placeholder="Search quiz names">
 				</div>
 				<?php
