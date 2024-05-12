@@ -217,17 +217,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <p><?= $row->questionText ?></p>
                     </div>
                     <div class="options-grid">
-                        <!-- Option 1 -->
                         <button type="button" class="optionButton option1" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option1 ?>"><?= $row->option1 ?></button>
-                        <!-- Option 2 -->
                         <button type="button" class="optionButton option2" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option2 ?>"><?= $row->option2 ?></button>
-                        <!-- Option 3 -->
                         <button type="button" class="optionButton option3" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option3 ?>"><?= $row->option3 ?></button>
-                        <!-- Option 4 -->
                         <button type="button" class="optionButton option4" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option4 ?>"><?= $row->option4 ?></button>
                     </div>
 
-                    <!-- Updated: Use square brackets for array submission -->
                     <input type="hidden" name="questionID[]" value="<?= $row->questionID ?>">
                     <input type="hidden" name="selectedOption[<?= $row->questionID ?>]" id="selectedOption<?= $row->questionID ?>">
                 </div>

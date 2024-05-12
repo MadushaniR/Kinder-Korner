@@ -156,13 +156,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
         }
 
         #topic-container {
-            /* background-color: white; */
             width: 100%;
             text-align: center;
             font-size: 40px;
             font-weight: 800;
             color: red;
-            /* padding: 10px; */
         }
 
         #question-text {
@@ -199,10 +197,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
             margin-top: 2%;
             margin-bottom: 2%;
         }
-        /* Kid-friendly button style */
+     
 .next {
-    background-color: #ffd700; /* Yellow color */
-    color: #000; /* Black text */
+    background-color: #ffd700;
+    color: #000; 
     border: none;
     padding: 15px 40px;
     font-size: 20px;
@@ -213,7 +211,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 }
 
 .next:hover {
-    background-color: #ffec80; /* Lighter shade of yellow on hover */
+    background-color: #ffec80; 
 }
 
     </style>
@@ -266,9 +264,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         </button>
                     <?php } ?>
                 </div>
-                <!-- <p>Correct Answer: <span class="correct_answer"><?= $row->correctAnswer ?></span></p>
-                <p>Your Answer: <?= $userAnswerText ?></p>
-                <p><?= ($isCorrect ? 'Correct' : 'Incorrect') ?></p> -->
                 <hr>
             </div>
         <?php } ?>
@@ -279,7 +274,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <a href="<?php echo base_url(); ?>index.php/Results/score?correctAnswers=<?= $correctAnswers ?>&totalQuestions=<?= $totalQuestions ?>&quizID=<?= $quizID ?>">
                 <button class="next">Next -> </button>
             </a>
-                <!-- <img src="<?php echo base_url('assets/images/home.png'); ?>" alt="Home" width="100" height="100"> -->
             </div>
         </a>
     </div>

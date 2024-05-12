@@ -44,7 +44,6 @@
       margin-right: 10px;
     }
 
-    /* New navigation bar styling */
     nav {
       display: flex;
       margin-left: 20px;

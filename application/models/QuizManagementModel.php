@@ -1,33 +1,30 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+
 class QuizManagementModel extends CI_Model
 {
- 
+    // Method to logically delete a question
     public function deleteQuestion($questionID)
     {
-        // Get the quizID associated with the question
+        // Update isDeleted flag instead of deleting the question
+        $this->db->set('isDeleted', 1);
+        $this->db->where('questionID', $questionID);
+        $this->db->update('questions');
+
+        // Get quizID of the deleted question
         $quizID = $this->db->select('quizID')->from('questions')->where('questionID', $questionID)->get()->row()->quizID;
-
-        // Delete options first
-        $this->db->where('questionID', $questionID);
-        $this->db->delete('options');
-
-        // Now, delete the question
-        $this->db->where('questionID', $questionID);
-        $this->db->delete('questions');
-
-        // Check if there are no more questions for the same quiz
-        $remainingQuestions = $this->db->where('quizID', $quizID)->get('questions')->num_rows();
-
-        // If no more questions, delete the quizdetails row
+        
+        // Check if there are remaining undeleted questions in the same quiz
+        $remainingQuestions = $this->db->where('quizID', $quizID)->where('isDeleted', 0)->get('questions')->num_rows();
+        
+        // If there are no remaining questions, delete the quiz details as well
         if ($remainingQuestions == 0) {
             $this->db->where('quizID', $quizID);
             $this->db->delete('quizdetails');
         }
     }
 
- 
-
+    // Method to update question details
     public function updateQuestionDetails($questionID, $editedData)
     {
         // Update quiz details
@@ -35,7 +32,7 @@ class QuizManagementModel extends CI_Model
             'quizName' => $editedData['quizName'],
             'quizDescription' => $editedData['quizDescription']
         );
-        $this->db->where('quizID', $questionID);  // Use 'quizID' instead of 'questionID'
+        $this->db->where('quizID', $questionID);  
         $this->db->update('quizdetails', $quizData);
 
         // Update question details

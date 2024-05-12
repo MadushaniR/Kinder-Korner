@@ -91,14 +91,11 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
         <div class="score" id="score">Your Score: <?= $correctAnswers ?>/<?= $totalQuestions ?></div>
     </div>
     <div class="btn-wrapper">
-        <!-- Replay button with image -->
         <div id="replay">
             <a href="<?php echo base_url(); ?>index.php/QuizDisplay/quizdisplay?quizID=<?= $quizID ?>">
                 <img src="<?php echo base_url('assets/images/play_again.png'); ?>" alt="Replay">
             </a>
         </div>
-
-        <!-- Home button with image -->
         <div id="home">
             <a href="<?php echo base_url(); ?>index.php/Auth/main">
                 <img src="<?php echo base_url('assets/images/home.png'); ?>" alt="Home">
