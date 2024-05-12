@@ -6,15 +6,19 @@ class QuizManage extends CI_Controller
     function __construct()
     {
         parent::__construct();
+        // Load the database library
         $this->load->database();
     }
 
+    // Method to create a new quiz
     public function createquiz()
     {
-        // $this->load->model('quizmodel');
+        // Load QuizDisplayModel
         $this->load->model('QuizDisplayModel');
 
+        // Process form submission
         if ($this->input->post()) {
+            // Retrieve form data
             $quizName = $this->input->post('quizName');
             $quizDescription = $this->input->post('quizDescription');
             $questions = $this->input->post('question');
@@ -27,6 +31,7 @@ class QuizManage extends CI_Controller
             // Check if the quizName already exists
             $existingQuiz = $this->db->get_where('quizdetails', array('quizName' => $quizName))->row();
 
+            // Determine quizID
             if ($existingQuiz) {
                 // Use the existing quizID
                 $quizID = $existingQuiz->quizID;
@@ -39,7 +44,6 @@ class QuizManage extends CI_Controller
                     'quizName' => $quizName,
                     'quizDescription' => $quizDescription,
                     'userID' => $this->session->userdata('userID'),
-                    // 'username' => $this->session->userdata('username'),
                     'quizNumber' => $quizNumber
                 );
 
@@ -47,7 +51,7 @@ class QuizManage extends CI_Controller
                 $quizID = $this->db->insert_id();
             }
 
-            // Loop through questions and insert them
+            // Insert questions and options
             foreach ($questions as $index => $question) {
                 $questionData = array(
                     'quizID' => $quizID,
@@ -69,25 +73,32 @@ class QuizManage extends CI_Controller
                 $this->db->insert('options', $optionsData);
             }
 
+            // Set flashdata and redirect
             $this->session->set_flashdata('success', 'Quiz created successfully!');
             redirect('QuizManage/createquiz');
         }
 
-        // Retrieve quiz details
+        // Retrieve quiz details for display
         $this->data['quizzes'] = $this->QuizDisplayModel->getQuizDetails();
 
+        // Load the create quiz view
         $this->load->view('Quiz/create_quiz', $this->data);
     }
 
+    // Method to delete a question
     public function deleteQuestion($questionID)
     {
+        // Load QuizManagementModel
         $this->load->model('QuizManagementModel');
+        // Call deleteQuestion method
         $this->QuizManagementModel->deleteQuestion($questionID);
         // You can redirect to the same page or send a success message if needed
     }
 
+    // Method to update question details
     public function updateQuestion($questionID)
     {
+        // Load QuizManagementModel
         $this->load->model('QuizManagementModel');
 
         // Retrieve edited data from the POST request

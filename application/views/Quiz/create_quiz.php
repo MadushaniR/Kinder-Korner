@@ -13,21 +13,14 @@
             top: 50%;
             left: 50%;
             max-height: 80%;
-            /* Adjusted max-height */
             transform: translate(-50%, -50%);
             padding: 20px;
             background: #f6f6f6;
-            /* Light background color */
             border-radius: 10px;
-            /* Rounded corners */
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            /* Soft shadow */
             border: 2px solid #00a3e0;
-            /* Blue border */
             max-width: 70%;
-            /* Adjusted max-width */
             overflow-y: auto;
-            /* Enable vertical scrolling if needed */
         }
 
         .edit-title {
@@ -498,29 +491,29 @@
         </thead>
         <tbody>
             <?php foreach ($quizzes as $quiz) : ?>
-                <tr>
-                    <td><?= $quiz->username ?></td>
-                    <td><?= $quiz->quizName ?></td>
-                    <td><?= $quiz->quizDescription ?></td>
-                    <td><?= $quiz->questionText ?></td>
-                    <td><?= $quiz->option1 ?></td>
-                    <td><?= $quiz->option2 ?></td>
-                    <td><?= $quiz->option3 ?></td>
-                    <td><?= $quiz->option4 ?></td>
-                    <td><?= $quiz->correctAnswer ?></td>
-                    <td>
-                        <button onclick="editRow(<?= $quiz->questionID ?>)">
-                            <img src="<?php echo base_url('assets/images/edit.png'); ?>" alt="Edit" style="width:35px; height:35px">
-                        </button>
-                        <button onclick="deleteRow(<?= $quiz->questionID ?>)">
-                            <img src="<?php echo base_url('assets/images/delete.png'); ?>" alt="Delete" style="width:35px; height:35px">
-                        </button>
-
-                        <!-- <button onclick="editRow(<?= $quiz->questionID ?>)">Edit</button>
-                        <button onclick="deleteRow(<?= $quiz->questionID ?>)">Delete</button> -->
-                    </td>
-                </tr>
+                <?php if ($quiz->isDeleted == 0) : ?>
+                    <tr>
+                        <td><?= $quiz->username ?></td>
+                        <td><?= $quiz->quizName ?></td>
+                        <td><?= $quiz->quizDescription ?></td>
+                        <td><?= $quiz->questionText ?></td>
+                        <td><?= $quiz->option1 ?></td>
+                        <td><?= $quiz->option2 ?></td>
+                        <td><?= $quiz->option3 ?></td>
+                        <td><?= $quiz->option4 ?></td>
+                        <td><?= $quiz->correctAnswer ?></td>
+                        <td>
+                            <button onclick="editRow(<?= $quiz->questionID ?>)">
+                                <img src="<?php echo base_url('assets/images/edit.png'); ?>" alt="Edit" style="width:35px; height:35px">
+                            </button>
+                            <button onclick="deleteRow(<?= $quiz->questionID ?>)">
+                                <img src="<?php echo base_url('assets/images/delete.png'); ?>" alt="Delete" style="width:35px; height:35px">
+                            </button>
+                        </td>
+                    </tr>
+                <?php endif; ?>
             <?php endforeach; ?>
+
         </tbody>
     </table>
 

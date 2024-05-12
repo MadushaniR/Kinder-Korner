@@ -116,7 +116,7 @@
                             <img src="<?php echo base_url($currentImagePath); ?>" class="card-img-top" alt="Quiz Image" style="width: 100%; height: 200px; object-fit: cover;">
                             <div class="overlay" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white;">
                                 <h2 class="card-title" style="color: white; text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black, 2px 2px 0 black; letter-spacing: 1px; font-family: 'Comic Sans MS', cursive;"><?php echo $quiz['quizName']; ?></h2>
-                                <form method="" action="<?php echo base_url(); ?>index.php/QuizDisplay/quizdisplay" class="start-quiz-btn"> <!-- Added class for styling -->
+                                <form method="" action="<?php echo base_url(); ?>index.php/QuizDisplay/quizdisplay" class="start-quiz-btn"> 
                                     <input type="hidden" name="quizID" value="<?php echo $quiz['quizID']; ?>">
                                     <input type="submit" class="btn btn-primary" value="Start Quiz">
                                 </form>
@@ -142,51 +142,46 @@
     </section>
 
     <script>
-        document.getElementById('quizSearch').addEventListener('input', function() {
-            var searchValue = this.value.toLowerCase();
-            var quizCards = document.querySelectorAll('.card');
+    // Function to filter quiz cards based on search input
+    document.getElementById('quizSearch').addEventListener('input', function() {
+        // Convert search input value to lowercase for case-insensitive comparison
+        var searchValue = this.value.toLowerCase();
+        // Select all quiz cards
+        var quizCards = document.querySelectorAll('.card');
 
-            quizCards.forEach(function(card) {
-                var cardTitle = card.querySelector('.card-title').innerText.toLowerCase();
-                if (cardTitle.includes(searchValue)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+        // Iterate through each quiz card
+        quizCards.forEach(function(card) {
+            // Get the text content of the card title and convert to lowercase
+            var cardTitle = card.querySelector('.card-title').innerText.toLowerCase();
+            // Check if the card title contains the search value
+            if (cardTitle.includes(searchValue)) {
+                // Display the card if it matches the search value
+                card.style.display = 'block';
+            } else {
+                // Hide the card if it does not match the search value
+                card.style.display = 'none';
+            }
         });
+    });
 
-        function updateCount(quizID, type) {
-            var userID = <?php echo $userID; ?>; // Assuming $userID is available in your view
-            var xhr = new XMLHttpRequest();
-            var url = '<?php echo base_url("index.php/UserFeedback/updateFeedback"); ?>/' + userID + '/' + quizID + '/' + type;
-            xhr.open('POST', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // Function to update like/dislike count for a quiz
+    function updateCount(quizID, type) {
+        // Fetch the user ID from PHP (assuming it's already defined in the page)
+        var userID = <?php echo $userID; ?>; 
+        // Create a new XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+        // Construct the URL for the AJAX request
+        var url = '<?php echo base_url("index.php/UserFeedback/updateFeedback"); ?>/' + userID + '/' + quizID + '/' + type;
+        // Open a POST request to the specified URL
+        xhr.open('POST', url, true);
+        // Set the request header
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        // Send the request
+        xhr.send();
+        // Reload the page after updating the feedback
+        window.location.reload();
+    }
+</script>
 
-            // Send the request without waiting for the response
-            xhr.send();
-
-            // Reload the page immediately after sending the request
-            window.location.reload();
-        }
-    </script>
-
-
-    <script type="text/javascript">
-        <?php if ($this->session->flashdata('suc')) { ?>
-            toastr.success("<?php echo $this->session->flashdata('suc'); ?>");
-        <?php } else if ($this->session->flashdata('wrong')) {  ?>
-            toastr.error("<?php echo $this->session->flashdata('wrong'); ?>");
-        <?php } else if ($this->session->flashdata('warning')) {  ?>
-            toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
-        <?php } else if ($this->session->flashdata('info')) {  ?>
-            toastr.info("<?php echo $this->session->flashdata('info'); ?>");
-        <?php } ?>
-        <?php
-        $this->session->unset_userdata('suc'); ?>
-        <?php
-        $this->session->unset_userdata('wrong'); ?>
-    </script>
 </body>
-
 </html>
