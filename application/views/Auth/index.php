@@ -58,6 +58,7 @@
 		.search-box {
         margin: 0 auto; 
         text-align: center; 
+        width: 50%;
     }
 
     .search-box input[type="text"] {

@@ -6,7 +6,6 @@ class UserFeedback extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        // Load the database library
         $this->load->database();
     }
 

@@ -224,7 +224,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </header>
 
 <body>
-    <!-- <img src="<?php echo base_url('assets/images/review_quiz.png'); ?>" alt="review Image" class="review-img"> -->
     <div id="topic-container">
         <img src="<?php echo base_url('assets/images/review_quiz.png'); ?>" alt="review Image" class="review-img">
     </div>

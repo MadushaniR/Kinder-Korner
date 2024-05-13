@@ -43,9 +43,7 @@
 
         .popup #save {
             background-color: #ff1a66;
-            /* Pink button background */
             color: #e6ffff;
-            /* White text color */
             padding: 10px 15px;
             border-radius: 10px;
             font-size: 16px;
@@ -53,13 +51,9 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
-        /* Close button style */
         .popup #close {
             background-color: #00a3e0;
-            /* Blue button background */
             color: white;
-            /* White text color */
             padding: 10px 15px;
             border-radius: 10px;
             font-size: 16px;
@@ -68,35 +62,27 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Button hover effect */
         .popup #save:hover,
         .popup #close:hover {
             filter: brightness(110%);
-            /* Lighten button on hover */
         }
 
-        /* Focus effect for text boxes */
         .popup input[type="text"]:focus,
         .popup textarea:focus {
             border-color: #ff6961;
-            /* Red border on focus */
         }
 
-        /* Label styles */
         .popup label {
             font-size: 18px;
             font-weight: bold;
             color: #ff6961;
-            /* Red color */
         }
 
         .popup .close-btn,
         .popup .save-btn,
         .popup .cancel-btn {
             background-color: #ff6961;
-            /* Red button background */
             color: #fff;
-            /* White text color */
             border: none;
             border-radius: 5px;
             padding: 10px 20px;
@@ -105,32 +91,24 @@
             transition: background-color 0.3s ease;
         }
 
-        /* Save changes button style */
         .popup .save-btn {
             background-color: #00a3e0;
-            /* Blue button background */
         }
 
-        /* Cancel button style */
         .popup .cancel-btn {
             background-color: #ff6961;
-            /* Red button background */
         }
 
-        /* Button hover effect */
         .popup .close-btn:hover,
         .popup .save-btn:hover,
         .popup .cancel-btn:hover {
             background-color: #ff4d4d;
-            /* Darker red/blue on hover */
         }
 
         body {
             background-image: url(<?php echo base_url('assets/images/5555.png'); ?>);
             background-size: cover;
             background-position: center top;
-
-
         }
 
         table {
@@ -196,46 +174,30 @@
 
         .add-container button {
             padding: 10px 20px;
-            /* Add padding to the buttons */
             margin: 10px 0;
-            /* Add margin to create space between buttons */
             background-color: #5DADE2;
-            /* Set background color */
             color: white;
-            /* Set text color */
             border: none;
-            /* Remove border */
             border-radius: 5px;
-            /* Add border radius */
             cursor: pointer;
-            /* Add pointer cursor on hover */
         }
 
         .add-container button:hover {
             background-color: #3c9cdd;
-            /* Change background color on hover */
         }
 
         .add-container input[type="submit"] {
             padding: 10px 20px;
-            /* Add padding to the submit button */
             margin: 10px 0;
-            /* Add margin to create space */
             background-color: #ff4d88;
-            /* Set background color */
             color: white;
-            /* Set text color */
             border: none;
-            /* Remove border */
             border-radius: 5px;
-            /* Add border radius */
             cursor: pointer;
-            /* Add pointer cursor on hover */
         }
 
         .add-container input[type="submit"]:hover {
             background-color: #ff1a66;
-            /* Change background color on hover */
         }
 
         .quiz-header {
@@ -248,8 +210,6 @@
     <header>
         <?php $this->load->view('Comman/header'); ?>
     </header>
-    <!-- <h1>Manage Quiz</h1> -->
-
     <?php echo form_open('QuizManage/createquiz'); ?>
 
     <div class=add-container>
@@ -409,7 +369,7 @@
 
             // Make an AJAX request to update the data in the database
             $.ajax({
-                type: 'POST', // Use POST method for updating data
+                type: 'POST', 
                 url: 'http://localhost/Kinder-Korner/QuizManage/updateQuestion/' + questionID,
                 dataType: 'json',
                 data: editedData,
@@ -516,9 +476,6 @@
 
         </tbody>
     </table>
-
-
-    <!-- <a href="<?php echo base_url(); ?>index.php/Auth/main"><button type="button">Go to Home Page</button></a> -->
 
     <script>
         function sortTable(n) {
