@@ -39,7 +39,7 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
         }
 
         .score {
-            font-size: 50px;
+            font-size: 40px;
             font-weight: 800;
             text-align: center;
             margin-top: -3%;
@@ -76,6 +76,15 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
             /* margin: 0 auto; */
             text-align: center;
         }
+        .star{
+            font-size: 60px;
+            font-weight: 800;
+            text-align: center;
+            margin-top: -3%;
+            background-color: yellow;
+            width: 58%;
+            color: red;
+        }
     </style>
 </head>
 
@@ -89,6 +98,8 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
             <img src="<?php echo base_url('assets/images/congrats.png'); ?>" alt="Congratulations" class="congrats-img">
         </div>
         <div class="score" id="score">Your Score: <?= $correctAnswers ?>/<?= $totalQuestions ?></div>
+        <div class="star">Total Stars: <?= $totalScore ?></div>
+
     </div>
     <div class="btn-wrapper">
         <div id="replay">

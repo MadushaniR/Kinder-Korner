@@ -19,12 +19,17 @@ class Results extends CI_Controller
         $user_name = $this->session->userdata('user_name');
         $quizID = $this->input->get('quizID');
 
+         // Retrieve the current user's total score
+         $userID = $this->session->userdata('userID');
+         $totalScore = $this->ResultsModel->getUserTotalScore($userID);
+
         // Load the view and pass the score, total questions, user name, and quiz ID as data
         $this->load->view('Quiz/score', array(
             'correctAnswers' => $correctAnswers,
             'totalQuestions' => $totalQuestions,
             'user_name' => $user_name,
-            'quizID' => $quizID // Pass the quiz ID to the score view
+            'quizID' => $quizID, 
+            'totalScore' => $totalScore 
         ));
     }
 
