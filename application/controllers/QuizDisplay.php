@@ -6,7 +6,6 @@ class QuizDisplay extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        // Load the database library
         $this->load->database();
     }
 
@@ -49,8 +48,6 @@ class QuizDisplay extends CI_Controller
                     'selectedOption' => $selectedOption,
                 );
             }
-
-            // Redirect to results page
             redirect('Results/resultdisplay?quizID=' . $quizID);
         }
 
@@ -63,7 +60,6 @@ class QuizDisplay extends CI_Controller
         // Initialize the currentPage variable
         $this->data['currentPage'] = 0;
         $this->load->model('AuthModel');
-        // Load quiz view
         $this->load->view('Quiz/play_quiz', $this->data);
     }
 }

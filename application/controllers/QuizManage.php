@@ -6,14 +6,12 @@ class QuizManage extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        // Load the database library
         $this->load->database();
     }
 
     // Method to create a new quiz
     public function createquiz()
     {
-        // Load QuizDisplayModel
         $this->load->model('QuizDisplayModel');
 
         // Process form submission
@@ -80,25 +78,20 @@ class QuizManage extends CI_Controller
 
         // Retrieve quiz details for display
         $this->data['quizzes'] = $this->QuizDisplayModel->getQuizDetails();
-
-        // Load the create quiz view
         $this->load->view('Quiz/create_quiz', $this->data);
     }
 
     // Method to delete a question
     public function deleteQuestion($questionID)
     {
-        // Load QuizManagementModel
         $this->load->model('QuizManagementModel');
         // Call deleteQuestion method
         $this->QuizManagementModel->deleteQuestion($questionID);
-        // You can redirect to the same page or send a success message if needed
     }
 
     // Method to update question details
     public function updateQuestion($questionID)
     {
-        // Load QuizManagementModel
         $this->load->model('QuizManagementModel');
 
         // Retrieve edited data from the POST request
