@@ -3,6 +3,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class ResultsModel extends CI_Model
 {
+
+    // total stars earned count
+    public function getUserTotalScore($userID)
+    {
+        $this->db->select_sum('score');
+        $this->db->where('userID', $userID);
+        $query = $this->db->get('results');
+        $result = $query->row();
+        return $result->score;
+    }
+
     // Method to get results of a quiz
     public function getResults($quizID)
     {
