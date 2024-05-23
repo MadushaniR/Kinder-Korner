@@ -1,135 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<meta name="description" content="This is a login page template based on Bootstrap 5">
-	<title>Kinder Koner</title>
-	<link rel="stylesheet" href="<?php echo site_url(); ?>assets/all.css">
-	<link rel="stylesheet" href="<?php echo site_url(); ?>assets/toast/toast.min.css">
-	<script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
-	<script src="<?php echo site_url(); ?>assets/toast/toast.js"></script>
-	<style>
-		body {
-			background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
-			background-size: cover;
-			background-position: center top;
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="This is a register">
+    <title>Kinder Koner</title>
+    <style>
+        body {
+            background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
+            background-size: cover;
+            background-position: center top;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
 
-		}
+        .register-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* min-height: 100vh; */
+        }
 
-		.card {
-			margin-top: 40%;
-			margin-bottom: auto;
-			max-width: 400px;
-			width: 100%;
-			/* border: 2px dashed black;  */
-			box-sizing: border-box;
-		}
+        .register-img {
+            margin-top: 5%;
+            margin-bottom: 2%;
+        }
 
-		.register-img {
-			position: absolute;
-			top: 50px;
-			left: 50%;
-			transform: translateX(-50%);
-			z-index: 1;
-		}
+        .register-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
 
-		.card label,
-		.card h1 {
-			color: black !important;
-			font-weight: bold;
-			font-size: larger;
-		}
+        .register-form h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
 
-		.card input[type="email"],
-		.card input[type="text"] {
-			box-shadow: 0px 0px 6px 2px #ffe6e6;
-		}
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-		.card input[type="password"] {
-			box-shadow: 0px 0px 6px 2px #ccffff;
-		}
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            color: black !important;
+            font-weight: bold;
+            font-size: larger;
+        }
 
-		.card .btn-login {
-			background-color: #EEAAAB;
-			color: black;
-			border: 2px solid black;
-			border-radius: 30px;
-			width: 50%;
-			font-weight: bolder;
-			font-size: larger;
-			margin: auto;
-			margin-top: 10px;
-			margin-bottom: -15px;
-		}
-		.card .btn-login:hover {
-			background-color: #D89DA5;
-		}
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0px 0px 6px 2px #ffe6e6;
+        }
 
-		.card-footer {
-			background-color: #bfecf2;
-		}
-	</style>
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #EEAAAB;
+            color: #333;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #D89DA5;
+        }
+
+        .text-center {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+    </style>
 </head>
 
 <body>
-	<img src="<?php echo base_url('assets/images/register.png'); ?>" alt="Register Image" class="register-img">
-	<section class="h-100">
-		<div class="container h-100">
-			<div class="row justify-content-sm-center h-100">
-				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
-					<div class="card shadow-lg">
-						<div class="card-body p-5">
-							<!-- <h1 class="fs-4 card-title fw-bold mb-4">Register</h1> -->
-							<?php echo form_open('Auth/registration_form'); ?>
-							<div class="mb-3">
-								<label class="mb-2 text-muted" for="email">Username</label>
-								<input id="username" name="username" type="text" class="form-control" value="" required autofocus>
-							</div>
-							<div class="mb-3">
-								<label class="mb-2 text-muted" for="email">E-Mail</label>
-								<input id="email" name="email" type="email" class="form-control" value="" required autofocus>
-							</div>
-							<div class="mb-3">
-								<label class="mb-2 text-muted" for="password">Passsword</label>
-								<input id="password" name="password" type="password" class="form-control" required>
-							</div>
-							<div class="mb-3">
-								<label class="mb-2 text-muted" for="password">Confirm Passsword</label>
-								<input id="password" name="con_password" type="password" class="form-control" required>
-							</div>
-							<div class="d-flex align-items-center">
-							<button type="submit" class="btn btn-login ms-auto">Register</button>
-							</div>
-							<?php echo form_close(); ?>
-						</div>
-						<div class="card-footer py-3 border-0">
-							<div class="text-center">
-								Have an account ? <a href="<?php echo base_url('Auth/login'); ?>" class="text-dark"> Login</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+    <div class="register-container">
+        <img src="<?php echo base_url('assets/images/register.png'); ?>" alt="Register Image" class="register-img">
+    </div>
+    <div class="register-container">
+        <div class="register-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="email">E-Mail</label>
+                <input id="email" name="email" type="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" required>
+            </div>
+            <div class="form-group">
+                <label for="con_password">Confirm Password</label>
+                <input id="con_password" name="con_password" type="password" required>
+            </div>
+            <div class="form-group">
+                <button id="registerBtn">Register</button>
+            </div>
+            <div class="text-center">
+                Have an account? <a href="<?php echo base_url('index.php/Auth/login'); ?>" class="text-dark">Login</a>
+            </div>
+        </div>
+    </div>
 
-	<script type="text/javascript">
-		<?php if ($this->session->flashdata('suc')) { ?>
-			toastr.success("<?php echo $this->session->flashdata('suc'); ?>");
-		<?php } else if ($this->session->flashdata('wrong')) {  ?>
-			toastr.error("<?php echo $this->session->flashdata('wrong'); ?>");
-		<?php } else if ($this->session->flashdata('warning')) {  ?>
-			toastr.warning("<?php echo $this->session->flashdata('warning'); ?>");
-		<?php } else if ($this->session->flashdata('info')) {  ?>
-			toastr.info("<?php echo $this->session->flashdata('info'); ?>");
-		<?php } ?>
-		<?php
-		$this->session->unset_userdata('suc'); ?>
-		<?php
-		$this->session->unset_userdata('wrong'); ?>
-	</script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
+    <script src="<?php echo site_url(); ?>assets/toast/toast.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#registerBtn').click(function(event) {
+                event.preventDefault();
+                // Perform AJAX registration request
+                $.ajax({
+                    url: "<?php echo base_url() ?>index.php/Auth/register_user",
+                    type: "POST",
+                    data: {
+                        username: $('#username').val(),
+                        email: $('#email').val(),
+                        password: $('#password').val(),
+                        con_password: $('#con_password').val()
+                    },
+                    success: function(response) {
+                        // Redirect to the login page
+                        window.location.href = "<?php echo base_url('index.php/Auth/login'); ?>";
+                        // Display success message to the user
+                        $.toast({
+                            heading: 'Success',
+                            text: response.message,
+                            icon: 'success',
+                            position: 'top-right',
+                            stack: false
+                        });
+
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        $.toast({
+                            heading: 'Error',
+                            text: xhr.responseJSON.message,
+                            icon: 'error',
+                            position: 'top-right',
+                            stack: false
+                        });
+                    }
+                });
+
+            });
+        });
+    </script>
 </body>
 
 </html>

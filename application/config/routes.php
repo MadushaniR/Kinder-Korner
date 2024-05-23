@@ -19,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 | Please see the user guide for complete details:
 |
-|	https://codeigniter.com/user_guide/general/routing.html
+|	https://codeigniter.com/userguide3/general/routing.html
 |
 | -------------------------------------------------------------------------
 | RESERVED ROUTES
@@ -52,3 +52,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['Auth/register_user'] = 'Auth/register_user';
+$route['Auth/login'] = 'Auth/login';
+
+$route['Auth/login_user'] = 'Auth/login_user';
+
+
+$route['quizes'] = 'QuizDisplay/quizes_get';
+$route['quiz/(:num)'] = 'QuizDisplay/getQuestionDetails/$1';
+$route['quizdisplay'] = 'QuizDisplay/quizdisplay';
+

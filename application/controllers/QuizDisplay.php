@@ -1,44 +1,60 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class QuizDisplay extends CI_Controller
+require APPPATH . '/libraries/RestController.php';
+require APPPATH . '/libraries/Format.php';
+
+use chriskacerguis\RestServer\RestController;
+
+class QuizDisplay extends RestController
 {
+
     function __construct()
     {
+        // Construct the parent class
         parent::__construct();
-        $this->load->database();
+        $this->load->model('QuizDisplayModel');
+        $this->load->library('session');
+    }
+
+    public function quizes_get()
+    {
+
+        $userID = $this->session->userdata('userID');
+        $quizDetails = $this->QuizDisplayModel->getQuizDetails();
+        $data['quizDetails'] = $quizDetails;
+        $data['userID'] = $userID;
+        $this->load->view('Quiz/quizes', $data);
     }
 
     // Method to fetch question details via AJAX
-    public function getQuestionDetails($questionID)
+    public function question_get($questionID)
     {
-        $this->load->model('QuizDisplayModel');
-        // Get question details from QuizDisplayModel and encode as JSON
+        if (!$questionID) {
+            $this->response(null, 400);
+        }
+
         $questionDetails = $this->QuizDisplayModel->getQuestionDetails($questionID);
-        echo json_encode($questionDetails);
+        if ($questionDetails) {
+            $this->response($questionDetails, 200);
+        } else {
+            $this->response(null, 404);
+        }
     }
 
     // Method to display the quiz
     public function quizdisplay()
     {
-        // Fetch user session data
         $user_name = $this->session->userdata('user_name');
         $userID = $this->session->userdata('userID');
-        // Get quizID from URL parameter
         $quizID = $this->input->get('quizID');
 
-        // Redirect to home page if no quizID is provided
         if (!$quizID) {
             redirect(base_url());
         }
 
-        // Load QuizDisplayModel
-        $this->load->model('QuizDisplayModel');
-
-        // Process form submission
         if ($this->input->post()) {
             $userAnswers = array();
-            // Iterate through submitted answers
             foreach ($this->input->post('questionID') as $questionID) {
                 $selectedOption = $this->input->post('selectedOption')[$questionID];
                 $userAnswers[] = array(
@@ -48,18 +64,33 @@ class QuizDisplay extends CI_Controller
                     'selectedOption' => $selectedOption,
                 );
             }
-            redirect('Results/resultdisplay?quizID=' . $quizID);
+            // redirect('Results/resultdisplay?quizID=' . $quizID);
         }
 
-        // Fetch quiz questions
         $this->data['questions'] = $this->QuizDisplayModel->getQuestions($quizID);
         $this->data['quizID'] = $quizID;
         $this->data['user_name'] = $user_name;
         $this->data['userID'] = $userID;
-
-        // Initialize the currentPage variable
         $this->data['currentPage'] = 0;
-        $this->load->model('AuthModel');
-        $this->load->view('Quiz/play_quiz', $this->data);
+
+        // $this->load->view('Quiz/play_quiz', $this->data);
+    }
+
+    // Method to fetch quiz questions with options for a given quiz ID and render view
+    public function quizplay_get()
+    {
+        $quizID = $this->get('quizID');
+        if (!$quizID) {
+            $this->response(['status' => false, 'error' => 'Quiz ID not provided'], RestController::HTTP_BAD_REQUEST);
+            return;
+        }
+
+        $quizData = $this->QuizDisplayModel->getQuizDetailsById($quizID);
+
+        if ($quizData) {
+            $this->load->view('Quiz/play_quiz', ['quizData' => $quizData]);
+        } else {
+            $this->response(['status' => false, 'error' => 'Quiz not found'], RestController::HTTP_NOT_FOUND);
+        }
     }
 }

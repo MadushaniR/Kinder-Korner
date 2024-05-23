@@ -3,6 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class UserFeedbackModel extends CI_Model
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+    }
+
     // Method to update user feedback for a quiz
     public function updateFeedback($userID, $quizID, $action)
     {
@@ -65,4 +71,3 @@ class UserFeedbackModel extends CI_Model
         return $query->row_array();
     }
 }
-?>

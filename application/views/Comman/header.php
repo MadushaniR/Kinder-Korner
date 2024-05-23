@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
-  <meta name="author" content="Your Name">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kinder Koner</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="<?php echo site_url(); ?>assets/all.css">
   <link rel="stylesheet" href="<?php echo site_url(); ?>assets/toast/toast.min.css">
   <script src="<?php echo site_url(); ?>assets/toast/jqm.js"></script>
@@ -62,6 +63,7 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="container">
@@ -69,19 +71,20 @@
         <h1>Kinder Koner</h1>
       </div>
       <nav>
-        <a href="<?php echo site_url('Auth/main'); ?>">&nbsp;Home</a> |
-        <a href="<?php echo site_url('Auth/main'); ?>">&nbsp;Quiz</a> |
-        <a href="<?php echo site_url('index.php/QuizManage/createquiz?'); ?>">&nbsp;Manage</a>
+        <a href="<?php echo base_url('index.php/QuizDisplay/quizes'); ?>">&nbsp;Home</a> |
+        <a href="<?php echo base_url('index.php/QuizDisplay/quizes'); ?>">&nbsp;Quiz</a> |
+        <a href="<?php echo base_url('index.php/QuizManage/quize_manage'); ?>">&nbsp;Manage</a>
       </nav>
       <div class="user-info">
         <?php if ($this->session->userdata('userID') && $this->session->userdata('user_name')) { ?>
           <p class="welcome-message"><?php echo $this->session->userdata('user_name'); ?></p>
-          <a href="<?php echo site_url('Auth/logout'); ?>" class="btn btn-danger">Logout</a>
+          <a href="<?php echo base_url('index.php/Auth/login'); ?>" class="btn btn-danger">Logout</a>
         <?php } else { ?>
-          <a href="<?php echo site_url('Auth/'); ?>" class="btn btn-primary">Login</a>
+          <a href="<?php echo base_url('index.php/Auth/login'); ?>" class="btn btn-primary">Login</a>
         <?php } ?>
       </div>
     </div>
   </header>
-  </body>
+</body>
+
 </html>
