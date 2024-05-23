@@ -7,6 +7,9 @@
     <title>Landing Page</title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
     <style>
         body {
             background-image: url(<?php echo base_url('assets/images/rt.jpg'); ?>);
@@ -134,7 +137,7 @@
         <div class="nav">
             <div class="container">
                 <div class="site-name">Kinder Koner</div>
-                <button class="login-button" onclick="location.href='<?php echo base_url('Auth/login'); ?>'">Login</button>
+                <button class="login-button" id="loginButton">Login</button>
             </div>
         </div>
     </header>
@@ -142,8 +145,32 @@
         <div class="landing-title">
             <h1>Inspire a Lifetime of Learning and Discovery!</h1>
         </div>
-        <button onclick="location.href='<?php echo base_url('Auth/login'); ?>'">Get Started</button>
-
+        <button id="getStartedButton">Get Started</button>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            // Define Backbone view
+            var MyView = Backbone.View.extend({
+                el: '.content-container',
+                events: {
+                    'click #getStartedButton': 'handleGetStarted',
+                    'click #loginButton': 'handleLogin'
+                },
+                handleGetStarted: function() {
+                    // Redirect to login page on Get Started button click
+                    window.location.href = '<?php echo base_url('index.php/Auth/login'); ?>';
+                },
+                handleLogin: function() {
+                    // Redirect to login page on Login button click
+                    window.location.href = '<?php echo base_url('index.php/Auth/login'); ?>';
+                }
+            });
+
+            // Initialize Backbone view
+            var myView = new MyView();
+        });
+    </script>
 </body>
+
 </html>

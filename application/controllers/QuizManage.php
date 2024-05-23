@@ -1,106 +1,113 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class QuizManage extends CI_Controller
+require APPPATH . '/libraries/RestController.php';
+require APPPATH . '/libraries/Format.php';
+
+use chriskacerguis\RestServer\RestController;
+
+class QuizManage extends RestController
 {
     function __construct()
     {
         parent::__construct();
-        $this->load->database();
+        $this->load->model('QuizManagementModel');
+        $this->load->library('session');
     }
 
-    // Method to create a new quiz
-    public function createquiz()
+    public function quize_manage_get()
     {
-        $this->load->model('QuizDisplayModel');
+        $quizData = $this->QuizManagementModel->getQuizData();
+        $this->load->view('Quiz/create_quiz', ['quizData' => $quizData]);
+    }
 
-        // Process form submission
-        if ($this->input->post()) {
-            // Retrieve form data
-            $quizName = $this->input->post('quizName');
-            $quizDescription = $this->input->post('quizDescription');
-            $questions = $this->input->post('question');
-            $choices1 = $this->input->post('choice1');
-            $choices2 = $this->input->post('choice2');
-            $choices3 = $this->input->post('choice3');
-            $choices4 = $this->input->post('choice4');
-            $answers = $this->input->post('answer');
+    public function quiz_data_get()
+    {
+        $quizData = $this->QuizManagementModel->getQuizData();
+        $this->response($quizData, 200);
+    }
 
-            // Check if the quizName already exists
-            $existingQuiz = $this->db->get_where('quizdetails', array('quizName' => $quizName))->row();
+    public function create_quiz_post()
+    {
+        $quizName = $this->input->post('quizName');
+        $quizDescription = $this->input->post('quizDescription');
+        $userID = $this->session->userdata('userID');
 
-            // Determine quizID
-            if ($existingQuiz) {
-                // Use the existing quizID
-                $quizID = $existingQuiz->quizID;
-            } else {
-                // Insert new quiz details
-                $maxQuizNumber = $this->db->select_max('quizNumber')->get('quizdetails')->row()->quizNumber;
-                $quizNumber = $maxQuizNumber + 1;
+        $quizData = [
+            'quizName' => $quizName,
+            'quizDescription' => $quizDescription,
+            'userID' => $userID
+        ];
 
-                $data = array(
-                    'quizName' => $quizName,
-                    'quizDescription' => $quizDescription,
-                    'userID' => $this->session->userdata('userID'),
-                    'quizNumber' => $quizNumber
-                );
+        $questions = $this->input->post('questionText');
+        $correctAnswers = $this->input->post('correctAnswer');
+        $options1 = $this->input->post('option1');
+        $options2 = $this->input->post('option2');
+        $options3 = $this->input->post('option3');
+        $options4 = $this->input->post('option4');
 
-                $this->db->insert('quizdetails', $data);
-                $quizID = $this->db->insert_id();
-            }
+        $questionsData = [];
 
-            // Insert questions and options
-            foreach ($questions as $index => $question) {
-                $questionData = array(
-                    'quizID' => $quizID,
-                    'questionText' => $question,
-                    'correctAnswer' => $answers[$index]
-                );
-
-                $this->db->insert('questions', $questionData);
-                $questionID = $this->db->insert_id();
-
-                $optionsData = array(
-                    'questionID' => $questionID,
-                    'option1' => $choices1[$index],
-                    'option2' => $choices2[$index],
-                    'option3' => $choices3[$index],
-                    'option4' => $choices4[$index]
-                );
-
-                $this->db->insert('options', $optionsData);
-            }
-
-            // Set flashdata and redirect
-            $this->session->set_flashdata('success', 'Quiz created successfully!');
-            redirect('QuizManage/createquiz');
+        for ($i = 0; $i < count($questions); $i++) {
+            $questionsData[] = [
+                'questionText' => $questions[$i],
+                'correctAnswer' => $correctAnswers[$i],
+                'option1' => $options1[$i],
+                'option2' => $options2[$i],
+                'option3' => $options3[$i],
+                'option4' => $options4[$i]
+            ];
         }
 
-        // Retrieve quiz details for display
-        $this->data['quizzes'] = $this->QuizDisplayModel->getQuizDetails();
-        $this->load->view('Quiz/create_quiz', $this->data);
+        $result = $this->QuizManagementModel->create_quiz($quizData, $questionsData);
+
+        if ($result) {
+            $this->response(['message' => 'Quiz created successfully'], 200);
+        } else {
+            $this->response(['message' => 'Quiz creation failed: Quiz name already exists'], 400);
+        }
     }
 
-    // Method to delete a question
-    public function deleteQuestion($questionID)
+    public function delete_question_post()
     {
-        $this->load->model('QuizManagementModel');
-        // Call deleteQuestion method
-        $this->QuizManagementModel->deleteQuestion($questionID);
+        $questionID = $this->input->post('questionID');
+        $result = $this->QuizManagementModel->delete_question($questionID);
+
+        if ($result) {
+            $this->response(['message' => 'Question deleted successfully'], 200);
+        } else {
+            $this->response(['message' => 'Failed to delete question'], 400);
+        }
     }
+
+    public function get_question_details_post()
+    {
+        $questionID = $this->input->post('questionID');
+        $questionDetails = $this->QuizManagementModel->get_question_details($questionID);
+
+        if ($questionDetails) {
+            $this->response(['success' => true, 'data' => $questionDetails], 200);
+        } else {
+            $this->response(['success' => false, 'message' => 'Failed to fetch question details.'], 400);
+        }
+    }
+
 
     // Method to update question details
-    public function updateQuestion($questionID)
+    public function update_question_post()
     {
         $this->load->model('QuizManagementModel');
 
         // Retrieve edited data from the POST request
         $editedData = $this->input->post();
 
+        // Extract the question ID from the POST data
+        $questionID = $editedData['questionID'];
+
         // Update the question details in the database
         $this->QuizManagementModel->updateQuestionDetails($questionID, $editedData);
 
         // Send a success response
-        echo json_encode(['success' => true]);
+        $this->response(['success' => true], 200);
     }
 }

@@ -1,20 +1,12 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
-
-$correctAnswers = isset($_GET['correctAnswers']) ? $_GET['correctAnswers'] : 0;
-$totalQuestions = isset($_GET['totalQuestions']) ? $_GET['totalQuestions'] : 0;
-$userName = isset($_GET['user_name']) ? $_GET['user_name'] : '';
-$quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Quiz Results</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
     <style>
         body {
@@ -73,10 +65,10 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
             width: 75%;
             margin-left: auto;
             margin-right: auto;
-            /* margin: 0 auto; */
             text-align: center;
         }
-        .star{
+
+        .star {
             font-size: 60px;
             font-weight: 800;
             text-align: center;
@@ -93,41 +85,43 @@ $quizID = isset($_GET['quizID']) ? $_GET['quizID'] : '';
         <?php $this->load->view('Comman/header'); ?>
     </header>
     <div class="results-container">
-        <div class="title-congrats">Congratulations <?php echo $userName; ?>!</div>
+        <div class="title-congrats" id="congrats">Congratulations <?php echo $this->session->userdata('user_name'); ?>!</div>
         <div class="congrat-img">
             <img src="<?php echo base_url('assets/images/congrats.png'); ?>" alt="Congratulations" class="congrats-img">
         </div>
-        <div class="score" id="score">Your Score: <?= $correctAnswers ?>/<?= $totalQuestions ?></div>
-        <div class="star">Total Stars: <?= $totalScore ?></div>
-
+        <div class="score" id="score">Your Score: <?php echo $score; ?> / <?php echo $totalQuestions; ?></div>
+        <div class="star" id="star">Total Stars: <?php echo $totalStars; ?></div>
     </div>
     <div class="btn-wrapper">
         <div id="replay">
-            <a href="<?php echo base_url(); ?>index.php/QuizDisplay/quizdisplay?quizID=<?= $quizID ?>">
+            <a href="<?php echo base_url(); ?>index.php/QuizDisplay/quizplay?quizID=<?= $quizID ?>">
                 <img src="<?php echo base_url('assets/images/play_again.png'); ?>" alt="Replay">
             </a>
         </div>
         <div id="home">
-            <a href="<?php echo base_url(); ?>index.php/Auth/main">
+            <a href="<?php echo base_url(); ?>index.php/QuizDisplay/quizes">
                 <img src="<?php echo base_url('assets/images/home.png'); ?>" alt="Home">
             </a>
         </div>
     </div>
 
     <script>
-        var ScoreView = Backbone.View.extend({
-            el: '#score',
-            initialize: function() {
-                this.render();
-            },
-            render: function() {
-                this.$el.html('Your Score: ' + <?= $correctAnswers ?> + '/' + <?= $totalQuestions ?>);
-                return this;
-            }
+        $(document).ready(function() {
+            var ScoreView = Backbone.View.extend({
+                el: '.results-container',
+                initialize: function() {
+                    this.render();
+                },
+                render: function() {
+                    this.$el.find('#congrats').text("Congratulations <?php echo $this->session->userdata('user_name'); ?>!");
+                    this.$el.find('#score').text("Your Score: <?php echo $score; ?> / <?php echo $totalQuestions; ?>");
+                    this.$el.find('#star').text("Total Stars: <?php echo $totalStars; ?>");
+                    return this;
+                }
+            });
+
+            var scoreView = new ScoreView();
         });
-
-        var scoreView = new ScoreView();
-
     </script>
 </body>
 

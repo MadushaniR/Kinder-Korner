@@ -1,36 +1,39 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class UserFeedback extends CI_Controller
+require APPPATH . '/libraries/RestController.php';
+require APPPATH . '/libraries/Format.php';
+
+use chriskacerguis\RestServer\RestController;
+
+class UserFeedback extends RestController
 {
     function __construct()
     {
         parent::__construct();
         $this->load->database();
+        $this->load->model('UserFeedbackModel');
     }
 
     // Method to update user feedback on a quiz
-    public function updateFeedback($userID, $quizID, $action)
+    public function updateFeedback_post()
     {
-        // Load UserFeedbackModel and call updateFeedback method
-        $this->load->model('UserFeedbackModel');
-        return $this->UserFeedbackModel->updateFeedback($userID, $quizID, $action);
-    }
+        $userID = $this->post('userID');
+        $quizID = $this->post('quizID');
+        $action = $this->post('action');
 
-    // Method to get the count of likes and dislikes for a quiz
-    public function getLikesDislikesCount($quizID)
-    {
-        // Load UserFeedbackModel and call getLikesDislikesCount method
-        $this->load->model('UserFeedbackModel');
-        return $this->UserFeedbackModel->getLikesDislikesCount($quizID);
-    }
-
-    // Method to update quiz details based on user feedback
-    public function updateQuizDetails($quizID)
-    {
-        // Load UserFeedbackModel and call updateQuizDetails method
-        $this->load->model('UserFeedbackModel');
-        return $this->UserFeedbackModel->updateQuizDetails($quizID);
+        $result = $this->UserFeedbackModel->updateFeedback($userID, $quizID, $action);
+        if ($result) {
+            $this->response([
+                'success' => true,
+                'totalLikes' => $result['totalLikes'],
+                'totalDislikes' => $result['totalDislikes']
+            ], RestController::HTTP_OK);
+        } else {
+            $this->response([
+                'success' => false,
+                'message' => 'Failed to update feedback'
+            ], RestController::HTTP_BAD_REQUEST);
+        }
     }
 }
-?>

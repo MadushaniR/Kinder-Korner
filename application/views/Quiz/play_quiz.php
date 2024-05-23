@@ -5,233 +5,301 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Play Quiz</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Play</title>
     <style>
-        .question-container {
-            display: none;
-        }
-
-        .question-container.active {
-            display: block;
-        }
-
-        .optionButton.selected {
-            background-color: blue;
-            color: white;
-        }
-
+        /* Kids-friendly CSS styles */
         body {
             background-image: url(<?php echo base_url('assets/images/bg.jpg'); ?>);
             background-size: cover;
-            background-position: center;
+            background-position: center bottom;
+            margin: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+
         }
 
-        .top-bottons {
-            display: grid;
-            grid-template-columns: auto auto;
-            grid-gap: 10px;
-            margin-bottom: 20px;
-            margin-top: 20px;
+        /* h1 {
+            color: #fff;
+            font-size: 36px;
+            margin-top: 0;
+        } */
+
+        #quiz-container {
+            margin-top: 2%;
+            /* border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+            /* padding: 3%;
+            margin: 10% auto; */
+
         }
 
-        #prevButton,
-        #nextButton {
-            background-color: yellow;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 20px;
-            width: fit-content;
-            cursor: pointer;
-            margin-left: 25%;
+        .question {
+            display: none;
         }
 
-        #nextButton {
-            background-color: yellow;
-            margin-left: 55%;
-            padding: 10px;
-            border-radius: 5px;
-            width: 20%;
-            font-size: 20px;
+        .question.active {
+            display: block;
         }
 
-        #container {
-            /* width: 50%;
-            margin-top: 100px;
-            margin-left: auto;
-            margin-right: auto;
-            border: 2px solid black; */
-            /* padding: 20px; */
-        }
-
-        .question-box {
-            width: 100%;
-            background-color: white;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            padding-top: 15px;
-            padding-bottom: 10px;
-            color: black;
-            /* padding: 5px; */
-            text-align: center;
-            font-size: 30px;
-            font-weight: bold;
-        }
-
-        .options-grid {
-            width: 80%;
-            margin-top: 10%;
-            margin-left: auto;
-            margin-right: auto;
+        .options {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            grid-gap: 25px;
+            grid-gap: 10px;
+            margin-top: 11%;
             align-items: center;
-            justify-items: center;
+            text-align: center;
+            margin-left: 20%;
+            margin-right: auto;
         }
 
-        .optionButton {
-            width: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+        .option {
+            background-color: #ffcc00;
             padding: 15px;
             font-size: 25px;
             border-radius: 50px;
             border-width: 3px;
+            width: 50%;
+            color: #333;
+            cursor: pointer;
+            font-size: 25px;
+            margin-bottom: 3%;
+            padding: 10px;
+            text-align: center;
+            transition: background-color 0.3s ease;
         }
 
-        .optionButton.option1 {
+        #btn1 {
             background-color: #EEAAAB;
         }
 
-        .optionButton.option2 {
+        #btn2 {
             background-color: #86D1EE;
         }
 
-        .optionButton.option3 {
+        #btn3 {
             background-color: #B2D531;
         }
 
-        .optionButton.option4 {
+        #btn4 {
             background-color: #CA82E6;
         }
+
+        .option:hover {
+            background-color: #ff9900;
+        }
+
+        .selected {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* #prev-question,
+        #next-question,
+        #submit-answers {
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 10px 20px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        } */
+
+        #prev-question {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffff00;
+            float: left;
+            margin-left: 1%;
+            margin-top: 1%;
+            border: 2px solid #000;
+            border-color: #000;
+            border-width: 2px;
+            border-radius: 10px;
+            color: #000;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 10px 20px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+            width: 10%;
+        }
+
+        #next-question {
+            margin-right: 1%;
+            margin-top: 1%;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #ffff00;
+            float: right;
+            border: 2px solid #000;
+            border-color: #000;
+            border-width: 2px;
+            border-radius: 10px;
+            color: #000;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 10px 20px;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+            width: 10%;
+        }
+
+        #submit-answers {
+            display: block;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: red;
+            color: #fff;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+
+        #prev-question:hover,
+        #next-question:hover {
+            background-color: #e6e600;
+        }
+
+        #submit-answers:hover {
+            background-color: #ff4d4d;
+        }
+
 
         .submit-btn {
             text-align: center;
             margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: red;
+            color: #000;
         }
 
-        .submit-btn input[type="submit"] {
-            background-color: red;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 20px;
-            cursor: pointer;
+        .qText {
+            background-color: #fff;
+            color: #000;
+            font-weight: bolder;
+            text-align: center;
+            margin-top: 5%;
+            margin-bottom: 10%;
+            padding-top: 3%;
+            padding-bottom: 3%;
         }
     </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let currentPage = <?= $currentPage ?>; // Initialize currentPage with the value passed from the controller
-            const totalQuestions = <?= count($questions) ?>; // Total number of questions
-
-            function showQuestion(page) {
-                const questions = document.querySelectorAll('.question-container');
-                questions.forEach(function(question, index) {
-                    question.style.display = index === page ? 'block' : 'none';
-                });
-            }
-
-
-            function updateButtonsState() {
-                // Enable or disable previous and next buttons based on the current page
-                const prevButton = document.getElementById('prevButton');
-                const nextButton = document.getElementById('nextButton');
-
-                prevButton.disabled = currentPage === 0;
-                nextButton.disabled = currentPage === totalQuestions - 1;
-            }
-
-            document.getElementById('nextButton').addEventListener('click', function() {
-                if (currentPage < totalQuestions - 1) {
-                    currentPage++;
-                    showQuestion(currentPage);
-                    updateButtonsState();
-                }
-            });
-
-            document.getElementById('prevButton').addEventListener('click', function() {
-                if (currentPage > 0) {
-                    currentPage--;
-                    showQuestion(currentPage);
-                    updateButtonsState();
-                }
-            });
-
-            showQuestion(currentPage);
-            updateButtonsState();
-        });
-
-        function selectOption(button) {
-            const questionID = button.getAttribute('data-question');
-            const selectedOption = button.getAttribute('data-value');
-
-            // Remove the "selected" class from all buttons in the same question
-            const allButtons = document.querySelectorAll('.optionButton[data-question="' + questionID + '"]');
-            allButtons.forEach(function(btn) {
-                btn.classList.remove('selected');
-            });
-
-            // Add the "selected" class to the clicked button
-            button.classList.add('selected');
-
-            // Set the selected option in the hidden input field
-            const hiddenInput = document.getElementById('selectedOption' + questionID);
-            if (hiddenInput) {
-                hiddenInput.value = selectedOption;
-            }
-        }
-    </script>
 </head>
 
 <body>
     <header>
         <?php $this->load->view('Comman/header'); ?>
     </header>
-    <div id="container">
-        <form method="post" action="<?php echo base_url(); ?>index.php/Results/resultdisplay?quizID=<?= $quizID ?>">
-            <div class=top-bottons>
-                <button type="button" id="prevButton" <?= $currentPage === 0 ? 'disabled' : '' ?>>
-                    << Previous </button>
+    <!-- <h1>Quiz Play</h1> -->
+    <div id="quiz-container">
+        <?php if (!empty($quizData)) : ?>
+            <button id="prev-question">
+                << Previous</button>
+                    <button id="next-question">Next >></button>
+                    <?php foreach ($quizData as $index => $question) : ?>
+                        <div class="question <?php echo $index === 0 ? 'active' : ''; ?>" data-question-id="<?php echo $question->questionID; ?>">
+                            <h2 class="qText"><?php echo $question->questionText; ?></h2>
+                            <div class="options">
+                                <button class="option" id="btn1" data-option="<?php echo $question->option1; ?>"><?php echo $question->option1; ?></button>
+                                <button class="option" id="btn2" data-option="<?php echo $question->option2; ?>"><?php echo $question->option2; ?></button>
+                                <button class="option" id="btn3" data-option="<?php echo $question->option3; ?>"><?php echo $question->option3; ?></button>
+                                <button class="option" id="btn4" data-option="<?php echo $question->option4; ?>"><?php echo $question->option4; ?></button>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
 
-                        <button type="button" id="nextButton" <?= $currentPage === count($questions) - 1 ? 'disabled' : '' ?>>Next >> </button>
-            </div>
-            <?php foreach ($questions as $row) { ?>
-                <div class="question-container">
-                    <div class="question-box">
-                        <p><?= $row->questionText ?></p>
-                    </div>
-                    <div class="options-grid">
-                        <button type="button" class="optionButton option1" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option1 ?>"><?= $row->option1 ?></button>
-                        <button type="button" class="optionButton option2" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option2 ?>"><?= $row->option2 ?></button>
-                        <button type="button" class="optionButton option3" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option3 ?>"><?= $row->option3 ?></button>
-                        <button type="button" class="optionButton option4" onclick="selectOption(this)" data-question="<?= $row->questionID ?>" data-value="<?= $row->option4 ?>"><?= $row->option4 ?></button>
-                    </div>
-
-                    <input type="hidden" name="questionID[]" value="<?= $row->questionID ?>">
-                    <input type="hidden" name="selectedOption[<?= $row->questionID ?>]" id="selectedOption<?= $row->questionID ?>">
-                </div>
-            <?php } ?>
-            <div class="submit-btn">
-                <input type="submit" value="Submit">
-            </div>
-        </form>
+                    <button id="submit-answers">Submit Answers</button>
+                <?php else : ?>
+                    <p>No questions available for this quiz.</p>
+                <?php endif; ?>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var currentIndex = 0;
+            var questions = $('.question');
+            var selectedAnswers = [];
+            // Fetch quiz ID from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const quizID = urlParams.get('quizID');
+
+            // Function to show or hide previous and next buttons based on the current question index
+            function toggleButtons() {
+                $('#prev-question').toggle(currentIndex > 0);
+                $('#next-question').toggle(currentIndex < questions.length - 1);
+                $('#submit-answers').toggle(currentIndex === questions.length - 1);
+            }
+
+            // Initialize button states
+            toggleButtons();
+
+            // Handle option click
+            $('.option').on('click', function() {
+                var selectedOption = $(this).data('option');
+                var questionID = $(this).closest('.question').data('question-id');
+                selectedAnswers[currentIndex] = {
+                    questionID: questionID,
+                    answer: selectedOption
+                };
+                $('.option').removeClass('selected'); 
+                $(this).addClass('selected');
+            });
+
+            // Handle previous button click
+            $('#prev-question').on('click', function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    showQuestion(currentIndex);
+                    toggleButtons();
+                    // Highlight previously selected option
+                    var prevSelectedOption = selectedAnswers[currentIndex] ? selectedAnswers[currentIndex].answer : null;
+                    if (prevSelectedOption) {
+                        $('.option').removeClass('selected');
+                        $('.option[data-option="' + prevSelectedOption + '"]').addClass('selected');
+                    }
+                }
+            });
+
+            // Handle next button click
+            $('#next-question').on('click', function() {
+                if (currentIndex < questions.length - 1) {
+                    currentIndex++;
+                    showQuestion(currentIndex);
+                    toggleButtons();
+                    // Highlight previously selected option
+                    var prevSelectedOption = selectedAnswers[currentIndex] ? selectedAnswers[currentIndex].answer : null;
+                    if (prevSelectedOption) {
+                        $('.option').removeClass('selected');
+                        $('.option[data-option="' + prevSelectedOption + '"]').addClass('selected');
+                    }
+                }
+            });
+
+            // Handle submit button click
+            $('#submit-answers').on('click', function() {
+                // Redirect to result page with selected answers and quiz ID
+                var selectedAnswersString = JSON.stringify(selectedAnswers);
+                window.location.href = '<?php echo base_url("index.php/Results/resultdisplay"); ?>?quizID=' + quizID + '&selectedAnswers=' + encodeURIComponent(selectedAnswersString);
+            });
+
+            // Function to show current question and hide others
+            function showQuestion(index) {
+                questions.removeClass('active');
+                questions.eq(index).addClass('active');
+            }
+        });
+    </script>
+
 </body>
 
 </html>

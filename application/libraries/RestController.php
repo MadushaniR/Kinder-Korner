@@ -3,6 +3,8 @@
 namespace chriskacerguis\RestServer;
 
 use Exception;
+use RecursiveArrayIterator;
+use RecursiveIteratorIterator;
 use stdClass;
 
 defined('BASEPATH') or exit('No direct script access allowed');
@@ -11,7 +13,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * CodeIgniter Rest Controller
  * A fully RESTful server implementation for CodeIgniter using one library, one config file and one controller.
  *
- * @link            https://github.com/chriskacerguis/ci-restserver
+ * @link            https://github.com/chriskacerguis/codeigniter-restserver
  *
  * @version         4.0.0
  */
@@ -832,7 +834,9 @@ class RestController extends \CI_Controller
                 $method = $this->input->server('HTTP_X_HTTP_METHOD_OVERRIDE');
             }
 
-            $method = strtolower($method);
+            if ($method !== null) {
+                $method = strtolower($method);
+            }
         }
 
         if (empty($method)) {

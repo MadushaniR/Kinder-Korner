@@ -1,6 +1,19 @@
 <IfModule authz_core_module>
-    Require all denied
+    # Allow access to index.php and its resources
+    <FilesMatch "^index\.php|assets|images">
+        Require all granted
+    </FilesMatch>
 </IfModule>
+
 <IfModule !authz_core_module>
-    Deny from all
+    # Allow access to index.php and its resources
+    <FilesMatch "^index\.php|assets|images">
+        Order deny,allow
+        Allow from all
+    </FilesMatch>
 </IfModule>
+
+# Deny access to all other files
+<FilesMatch "\.(htaccess|htpasswd|ini|phps|fla|psd|log|sh|inc|bak|txt)$">
+    Require all denied
+</FilesMatch>
