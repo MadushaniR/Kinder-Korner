@@ -94,7 +94,7 @@
         }
 
         .form-popup button {
-            background-color: #4CAF50;
+            background-color: #ff3399;
             color: white;
             padding: 12px 20px;
             border: none;
@@ -102,18 +102,20 @@
             border-radius: 10px;
             font-size: 16px;
             margin-top: 10px;
-        }
-
-        .form-popup button[type="button"] {
-            background-color: #ff9800;
-        }
-
-        .form-popup button:hover {
             opacity: 0.8;
         }
 
+        .form-popup button[type="button"] {
+            background-color: #00aaff;
+            opacity: 0.8;
+        }
+
+        .form-popup button:hover {
+            opacity: 0.9;
+        }
+
         .form-popup button[type="button"]:hover {
-            background-color: #e68900;
+            opacity: 0.9;
         }
 
         .question-group {
@@ -141,6 +143,19 @@
 
         .create-btn:hover {
             background-color: #00aaff;
+        }
+        .add{
+            background-color: #00aaff;
+            color: #e0ffff;
+        }
+        .create{
+            background-color: #ff4da6;
+            color: #e0ffff;
+        }
+        .cancel{
+            background-color: #00b3b3;
+            color: #e0ffff;
+
         }
     </style>
    
@@ -218,9 +233,9 @@
                 </div>
             </div>
 
-            <button type="button" onclick="addQuestion()">Add Another Question</button>
-            <button type="submit">Create Quiz</button>
-            <button type="button" onclick="closeForm()">Cancel</button>
+            <button type="button" class="add" onclick="addQuestion()">Add Another Question</button>
+            <button type="submit" class="create">Create Quiz</button>
+            <button type="button" onclick="closeForm()" class="cancel">Cancel</button>
         </form>
     </div>
 
