@@ -79,18 +79,18 @@ class QuizManagementModel extends CI_Model
 
         // Update question details
         $questionData = array(
-            'questionText' => $editedData['questionText'][0], // Assuming you're updating only one question at a time
-            'correctAnswer' => $editedData['correctAnswer'][0] // Assuming you're updating only one question at a time
+            'questionText' => $editedData['questionText'][0], 
+            'correctAnswer' => $editedData['correctAnswer'][0] 
         );
         $this->db->where('questionID', $questionID);
         $this->db->update('questions', $questionData);
 
         // Update options details
         $optionsData = array(
-            'option1' => $editedData['option1'][0], // Assuming you're updating only one question at a time
-            'option2' => $editedData['option2'][0], // Assuming you're updating only one question at a time
-            'option3' => $editedData['option3'][0], // Assuming you're updating only one question at a time
-            'option4' => $editedData['option4'][0]  // Assuming you're updating only one question at a time
+            'option1' => $editedData['option1'][0], 
+            'option2' => $editedData['option2'][0], 
+            'option3' => $editedData['option3'][0], 
+            'option4' => $editedData['option4'][0]  
         );
         $this->db->where('questionID', $questionID);
         $this->db->update('options', $optionsData);
@@ -107,6 +107,6 @@ class QuizManagementModel extends CI_Model
         $this->db->where('questions.questionID', $questionID); // Filter by questionID
         $query = $this->db->get();
 
-        return $query->row_array(); // Assuming you expect only one row
+        return $query->row_array(); 
     }
 }
