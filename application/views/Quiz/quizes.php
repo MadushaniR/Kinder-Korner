@@ -195,9 +195,9 @@
         ?>
     </div>
 
-    <!-- jQuery library (ensure you have included jQuery) -->
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Your custom JavaScript -->
+    <!-- like and dislike for quizes function -->
     <script>
         function sendFeedback(userID, quizID, action) {
             $.ajax({
@@ -224,6 +224,7 @@
             });
         }
 
+        // search function 
         function searchQuizzes() {
             var input, filter, quizzes, quizName, i;
             input = document.getElementById("quiz-search");
